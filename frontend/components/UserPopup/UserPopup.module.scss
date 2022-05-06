@@ -1,0 +1,63 @@
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.popup {
+  position: absolute;
+  z-index: 10;
+  overflow: hidden;
+  background-color: #222223;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 4px;
+  top: 44px;
+  right: 0;
+  width: 300px;
+  font-style: 14px;
+  padding-top: 5px;
+  margin: 2px 0 0;
+  color: #f2f2f2;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px 0 20px 20px;
+}
+
+.userName {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 18px;
+  font-weight: 700;
+  &Wrapper {
+    margin: 0 20px;
+  }
+}
+
+.balanceIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  &Wrapper {
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+  }
+}
+
+.btn {
+  color: rgba(255, 255, 255, 0.78);
+  display: flex;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 15px 18px;
+  font-size: 14px;
+  justify-content: flex-start;
+  &:hover {
+    background-color: rgba(140, 140, 140, 0.1);
+  }
+}

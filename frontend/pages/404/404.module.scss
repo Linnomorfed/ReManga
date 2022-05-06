@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex: 1;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+}
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.error {
+  font-weight: 400;
+  font-size: 3rem;
+  border-right: 1px solid #fff;
+  padding-right: 25px;
+  margin-right: 25px;
+  align-items: center;
+  display: flex;
+  min-height: 100px;
+}
+
+.title {
+  margin-bottom: 10px;
+}

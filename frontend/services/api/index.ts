@@ -1,0 +1,42 @@
+import axios from 'axios';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
+import Cookies, { parseCookies } from 'nookies';
+import { BookmarksApi } from './bookmarks';
+import { CommentsApi } from './comments';
+import { FilesApi } from './files';
+import { FiltersApi } from './filters';
+import { MangaApi } from './manga';
+import { UserApi } from './user';
+
+export type ApiReturnType = {
+  user: ReturnType<typeof UserApi>;
+  manga: ReturnType<typeof MangaApi>;
+  filters: ReturnType<typeof FiltersApi>;
+  comments: ReturnType<typeof CommentsApi>;
+  bookmarks: ReturnType<typeof BookmarksApi>;
+  files: ReturnType<typeof FilesApi>;
+};
+export const Api = (
+  ctx?: NextPageContext | GetServerSidePropsContext
+): ApiReturnType => {
+  const cookies = ctx ? Cookies.get(ctx) : parseCookies();
+  const token = cookies.remangaToken;
+
+  const instance = axios.create({
+    baseURL: 'http://localhost:4000',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+
+  const apis = {
+    user: UserApi(instance),
+    filters: FiltersApi(instance),
+    manga: MangaApi(instance),
+    comments: CommentsApi(instance),
+    bookmarks: BookmarksApi(instance),
+    files: FilesApi(instance),
+  };
+
+  return { ...apis };
+};

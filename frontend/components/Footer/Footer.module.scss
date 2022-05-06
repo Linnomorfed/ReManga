@@ -1,0 +1,87 @@
+.footer {
+  display: flex;
+  max-width: 100vw;
+  position: relative;
+  z-index: 2;
+  background-color: #171717;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 8px 24px 16px;
+}
+
+.title {
+  margin: 1em 0 0.75em;
+  font-weight: 800;
+}
+
+.description {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 17px;
+}
+
+.qustionBtn {
+  color: rgba(78, 107, 175, 1);
+  font-weight: 600;
+  padding: 5px 20px 5px 0px;
+  margin-top: 6px;
+  margin-bottom: 26px;
+  cursor: pointer;
+  &:hover {
+    color: rgba(78, 107, 175, 0.8);
+  }
+}
+
+.firstSection {
+  width: 33%;
+}
+
+.secondSection {
+  width: 17%;
+}
+
+.thirdSection {
+  width: 25%;
+}
+
+.fourthSection {
+  width: 25%;
+}
+
+.list {
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.listElement {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 4px 0;
+  font-weight: 700;
+  line-height: 1.8;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.socials {
+  margin-left: -18px;
+}
+
+.copyrightings {
+  margin: 23px 0;
+  font-size: 9px;
+  font-weight: 800;
+}

@@ -1,0 +1,31 @@
+.btn {
+  line-height: 1.5;
+  font-size: 15px;
+  color: #f2f2f2;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  border-radius: 4px;
+  padding: 6px 22px;
+  margin-top: 16px;
+  margin-bottom: 3px;
+  background: rgb(78, 107, 175);
+  cursor: pointer;
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+
+  &:hover {
+    background-color: #303f9f;
+  }
+
+  &:focus {
+    background-color: #303f9f;
+  }
+
+  &:disabled {
+    background-color: rgba(78, 107, 175, 0.4);
+    cursor: not-allowed;
+  }
+}

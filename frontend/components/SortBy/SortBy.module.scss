@@ -1,0 +1,27 @@
+.sortBy {
+  padding: 8px 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+}
+
+.switchBtn {
+  padding: 6px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  height: 36px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(242, 242, 242, 0.04);
+  }
+}
+
+.rightBtns {
+  margin-left: 8px;
+}

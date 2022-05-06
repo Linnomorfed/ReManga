@@ -1,0 +1,108 @@
+@import '_fonts';
+@import '_variables';
+
+@media (min-width: 720px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: rgba(140, 140, 140, 0.2);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(140, 140, 140, 0.7);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+article > * + * {
+  margin-top: 1em;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  color: #f2f2f2;
+  font-size: 0.875rem;
+  font-weight: 400;
+  background-color: #121212;
+  font-family: Segoe UI;
+
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+#__next {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.wrapper {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 84rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 auto;
+}
+.containerSmall {
+  width: 100%;
+  max-width: 69rem;
+  padding: 8px 0 16px;
+  margin: 0 auto;
+}

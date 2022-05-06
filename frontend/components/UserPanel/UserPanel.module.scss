@@ -1,0 +1,149 @@
+.header {
+  margin: 0;
+  display: flex;
+  padding: 36px 0 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: #171717;
+}
+.left {
+  flex-grow: 0;
+  max-width: 25%;
+  flex-basis: 25%;
+}
+.right {
+  flex-grow: 0;
+  max-width: 75%;
+  flex-basis: 75%;
+  padding: 20px 8px 16px;
+}
+
+.avatar {
+  width: 130px;
+  cursor: pointer;
+  height: 130px;
+  border-radius: 50%;
+  position: relative;
+  border: 3px solid #222223;
+  box-shadow: 0 0 7px #000;
+  background-color: #222223;
+  &Container {
+    display: flex;
+    width: 25%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &Img {
+    border-radius: 50%;
+  }
+  &Span {
+    bottom: -5px;
+    left: -5px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 100%;
+    background-color: #fff;
+  }
+}
+.subtitle {
+  margin: 16px 8px 12px;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.publishers {
+  &Wrapper {
+    padding: 0px 16px;
+  }
+  &Btn {
+    justify-content: center;
+    margin: 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    & > button {
+      text-transform: none;
+      font-size: 14px;
+      border-radius: 20px;
+    }
+  }
+}
+.nickname {
+  font-size: 2rem;
+  color: #fff;
+  margin-right: 6px;
+  &:hover {
+    text-decoration: underline;
+  }
+  &Container {
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+.user {
+  &RightSection {
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &StatElement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    margin: 2px;
+    color: #fff;
+    padding: 7px 12px;
+    font-size: 14px;
+    text-align: center;
+    margin-right: 3px;
+    & > span {
+      margin-left: 3px;
+      font-size: 16px;
+    }
+  }
+  &Id {
+    color: #83848f;
+    font-size: 14px;
+    margin-left: 24px;
+  }
+  &Info {
+    display: flex;
+    align-items: baseline;
+    font-weight: 500;
+    &Top {
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+    }
+
+    &Bottom {
+      width: 100%;
+      margin: 6px 0 4px -15px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.tabs {
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.mangaList {
+  padding: 4px;
+  width: calc(100% + 16px);
+  margin: -8px;
+  flex: 1 1 20%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
