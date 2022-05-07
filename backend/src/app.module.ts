@@ -16,6 +16,7 @@ import { StatusModule } from './status/status.module';
 import { RestrictionModule } from './restriction/restriction.module';
 import { FilesModule } from './files/files.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { RatingModule } from './rating/rating.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
     RestrictionModule,
     FilesModule,
     BookmarksModule,
+    RatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,14 +5,16 @@ import { MangaContent } from '../../../components';
 import MainLayout from '../../../layouts/MainLayout';
 import { ResponseBookmark } from '../../../models/IBookmarks';
 import { ResponceManga } from '../../../models/IManga';
+import { RatingResponse } from '../../../models/IRating';
 import { Api } from '../../../services/api';
 
 interface MangaProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
+  ratedByUser: RatingResponse | null;
 }
 
-const Manga: NextPage<MangaProps> = ({ manga, bookmark }) => {
+const Manga: NextPage<MangaProps> = ({ manga, bookmark, ratedByUser }) => {
   return (
     <>
       <Head>
@@ -20,7 +22,11 @@ const Manga: NextPage<MangaProps> = ({ manga, bookmark }) => {
         <meta name='description' content={'Read ' + manga.title + ' online'} />
       </Head>
       <MainLayout showFooter={false} bgTranparent={true}>
-        <MangaContent manga={manga} bookmark={bookmark} />
+        <MangaContent
+          manga={manga}
+          bookmark={bookmark}
+          ratedByUser={ratedByUser}
+        />
       </MainLayout>
     </>
   );
@@ -32,10 +38,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const id = ctx.params?.id as string;
     const obj = await Api(ctx).manga.getOneById(+id);
-    const manga = obj.item;
-    const bookmark = obj.bookmark;
+    const manga = obj.manga;
+    const bookmark = obj.bookmark ? obj.bookmark : null;
+    const ratedByUser = obj.bookmark ? obj.ratedByUser : null;
 
-    return { props: { manga, bookmark } };
+    return { props: { manga, bookmark, ratedByUser } };
   } catch (err) {
     console.warn('Manga loading error', err);
     return {

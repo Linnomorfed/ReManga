@@ -34,6 +34,12 @@ export class MangaEntity {
   @Column({ type: 'jsonb' })
   blocks: any[];
 
+  @Column({ type: 'real', default: 0 })
+  rating: number;
+
+  @Column({ default: 0 })
+  votes_count: number;
+
   @Column({ default: 0 })
   views: number;
 

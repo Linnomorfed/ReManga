@@ -9,6 +9,7 @@ interface ModalBlockProps {
   toggleModalVisibility: () => void;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  title?: string;
 }
 
 const ModalBlock: React.FC<ModalBlockProps> = ({
@@ -16,6 +17,7 @@ const ModalBlock: React.FC<ModalBlockProps> = ({
   toggleModalVisibility,
   visible,
   setVisible,
+  title,
 }) => {
   const { componentRef } = useOutsideClick(visible, setVisible);
 
@@ -23,10 +25,13 @@ const ModalBlock: React.FC<ModalBlockProps> = ({
     <div className={styles.modal}>
       <FocusLock>
         <div className={styles.content} ref={componentRef}>
-          <button className={styles.closeBtn} onClick={toggleModalVisibility}>
-            <CloseSvg w={16} h={16} fill={'#f2f2f2'} />
-          </button>
-          {children}
+          <div className={styles.header}>
+            {title && <h4 className={styles.headerTitle}>{title}</h4>}
+            <button className={styles.closeBtn} onClick={toggleModalVisibility}>
+              <CloseSvg w={16} h={16} fill={'#f2f2f2'} />
+            </button>
+          </div>
+          <div className={styles.body}>{children}</div>
         </div>
       </FocusLock>
     </div>

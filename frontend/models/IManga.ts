@@ -1,6 +1,7 @@
 import { OutputData } from '@editorjs/editorjs';
 import { ResponseBookmark } from './IBookmarks';
 import { ResponceFilter } from './IFilters';
+import { RatingResponse } from './IRating';
 
 interface mangaImage {
   id: number;
@@ -23,11 +24,14 @@ export interface ResponceManga {
   genres: ResponceFilter[];
   categories: ResponceFilter[];
   image: mangaImage;
+  rating: number;
+  votes_count: number;
 }
 
 export interface ResponceSingleManga {
-  item: ResponceManga;
+  manga: ResponceManga;
   bookmark: ResponseBookmark | null;
+  ratedByUser: RatingResponse | null;
 }
 
 export interface ResponceMangaData {

@@ -10,13 +10,19 @@ import Description from './Description';
 import LeftPanel from './LeftPanel';
 import MangaInfo from './MangaInfo';
 import Chapters from './Chapters';
+import { RatingResponse } from '../../models/IRating';
 
 interface MangaContentProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
+  ratedByUser: RatingResponse | null;
 }
 
-const MangaContent: React.FC<MangaContentProps> = ({ manga, bookmark }) => {
+const MangaContent: React.FC<MangaContentProps> = ({
+  manga,
+  bookmark,
+  ratedByUser,
+}) => {
   const [activeTab, setActiveTab] = React.useState<number>(1);
 
   const onTabClick = (id: number) => {
@@ -34,12 +40,16 @@ const MangaContent: React.FC<MangaContentProps> = ({ manga, bookmark }) => {
         />
 
         <MangaInfo
+          mangaId={manga.id}
           otherTitles={manga.otherTitles}
           title={manga.title}
           status={manga.status.name}
           type={manga.type.name}
           views={manga.views}
           issueYear={manga.issueYear}
+          rating={manga.rating}
+          votesCount={manga.votes_count}
+          ratedByUser={ratedByUser}
         />
       </div>
       <div className={styles.body}>

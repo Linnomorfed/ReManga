@@ -6,6 +6,7 @@ import { CommentsApi } from './comments';
 import { FilesApi } from './files';
 import { FiltersApi } from './filters';
 import { MangaApi } from './manga';
+import { RatingApi } from './rating';
 import { UserApi } from './user';
 
 export type ApiReturnType = {
@@ -15,6 +16,7 @@ export type ApiReturnType = {
   comments: ReturnType<typeof CommentsApi>;
   bookmarks: ReturnType<typeof BookmarksApi>;
   files: ReturnType<typeof FilesApi>;
+  rating: ReturnType<typeof RatingApi>;
 };
 export const Api = (
   ctx?: NextPageContext | GetServerSidePropsContext
@@ -36,6 +38,7 @@ export const Api = (
     comments: CommentsApi(instance),
     bookmarks: BookmarksApi(instance),
     files: FilesApi(instance),
+    rating: RatingApi(instance),
   };
 
   return { ...apis };

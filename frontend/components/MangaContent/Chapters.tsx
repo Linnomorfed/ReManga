@@ -12,7 +12,6 @@ const Chapters = () => {
       setPreviewImages((prev) => [...prev, URL.createObjectURL(file)]);
     });
   };
-  console.log(uploadedImages);
 
   const createChapters = async () => {
     try {

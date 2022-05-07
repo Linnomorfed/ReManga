@@ -4,6 +4,7 @@ import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
 import { CategoriesService } from 'src/categories/categories.service';
 import { FilesService } from 'src/files/files.service';
 import { GenresService } from 'src/genres/genres.service';
+import { RatingEntity } from 'src/rating/entities/rating.entity';
 import { getRepository, In, Like, Repository } from 'typeorm';
 import { CreateMangaDto } from './dto/create-manga.dto';
 import { SearchMangaDto } from './dto/search-manga.dto';
@@ -124,9 +125,18 @@ export class MangaService {
       .andWhere('bookmarks.manga.id = :mangaId', { mangaId: id })
       .getOne();
 
-    const manga = await this.getMangaById(+id);
+    const ratedByUser = await getRepository(RatingEntity)
+      .createQueryBuilder('rating')
+      .andWhere('rating.userId = :userId', { userId: userId })
+      .andWhere('rating.mangaId = :mangaId', { mangaId: id })
+      .getOne();
 
-    return { item: manga, bookmark: bookmark || null };
+    const manga = await this.getMangaById(+id);
+    return {
+      manga,
+      bookmark: bookmark ? bookmark : null,
+      ratedByUser: ratedByUser ? ratedByUser : null,
+    };
   }
 
   update(id: number, dto: UpdateMangaDto) {

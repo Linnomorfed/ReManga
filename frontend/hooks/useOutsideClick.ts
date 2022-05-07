@@ -42,10 +42,6 @@ function useOutsideClick(
     };
   }, [handleClickOutside, keyPress]);
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return {
     componentRef,
     toggleVisibility,

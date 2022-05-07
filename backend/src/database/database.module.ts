@@ -7,6 +7,7 @@ import { CommentEntity } from 'src/comments/entities/comment.entity';
 import FileEnity from 'src/files/entities/file.entity';
 import { GenresEntity } from 'src/genres/entities/genre.entity';
 import { MangaEntity } from 'src/manga/entities/manga.entity';
+import { RatingEntity } from 'src/rating/entities/rating.entity';
 import { RestrictionEntity } from 'src/restriction/entities/restriction.entity';
 import { StatusEntity } from 'src/status/entities/status.entity';
 import { TypesEntity } from 'src/types/entities/type.entity';
@@ -34,6 +35,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
           RestrictionEntity,
           FileEnity,
           BookmarksEntity,
+          RatingEntity,
         ],
         synchronize: true,
       }),
