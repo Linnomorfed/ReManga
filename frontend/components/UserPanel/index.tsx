@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { ResponseUser } from '../../models/IAuth';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { selectUserData } from '../../redux/slices/userSlice';
-import Bookmarks from './Bookmarks';
+import Bookmarks from '../Bookmarks';
 import Header from './Header';
 import Publishers from './Publishers';
 import styles from './UserPanel.module.scss';
@@ -21,7 +21,7 @@ const UserPanel: React.FC<UserPanelProps> = ({
 }) => {
   const userData = useAppSelector(selectUserData);
   return (
-    <div className='wrapper'>
+    <>
       <Header
         userId={user.id}
         nickname={user.nickname}
@@ -36,11 +36,11 @@ const UserPanel: React.FC<UserPanelProps> = ({
           <Bookmarks
             userId={user.id}
             preloadedData={preloadedData}
-            bookmarksCount={bookmarksCount}
+            preloadedBookmarksCount={bookmarksCount}
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

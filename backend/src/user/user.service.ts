@@ -48,16 +48,22 @@ export class UserService {
       .andWhere('bookmarks.bookmarkId = 3')
       .getCount();
 
-    const thrown = await getRepository(BookmarksEntity)
+    const postponed = await getRepository(BookmarksEntity)
       .createQueryBuilder('bookmarks')
       .andWhere('bookmarks.userId = :id', { id: id })
       .andWhere('bookmarks.bookmarkId = 4')
       .getCount();
 
-    const not_interesting = await getRepository(BookmarksEntity)
+    const thrown = await getRepository(BookmarksEntity)
       .createQueryBuilder('bookmarks')
       .andWhere('bookmarks.userId = :id', { id: id })
       .andWhere('bookmarks.bookmarkId = 5')
+      .getCount();
+
+    const not_interesting = await getRepository(BookmarksEntity)
+      .createQueryBuilder('bookmarks')
+      .andWhere('bookmarks.userId = :id', { id: id })
+      .andWhere('bookmarks.bookmarkId = 6')
       .getCount();
 
     const [preloadedData, readingCount] = bookmarksPreload;
@@ -67,7 +73,14 @@ export class UserService {
     return {
       data: user,
       preloadedData,
-      bookmarksCount: [readingCount, will_read, read, thrown, not_interesting],
+      bookmarksCount: [
+        readingCount,
+        will_read,
+        read,
+        postponed,
+        thrown,
+        not_interesting,
+      ],
     };
   }
 

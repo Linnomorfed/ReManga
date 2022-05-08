@@ -23,6 +23,7 @@ export interface ResponseUser {
   id: number;
   nickname: string;
   updatedAt: string;
+  access_token: string;
 }
 
 export interface ResponseUserPage {

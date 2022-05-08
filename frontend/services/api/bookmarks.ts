@@ -25,4 +25,8 @@ export const BookmarksApi = (instance: AxiosInstance) => ({
     );
     return data;
   },
+  async deleteBookmark(id: number) {
+    const { data } = await instance.delete(`bookmarks/${id}`);
+    return data;
+  },
 });

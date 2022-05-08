@@ -46,6 +46,6 @@ export class BookmarksService {
     return this.repository.update(id, dto);
   }
   remove(id: number) {
-    return `This action removes a #${id} bookmark`;
+    return this.repository.delete(id);
   }
 }

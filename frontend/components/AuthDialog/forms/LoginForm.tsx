@@ -44,6 +44,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
         email: dto.email,
         password: dto.password,
       });
+      console.log(data);
+
       setCookie(null, 'remangaToken', data.access_token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',

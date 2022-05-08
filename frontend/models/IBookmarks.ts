@@ -4,8 +4,9 @@ export enum bookmarkIdEnum {
   READING = 1,
   WILL_READ = 2,
   READ = 3,
-  THROWN = 4,
-  NOT_INTERESTED = 5,
+  POSTPONED = 4,
+  THROWN = 5,
+  NOT_INTERESTED = 6,
 }
 
 export interface UpdateBookmarkDto {

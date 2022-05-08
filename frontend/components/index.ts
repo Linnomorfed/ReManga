@@ -19,3 +19,4 @@ export { default as MangaContent } from './MangaContent';
 export { default as Comments } from './Comments';
 export { default as Panel } from './Panel';
 export { default as UserPanel } from './UserPanel';
+export { default as Bookmarks } from './Bookmarks';

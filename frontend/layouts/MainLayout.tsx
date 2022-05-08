@@ -15,7 +15,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   return (
     <>
       <Header bgTranparent={bgTranparent} />
-      <>{children}</>
+      <div className='wrapper'>{children}</div>
       {showFooter && <Footer />}
     </>
   );

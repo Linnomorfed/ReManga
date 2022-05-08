@@ -35,6 +35,7 @@ export class RatingService {
       .update()
       .set({ votes_count: () => 'votes_count +1' })
       .execute();
+    const start = new Date();
 
     getRepository(MangaEntity)
       .createQueryBuilder('manga')
@@ -71,6 +72,10 @@ export class RatingService {
       .update()
       .set({ rating: +avg })
       .execute();
+
+    const today = new Date();
+    today.setDate(today.getDate() - 30);
+    console.log(today);
 
     return data;
   }

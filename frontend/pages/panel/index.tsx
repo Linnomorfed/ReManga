@@ -3,13 +3,18 @@ import { GetServerSideProps, NextPage } from 'next';
 import { Panel } from '../../components';
 import { Api } from '../../services/api';
 import { FiltersDataResponce } from '../../models/IFilters';
+import MainLayout from '../../layouts/MainLayout';
 
 interface PanelProps {
   filters: FiltersDataResponce;
 }
 
 const PanelPage: NextPage<PanelProps> = ({ filters }) => {
-  return <Panel filters={filters} />;
+  return (
+    <MainLayout showFooter={false} bgTranparent={false}>
+      <Panel filters={filters} />
+    </MainLayout>
+  );
 };
 
 export default PanelPage;
