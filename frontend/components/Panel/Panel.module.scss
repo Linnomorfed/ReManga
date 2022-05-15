@@ -1,3 +1,5 @@
+@import '/styles/_variables.scss';
+
 .panel {
   background: #1f1f1f;
   color: #ccc;
@@ -25,16 +27,14 @@
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   background-color: transparent !important;
   border: 1px solid #3b3b3b !important;
   color: #ccc !important;
   margin-top: 0.5rem;
-
 }
 
 .editor {
-  background-color: #fff;
-  color: #2b2c2a;
-
+  background-color: $clr-bg-light;
+  color: $clr-text-dark;
 }

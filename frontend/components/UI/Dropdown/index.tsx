@@ -8,7 +8,7 @@ import { ResponceFilter } from '../../../models/IFilters';
 
 interface DropdownProps {
   items: ResponceFilter[];
-  title: string;
+  title?: string;
   selected?: number;
   type: 'default' | 'sortBy' | 'manga';
   returnId?: (ids: number[]) => void;

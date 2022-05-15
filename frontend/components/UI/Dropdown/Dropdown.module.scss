@@ -1,3 +1,5 @@
+@import '/styles/_variables.scss';
+
 .select {
   display: flex;
   padding: 9px 20px 9px 12px;
@@ -6,13 +8,13 @@
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  background-color: rgba(140, 140, 140, 0.05);
+  background-color: rgba($clr-grey, 0.05);
   align-items: center;
   border: 1px solid transparent;
   margin-right: 8px;
   position: relative;
   &:hover {
-    border-color: #4e6baf;
+    border-color: $clr-blue;
   }
 
   & svg {
@@ -20,10 +22,10 @@
   }
 
   &Manga {
-    border: 1px solid rgba(140, 140, 140, 0.25);
+    border: $border-grey;
     padding: 10px 26px 10px 12px;
     text-align: center;
-    background-color: #171717;
+    background-color: $clr-bg-secondary;
     margin-right: 0px;
     justify-content: center;
     position: relative;
@@ -51,8 +53,8 @@
   opacity: 1;
   visibility: visible;
   position: absolute;
-  color: #f2f2f2;
-  background-color: #171717;
+  color: $clr-text-light;
+  background-color: $clr-bg-secondary;
   opacity: 1;
   min-width: 90px;
   transition: opacity 340ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,

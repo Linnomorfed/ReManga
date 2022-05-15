@@ -1,6 +1,8 @@
+@import '/styles/_variables.scss';
+
 .cart {
   display: flex;
-  background: #171717;
+  background: $clr-bg-secondary;
   margin: 6px 0;
   border-radius: 6px;
   align-items: center;

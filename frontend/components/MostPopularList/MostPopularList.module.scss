@@ -1,4 +1,6 @@
+@import '/styles/_variables.scss';
+
 .carousel {
-  background: #171717;
+  background: $clr-bg-secondary;
   margin-bottom: 16px;
 }

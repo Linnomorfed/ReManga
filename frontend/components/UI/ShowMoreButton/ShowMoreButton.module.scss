@@ -1,5 +1,7 @@
+@import '/styles/_variables.scss';
+
 .btn {
-  color: rgb(78, 107, 175);
+  color: $clr-blue;
   padding: 8px;
   font-size: 14px;
   text-transform: uppercase;
@@ -8,13 +10,13 @@
   border-radius: 4px;
   cursor: pointer;
   &:hover {
-    color: rgba(78, 107, 175, 0.8);
+    color: rgba($clr-blue, 0.8);
   }
   &Comment {
     font-size: 16px;
     padding: 0;
     text-transform: lowercase;
-    &:hover{
+    &:hover {
       text-decoration: underline;
     }
   }

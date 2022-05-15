@@ -1,3 +1,5 @@
+@import '/styles/_variables.scss';
+
 .comments {
   padding: 0;
   padding-top: 24px;
@@ -61,14 +63,14 @@
     position: relative;
     cursor: text;
     &:hover {
-      border-color: #4e6baf;
+      border-color: $clr-blue;
     }
     &:focus-within {
-      border-color: #4e6baf !important;
+      border-color: $clr-blue !important;
 
       .replyLabel {
         font-size: 12px;
-        color: #4e6baf;
+        color: $clr-blue;
         top: -12px;
       }
     }
@@ -92,7 +94,7 @@
   line-height: 1em;
 
   &Red {
-    color: #f44336;
+    color: $clr-error;
   }
 }
 
@@ -163,7 +165,7 @@
   padding: 3px 6px;
   font-size: 11px;
   border-radius: 8px;
-  background-color: #4e6baf;
+  background-color: $clr-blue;
   color: #fff;
   text-align: center;
   margin: 2px;
@@ -209,7 +211,7 @@
 }
 
 .replies {
-  color: #4e6baf;
+  color: $clr-blue;
   padding: 4px;
   font-size: 11px;
   font-weight: 400;
@@ -225,7 +227,7 @@
 }
 
 .spoiler {
-  color: #4e6baf;
+  color: $clr-blue;
   width: fit-content;
   cursor: pointer;
   font-size: 16px;

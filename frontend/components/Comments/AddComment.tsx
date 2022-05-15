@@ -27,9 +27,12 @@ const AddComment: React.FC<AddCommentProps> = ({
   const [isSpoiler, setIsSpoiler] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  console.log(text);
+
   const limitHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
+
   const toogleSwitch = () => {
     setIsSpoiler(!isSpoiler);
   };
@@ -38,7 +41,7 @@ const AddComment: React.FC<AddCommentProps> = ({
     try {
       setIsLoading(true);
       const comment = await Api().comments.createComment({
-        text,
+        text: replyToName + text,
         spoiler: isSpoiler,
         mangaId: mangaId,
         replyTo: commentId,

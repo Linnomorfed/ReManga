@@ -37,7 +37,7 @@ const MangaCard: FC<MangaCardProps> = ({
   };
 
   return (
-    <div onClick={toggleSelected}>
+    <div onClick={toggleSelected} className='pointer'>
       <div className={`${editing && styles.disabledLink}`}>
         <Link href={`/manga/${mangaId}`} passHref>
           <div
@@ -47,7 +47,11 @@ const MangaCard: FC<MangaCardProps> = ({
               variant === 'catalog' && styles.cardCatalog
             )}>
             <div className={styles.top}>
-              <div className={styles.imgContainer}>
+              <div
+                className={classNames(
+                  styles.imgContainer,
+                  `${editing && styles.imgEditing}`
+                )}>
                 <Image
                   className={styles.img}
                   src={url}

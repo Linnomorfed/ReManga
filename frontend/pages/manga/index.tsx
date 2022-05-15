@@ -21,12 +21,12 @@ const MangaCatalog: NextPage<MangaCatalogProps> = ({ filters }) => {
           <Filters filters={filters} />
         </div>
       </div>
-      {/*  <div className='containerSmall'>
+      <div className='containerSmall'>
         <div className={styles.main}>
           <SortBy />
-          <CatalogMangaList />
+          {/* <CatalogMangaList /> */}
         </div>
-      </div> */}
+      </div>
     </MainLayout>
   );
 };
@@ -35,6 +35,8 @@ export default MangaCatalog;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
+    //const manga = await Api().manga
+
     const types = await Api().filters.getTypes();
     const genres = await Api().filters.getGenres();
     const categories = await Api().filters.getCategories();

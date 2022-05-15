@@ -1,3 +1,5 @@
+@import '/styles/_variables.scss';
+
 .card {
   padding: 16px 6px;
   width: 160px;
@@ -28,6 +30,10 @@
     height: 225px;
     position: relative;
   }
+}
+
+.editing {
+  cursor: pointer;
 }
 
 .status {
@@ -94,7 +100,7 @@
 
 .genre {
   text-align: left;
-  color: #83848f;
+  color: $clr-grey-light;
   font-size: 13px;
   font-weight: 400;
   overflow: hidden;

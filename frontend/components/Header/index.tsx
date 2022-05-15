@@ -2,11 +2,9 @@ import React, { FC } from 'react';
 import styles from './Header.module.scss';
 import {
   BookmarkSvg,
-  ClearSvg,
   LogoSvg,
   NotificationSvg,
   RandomSvg,
-  SearchSvg,
   ThemeSvg,
 } from '../../assets/svgs';
 import classnames from 'classnames';
@@ -18,6 +16,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { selectUserData } from '../../redux/slices/userSlice';
 import UserAvatar from '../UI/UserAvatar';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import Search from './Search';
 
 interface HeaderProps {
   bgTranparent: boolean;
@@ -30,8 +29,6 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
   const [visibleUserPopup, setVisibleUserPopup] = React.useState(false);
   const [visibleAuthModal, setVisibleAuthModal] = React.useState(false);
 
-  const [searchValue, setSearchValue] = React.useState('');
-
   const { componentRef, toggleVisibility } = useOutsideClick(
     visibleUserPopup,
     setVisibleUserPopup
@@ -39,13 +36,6 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
 
   const toggleAuthVisibility = () => {
     setVisibleAuthModal(!visibleAuthModal);
-  };
-
-  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
-  const onClickClearButton = () => {
-    setSearchValue('');
   };
 
   return (
@@ -69,23 +59,7 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
             </button>
           </div>
           <div className={styles.right}>
-            <div className={styles.inputComp}>
-              <button className={styles.searchSvg}>
-                <SearchSvg fill={'#f2f2f2'} w={24} h={24} />
-              </button>
-              <input
-                className={styles.input}
-                onChange={onChangeInputValue}
-                type='text'
-                value={searchValue}
-                placeholder='What are we looking for?'
-              />
-              {searchValue && (
-                <button className={styles.clear} onClick={onClickClearButton}>
-                  <ClearSvg fill={'#f2f2f2'} w={20} h={20} />
-                </button>
-              )}
-            </div>
+            <Search />
             <button className={classNames(styles.btn, styles.btnThemes)}>
               <ThemeSvg fill={'#f2f2f2'} w={24} h={24} />
             </button>

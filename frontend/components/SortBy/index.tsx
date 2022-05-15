@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
 import Dropdown from '../UI/Dropdown';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { BlockViewSvg, ListViewSvg, SwitchSvg } from '../../assets/svgs';
 import classNames from 'classnames';
 import styles from './SortBy.module.scss';
+import { CatalogFilter } from '../../utils/static/Catalog';
 
 const SortBy: FC = () => {
   return (
     <div className={styles.sortBy}>
-      {/* <div className={styles.center}>
-        <Dropdown title='Popularity' items={sortBy} isSortBy={true} />
+      <div className={styles.center}>
+        <div>
+          <Dropdown items={CatalogFilter} type='sortBy' selected={5} />
+        </div>
         <button className={styles.switchBtn}>
           <SwitchSvg w={24} h={24} fill={'white'} />
         </button>
@@ -21,7 +23,7 @@ const SortBy: FC = () => {
         <button className={classNames(styles.switchBtn, styles.rightBtns)}>
           <BlockViewSvg w={24} h={24} fill={'white'} />
         </button>
-      </div> */}
+      </div>
     </div>
   );
 };
