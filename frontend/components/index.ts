@@ -20,3 +20,5 @@ export { default as Comments } from './Comments';
 export { default as Panel } from './Panel';
 export { default as UserPanel } from './UserPanel';
 export { default as Bookmarks } from './Bookmarks';
+export { default as Catalog } from './Catalog';
+export { default as Pagination } from './Pagination';

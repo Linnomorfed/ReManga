@@ -1,32 +1,25 @@
 import { GetServerSideProps, NextPage } from 'next';
 import React from 'react';
-import CatalogMangaList from '../../components/CatalogMangaList';
-import Filters from '../../components/Filters';
-import SortBy from '../../components/SortBy';
+import { Catalog } from '../../components';
 import MainLayout from '../../layouts/MainLayout';
 import { FiltersDataResponce } from '../../models/IFilters';
+import { MangaFilterEnum, ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
-import styles from './MangaCatalog.module.scss';
 
 interface MangaCatalogProps {
   filters: FiltersDataResponce;
+  manga: ResponceManga[];
+  itemsCount: number;
 }
 
-const MangaCatalog: NextPage<MangaCatalogProps> = ({ filters }) => {
+const MangaCatalog: NextPage<MangaCatalogProps> = ({
+  filters,
+  manga,
+  itemsCount,
+}) => {
   return (
     <MainLayout showFooter={false}>
-      <div className={styles.header}>
-        <div className='container'>
-          <h1 className={styles.title}>Manga catalog</h1>
-          <Filters filters={filters} />
-        </div>
-      </div>
-      <div className='containerSmall'>
-        <div className={styles.main}>
-          <SortBy />
-          {/* <CatalogMangaList /> */}
-        </div>
-      </div>
+      <Catalog filters={filters} manga={manga} itemsCount={itemsCount} />
     </MainLayout>
   );
 };
@@ -35,7 +28,12 @@ export default MangaCatalog;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    //const manga = await Api().manga
+    const manga = await Api().manga.getMangaByQuery({
+      filter: MangaFilterEnum.views,
+      page: 1,
+      take: 3,
+      orderby: 'DESC',
+    });
 
     const types = await Api().filters.getTypes();
     const genres = await Api().filters.getGenres();
@@ -44,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const restrictions = await Api().filters.getRestrictions();
     const filters = { types, genres, categories, statuses, restrictions };
 
-    return { props: { filters } };
+    return { props: { filters, manga: manga.items, itemsCount: manga.count } };
   } catch (err) {
     console.warn('Filters loading error', err);
   }

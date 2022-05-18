@@ -49,11 +49,6 @@ export class MangaController {
     return this.mangaService.getMangaByQuery(query);
   }
 
-  @Get('popular')
-  getPopular() {
-    return this.mangaService.getPopularMangas();
-  }
-
   @Get(':id')
   @UseGuards(OptionalJwtAuthGuard)
   findOne(@User() user: UserEntity, @Param('id') id: number) {

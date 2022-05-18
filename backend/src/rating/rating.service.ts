@@ -73,9 +73,9 @@ export class RatingService {
       .set({ rating: +avg })
       .execute();
 
-    const today = new Date();
-    today.setDate(today.getDate() - 30);
-    console.log(today);
+    // const today = new Date();
+    // today.setDate(today.getDate() - 30);
+    // console.log(today);
 
     return data;
   }

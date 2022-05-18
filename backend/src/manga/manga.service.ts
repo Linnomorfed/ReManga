@@ -5,11 +5,12 @@ import { CategoriesService } from 'src/categories/categories.service';
 import { FilesService } from 'src/files/files.service';
 import { GenresService } from 'src/genres/genres.service';
 import { RatingEntity } from 'src/rating/entities/rating.entity';
-import { getRepository, In, Like, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { CreateMangaDto } from './dto/create-manga.dto';
 import { SearchMangaDto } from './dto/search-manga.dto';
 import { UpdateMangaDto } from './dto/update-manga.dto';
 import { MangaEntity } from './entities/manga.entity';
+import { FilterEnum } from './enums/filter';
 
 @Injectable()
 export class MangaService {
@@ -51,19 +52,25 @@ export class MangaService {
     return this.categoriesService.findById(ids);
   }
 
-  async getPopularMangas() {
-    const qb = this.repository.createQueryBuilder();
+  async getMostViewed(query: SearchMangaDto) {
+    const take = query.take || 30;
+    const page = query.page || 1;
+    const orderby = query.orderby || 'DESC';
+    const skip = query.skip || (page - 1) * take;
 
-    qb.orderBy('views', 'DESC').limit(30);
+    const qb = this.repository.createQueryBuilder();
+    qb.orderBy('views', orderby).take(take).skip(skip);
 
     const [items, total] = await qb.getManyAndCount();
-
     return { items, total };
   }
+
   async getMangaByQuery(query: SearchMangaDto) {
     const take = query.take || 30;
     const page = query.page || 1;
     const skip = query.skip || (page - 1) * take;
+    const orderby = query.orderby || 'DESC';
+    const filter = query.filter || FilterEnum.createdAt;
 
     const keyword = query.keyword || '';
 
@@ -78,11 +85,19 @@ export class MangaService {
       .setParameters({
         keyword: `%${keyword}%`,
       })
-      .orderBy('manga.createdAt', 'DESC')
+
       .orWhere(`manga.title ILIKE :keyword`)
       .orWhere(`manga.otherTitles ILIKE :keyword`)
       .take(take)
       .skip(skip);
+
+    if (filter === FilterEnum.createdAt) {
+      qb.orderBy('manga.createdAt', orderby);
+    }
+
+    if (filter === FilterEnum.views) {
+      qb.orderBy('manga.views', orderby);
+    }
 
     const data = await qb.getManyAndCount();
 

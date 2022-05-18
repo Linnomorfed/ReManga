@@ -56,4 +56,11 @@ export interface SearchMangaDto {
   page?: number;
   take?: number;
   skip?: number;
+  filter?: MangaFilterEnum;
+}
+
+export enum MangaFilterEnum {
+  views = 'views',
+  createdAt = 'createdAt',
+  likes = 'likes',
 }

@@ -66,8 +66,8 @@ const MangaCard: FC<MangaCardProps> = ({
                   <CheckMarkSvg fill='white' h={24} />
                 </div>
               )}
-              {rating && <div className={styles.rating}>{rating}</div>}
-              {!rating && likesCount && (
+              {rating! >= 0 && <div className={styles.rating}>{rating}</div>}
+              {rating !== 0 && !rating && (
                 <div className={styles.likes}>
                   <HeartSvg fill='white' w={15} h={15} />
                   <div className={styles.likesCount}>{likesCount}</div>

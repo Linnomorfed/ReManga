@@ -9,7 +9,6 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({ filters }) => {
   const [isShowMore, setIsShowMore] = React.useState(false);
-  console.log(filters);
 
   return (
     <div>

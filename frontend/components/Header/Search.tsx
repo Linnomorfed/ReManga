@@ -10,8 +10,6 @@ const Search = () => {
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState<ResponceManga[]>([]);
 
-  console.log(searchResult);
-
   const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
