@@ -1,4 +1,4 @@
-import { FilterEnum } from '../enums/filter';
+import { SortByEnum } from '../enums/sortby';
 
 export class SearchMangaDto {
   keyword?: string;
@@ -6,5 +6,13 @@ export class SearchMangaDto {
   page?: number;
   take?: number;
   skip?: number;
-  filter?: FilterEnum;
+  sortby?: SortByEnum;
+  types?: number[];
+  genres?: number[];
+  categories?: number[];
+  restrictions?: number[];
+  statuses?: number[];
+  excludedTypes?: number[];
+  excludedGenres?: number[];
+  excludedCategories?: number[];
 }

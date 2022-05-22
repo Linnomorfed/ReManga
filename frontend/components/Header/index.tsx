@@ -66,10 +66,12 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
             <span className={styles.divider}>|</span>
             {userData ? (
               <>
-                <Link href='/user/bookmarks' passHref>
-                  <button className={classNames(styles.btn, styles.btnSpace)}>
-                    <BookmarkSvg fill={'#f2f2f2'} w={20} h={20} />
-                  </button>
+                <Link href='/user/bookmarks'>
+                  <a>
+                    <button className={classNames(styles.btn, styles.btnSpace)}>
+                      <BookmarkSvg fill={'#f2f2f2'} w={20} h={20} />
+                    </button>
+                  </a>
                 </Link>
 
                 <button className={classnames(styles.btn, styles.btnSpace)}>

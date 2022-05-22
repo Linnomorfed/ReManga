@@ -40,46 +40,48 @@ const MangaCard: FC<MangaCardProps> = ({
     <div onClick={toggleSelected} className='pointer'>
       <div className={`${editing && styles.disabledLink}`}>
         <Link href={`/manga/${mangaId}`} passHref>
-          <div
-            className={classNames(
-              styles.card,
-              variant === 'small' && styles.cardSmall,
-              variant === 'catalog' && styles.cardCatalog
-            )}>
-            <div className={styles.top}>
-              <div
-                className={classNames(
-                  styles.imgContainer,
-                  `${editing && styles.imgEditing}`
-                )}>
-                <Image
-                  className={styles.img}
-                  src={url}
-                  alt={title}
-                  layout='fill'
-                  objectFit='cover'
-                />
-              </div>
+          <a>
+            <div
+              className={classNames(
+                styles.card,
+                variant === 'small' && styles.cardSmall,
+                variant === 'catalog' && styles.cardCatalog
+              )}>
+              <div className={styles.top}>
+                <div
+                  className={classNames(
+                    styles.imgContainer,
+                    `${editing && styles.imgEditing}`
+                  )}>
+                  <Image
+                    className={styles.img}
+                    src={url}
+                    alt={title}
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                </div>
 
-              {editing && selected && (
-                <div className={styles.selected}>
-                  <CheckMarkSvg fill='white' h={24} />
-                </div>
-              )}
-              {rating! >= 0 && <div className={styles.rating}>{rating}</div>}
-              {rating !== 0 && !rating && (
-                <div className={styles.likes}>
-                  <HeartSvg fill='white' w={15} h={15} />
-                  <div className={styles.likesCount}>{likesCount}</div>
-                </div>
-              )}
-              {bookmarkType && (
-                <div className={styles.status}>{bookmarkType}</div>
-              )}
+                {editing && selected && (
+                  <div className={styles.selected}>
+                    <CheckMarkSvg fill='white' h={24} />
+                  </div>
+                )}
+                {rating! >= 0 && <div className={styles.rating}>{rating}</div>}
+                {rating !== 0 && !rating && (
+                  <div className={styles.likes}>
+                    <HeartSvg fill='white' w={15} h={15} />
+                    <div className={styles.likesCount}>{likesCount}</div>
+                  </div>
+                )}
+                {bookmarkType && (
+                  <div className={styles.status}>{bookmarkType}</div>
+                )}
+              </div>
+              <h4 className={styles.title}>{title}</h4>
+              <p className={styles.genre}>Manhwa Action</p>
             </div>
-            <h4 className={styles.title}>{title}</h4>
-            <p className={styles.genre}>Manhwa Action</p>
-          </div>
+          </a>
         </Link>
       </div>
     </div>

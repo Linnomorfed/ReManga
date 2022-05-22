@@ -15,28 +15,30 @@ interface UserPopupProps {
 const UserPopup: React.FC<UserPopupProps> = ({ nickname, id }) => {
   return (
     <div className={classNames(styles.popup, 'd-ib')}>
-      <Link href={`/user/${id}`} passHref>
-        <div className={styles.header}>
-          <UserAvatar size='medium' nickname={nickname} />
-          <div className={styles.userNameWrapper}>
-            <div className={styles.userName}>{nickname}</div>
-            <div className='d-flex'>
-              <div className={styles.balanceIconWrapper}>
-                <div className={styles.balanceIcon}>
-                  <Image src={coin} alt='' />
-                </div>
+      <Link href={`/user/${id}`}>
+        <a>
+          <div className={styles.header}>
+            <UserAvatar size='medium' nickname={nickname} />
+            <div className={styles.userNameWrapper}>
+              <div className={styles.userName}>{nickname}</div>
+              <div className='d-flex'>
+                <div className={styles.balanceIconWrapper}>
+                  <div className={styles.balanceIcon}>
+                    <Image src={coin} alt='' />
+                  </div>
 
-                <b>0</b>
-              </div>
-              <div className={styles.balanceIconWrapper}>
-                <div className={styles.balanceIcon}>
-                  <Image src={ticket} alt='' />
+                  <b>0</b>
                 </div>
-                <b>0</b>
+                <div className={styles.balanceIconWrapper}>
+                  <div className={styles.balanceIcon}>
+                    <Image src={ticket} alt='' />
+                  </div>
+                  <b>0</b>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </Link>
       <div>
         <button className={styles.btn}>Top up balance</button>

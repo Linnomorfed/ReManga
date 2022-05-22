@@ -3,14 +3,19 @@ import Dropdown from '../UI/Dropdown';
 import { BlockViewSvg, ListViewSvg, SwitchSvg } from '../../assets/svgs';
 import classNames from 'classnames';
 import styles from './SortBy.module.scss';
-import { CatalogFilter } from '../../utils/static/Catalog';
+import { CatalogSortBy } from '../../utils/static/Catalog';
 
 interface SortByProps {
   callbackId?: (id: number) => void;
+  currentSortById?: number;
   callbackOrder?: (order: boolean) => void;
 }
 
-const SortBy: FC<SortByProps> = ({ callbackId, callbackOrder }) => {
+const SortBy: FC<SortByProps> = ({
+  callbackId,
+  callbackOrder,
+  currentSortById,
+}) => {
   const [currentOrder, setCurrentOrder] = React.useState<boolean>(false);
 
   const toggleOrder = () => {
@@ -29,9 +34,9 @@ const SortBy: FC<SortByProps> = ({ callbackId, callbackOrder }) => {
       <div className={styles.center}>
         <div>
           <Dropdown
-            items={CatalogFilter}
+            items={CatalogSortBy}
             type='sortBy'
-            selected={5}
+            selected={currentSortById}
             returnId={returnId}
           />
         </div>

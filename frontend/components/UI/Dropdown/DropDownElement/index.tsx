@@ -6,7 +6,7 @@ import styles from './DropDownElement.module.scss';
 interface DropDownElementProps {
   title: string;
   id: number;
-  selectedId?: number | number[];
+  selectedId?: number[];
   close: () => void;
   type: 'default' | 'sortBy' | 'manga';
   changeTitle: (title: string) => void;
@@ -22,21 +22,18 @@ const DropDownElement: FC<DropDownElementProps> = ({
   changeTitle,
   close,
 }) => {
-  const [totalChecked, setTotalChecked] = useState(0);
-  const [callbackId, setCallbackId] = useState();
-  const [returnTitle, setReturnTitle] = useState(title);
   const [isChecked, setIsChecked] = useState(false);
 
   React.useEffect(() => {
-    selectedId === id && setIsChecked(true);
-  }, []);
+    selectedId && selectedId.includes(id)
+      ? setIsChecked(true)
+      : setIsChecked(false);
+  }, [selectedId]);
 
   const onClickElement = () => {
-    setIsChecked(!isChecked);
     returnId(id);
 
-    type !== 'default' && close();
-    type !== 'default' && changeTitle(returnTitle);
+    type !== 'default' && (close(), changeTitle(title));
   };
 
   return (

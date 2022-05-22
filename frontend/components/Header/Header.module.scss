@@ -78,7 +78,9 @@
   background-color: transparent;
   border: 0;
   padding: 3px;
-  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }
 
 .searchResult {

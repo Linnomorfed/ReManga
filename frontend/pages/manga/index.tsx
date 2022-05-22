@@ -3,7 +3,7 @@ import React from 'react';
 import { Catalog } from '../../components';
 import MainLayout from '../../layouts/MainLayout';
 import { FiltersDataResponce } from '../../models/IFilters';
-import { MangaFilterEnum, ResponceManga } from '../../models/IManga';
+import { MangaSortEnum, ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 
 interface MangaCatalogProps {
@@ -29,7 +29,7 @@ export default MangaCatalog;
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const manga = await Api().manga.getMangaByQuery({
-      filter: MangaFilterEnum.views,
+      sortby: MangaSortEnum.views,
       page: 1,
       take: 3,
       orderby: 'DESC',

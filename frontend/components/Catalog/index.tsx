@@ -1,8 +1,8 @@
 import React from 'react';
-import { FiltersDataResponce } from '../../models/IFilters';
+import { CatalogFilters, FiltersDataResponce } from '../../models/IFilters';
 import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
-import { CatalogFilter } from '../../utils/static/Catalog';
+import { CatalogSortBy } from '../../utils/static/Catalog';
 import CatalogMangaList from '../CatalogMangaList';
 import Filters from '../Filters';
 import Pagination from '../Pagination';
@@ -24,14 +24,22 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
   );
-  const [currentFilterId, setCurrentFilterId] = React.useState<number>(5);
-  const [currentFilter, setCurrentFilter] = React.useState(
-    CatalogFilter[4].filter
+
+  const [currentSortById, setCurrentSortById] = React.useState<number>(5);
+  const [currentSortBy, setCurrentSortBy] = React.useState(
+    CatalogSortBy[4].filter
   );
 
+  const [selectedFilters, setSelectedFilters] =
+    React.useState<CatalogFilters>();
+
+  const updateSelectedFilters = (filters: CatalogFilters) => {
+    setSelectedFilters(filters);
+  };
+
   const callbackId = (id: number) => {
-    setCurrentFilterId(id);
-    setCurrentFilter(CatalogFilter[id - 1].filter);
+    id && setCurrentSortById(id);
+    id && setCurrentSortBy(CatalogSortBy[id - 1].filter);
   };
 
   const callbackOrder = (order: boolean) => {
@@ -50,29 +58,47 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
     } else {
       (async () => {
         const manga = await Api().manga.getMangaByQuery({
-          filter: currentFilter,
+          sortby: currentSortBy,
           page: currentPage,
           take: showPerPage,
           orderby: currentOrder,
+          types: selectedFilters?.types,
+          genres: selectedFilters?.genres,
+          categories: selectedFilters?.categories,
+          restrictions: selectedFilters?.restrictions,
+          statuses: selectedFilters?.statuses,
+          excludedTypes: selectedFilters?.excludedTypes,
+          excludedGenres: selectedFilters?.excludedGenres,
+          excludedCategories: selectedFilters?.excludedCategories,
         });
 
         setMangaItems(manga.items);
         setTotalCount(manga.count);
       })();
     }
-  }, [currentFilterId, currentPage, currentOrder, currentFilter]);
+  }, [
+    currentSortById,
+    currentPage,
+    currentOrder,
+    currentSortBy,
+    selectedFilters,
+  ]);
 
   return (
     <>
       <div className={styles.header}>
         <div className='container'>
           <h1 className={styles.title}>Manga catalog</h1>
-          <Filters filters={filters} />
+          <Filters filters={filters} returnFilters={updateSelectedFilters} />
         </div>
       </div>
       <div className='containerSmall'>
         <div className={styles.main}>
-          <SortBy callbackId={callbackId} callbackOrder={callbackOrder} />
+          <SortBy
+            callbackId={callbackId}
+            callbackOrder={callbackOrder}
+            currentSortById={currentSortById}
+          />
           <CatalogMangaList items={mangaItems} />
           <Pagination
             itemsPerPage={showPerPage}

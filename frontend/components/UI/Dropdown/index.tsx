@@ -5,13 +5,16 @@ import { SelectSvg } from '../../../assets/svgs';
 import DropDownElement from './DropDownElement';
 import styles from './Dropdown.module.scss';
 import { ResponceFilter } from '../../../models/IFilters';
+import useOutsideClick from '../../../hooks/useOutsideClick';
 
 interface DropdownProps {
   items: ResponceFilter[];
   title?: string;
-  selected?: number;
+  selected?: number | null;
   type: 'default' | 'sortBy' | 'manga';
   returnId?: (ids: number[]) => void;
+  resetFilters?: boolean;
+  toggleResetFilters?: () => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -20,27 +23,52 @@ const Dropdown: React.FC<DropdownProps> = ({
   type,
   selected,
   returnId,
+  resetFilters,
+  toggleResetFilters,
 }) => {
+  const defaultSelected = selected ? [selected] : [];
+  const selectedOne = items.filter((obj) => obj.id === selected);
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [defaultTitle, setDefaultTitle] = useState<string>();
-  const [selectedId, setSelectedId] = useState<number[]>([]);
+  const [selectedId, setSelectedId] = useState<number[]>(defaultSelected);
 
   const toggleTitle = (returnedTitle: string) => {
     setDefaultTitle(returnedTitle);
   };
 
-  React.useEffect(() => {
-    const selectedOne = items.filter((obj) => obj.id === selected);
-    selected ? setDefaultTitle(selectedOne[0].name) : setDefaultTitle(title);
-  }, []);
+  // const toggleVisibility = () => {
+  //   setIsOpened(!isOpened);
+  // };
+
+  const { componentRef, toggleVisibility } = useOutsideClick(
+    isOpened,
+    setIsOpened
+  );
 
   React.useEffect(() => {
-    returnId && selectedId.length > 0 && returnId(selectedId);
-  }, [returnId, selectedId]);
+    resetFilters && setSelectedId([]);
+    toggleResetFilters && toggleResetFilters();
+  }, [resetFilters]);
 
-  const toggleVisibility = () => {
-    setIsOpened(!isOpened);
-  };
+  React.useEffect(() => {
+    if (type === 'default') {
+      selectedId.length > 0
+        ? setDefaultTitle(`${selectedId.length} selected`)
+        : setDefaultTitle(title);
+    } else {
+      selected ? setDefaultTitle(selectedOne[0].name) : setDefaultTitle(title);
+    }
+  }, [selectedId, selectedOne]);
+
+  const initialRender = React.useRef(true);
+
+  React.useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      returnId && !isOpened && returnId(selectedId);
+    }
+  }, [returnId, selectedId, isOpened]);
 
   const updateReturnedId = (id: number) => {
     if (type === 'default') {
@@ -55,7 +83,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <>
+    <div ref={componentRef}>
       <div
         className={classNames(
           styles.select,
@@ -90,7 +118,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           ))}
         </div>
       }
-    </>
+    </div>
   );
 };
 

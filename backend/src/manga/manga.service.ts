@@ -10,7 +10,7 @@ import { CreateMangaDto } from './dto/create-manga.dto';
 import { SearchMangaDto } from './dto/search-manga.dto';
 import { UpdateMangaDto } from './dto/update-manga.dto';
 import { MangaEntity } from './entities/manga.entity';
-import { FilterEnum } from './enums/filter';
+import { SortByEnum } from './enums/sortby';
 
 @Injectable()
 export class MangaService {
@@ -70,53 +70,114 @@ export class MangaService {
     const page = query.page || 1;
     const skip = query.skip || (page - 1) * take;
     const orderby = query.orderby || 'DESC';
-    const filter = query.filter || FilterEnum.createdAt;
+    const types = query.types;
+    const restrictions = query.restrictions;
+    const statuses = query.statuses;
+    const genres = query.genres;
+    const categories = query.categories;
+    const excludedTypes = query.excludedTypes;
+    const excludedGenres = query.excludedGenres;
+    const excludedCategories = query.excludedCategories;
 
-    const keyword = query.keyword || '';
+    const sortby = query.sortby || SortByEnum.createdAt;
+
+    const keyword = query.keyword;
 
     const qb = this.repository.createQueryBuilder('manga');
 
     qb.leftJoinAndSelect('manga.image', 'image')
       .leftJoinAndSelect('manga.type', 'type')
       .leftJoinAndSelect('manga.status', 'status')
-      .leftJoinAndSelect('manga.restriction', 'restriction')
       .leftJoinAndSelect('manga.genres', 'genres')
+      .leftJoinAndSelect('manga.restriction', 'restriction')
       .leftJoinAndSelect('manga.categories', 'categories')
       .setParameters({
         keyword: `%${keyword}%`,
       })
 
-      .orWhere(`manga.title ILIKE :keyword`)
-      .orWhere(`manga.otherTitles ILIKE :keyword`)
       .take(take)
       .skip(skip);
 
-    if (filter === FilterEnum.createdAt) {
+    if (keyword) {
+      qb.orWhere('manga.title ILIKE :keyword').orWhere(
+        'manga.otherTitles ILIKE :keyword',
+      );
+    }
+
+    types &&
+      types.length > 0 &&
+      qb.andWhere('manga.type IN (:...types)', { types: types });
+
+    restrictions &&
+      restrictions.length > 0 &&
+      qb.andWhere('manga.restriction IN (:...restrictions)', {
+        restrictions: restrictions,
+      });
+    statuses &&
+      statuses.length > 0 &&
+      qb.andWhere('manga.status IN (:...statuses)', { statuses: statuses });
+
+    genres &&
+      genres.length > 0 &&
+      genres.map((param) => {
+        qb.leftJoin('manga.genres', `genresFilter${param}`);
+        qb.andWhere(`genresFilter${param}.id  = :genres${param}`, {
+          [`genres${param}`]: param,
+        });
+      });
+
+    categories &&
+      categories.length > 0 &&
+      categories.map((param) => {
+        qb.leftJoin('manga.categories', `categoriesFilter${param}`);
+        qb.andWhere(`categoriesFilter${param}.id = :categories${param}`, {
+          [`categories${param}`]: param,
+        });
+      });
+
+    excludedTypes &&
+      excludedTypes.length > 0 &&
+      qb.andWhere('manga.type NOT IN (:...excludedTypes)', {
+        excludedTypes: excludedTypes,
+      });
+
+    excludedGenres &&
+      excludedGenres.length > 0 &&
+      excludedGenres.map((param) => {
+        qb.leftJoin('manga.genres', `excludedGenres${param}`);
+        qb.andWhere(
+          ` (excludedGenres${param}.id)  !=  :excludedGenres${param}`,
+          {
+            [`excludedGenres${param}`]: param,
+          },
+        );
+      });
+
+    excludedCategories &&
+      excludedCategories.length > 0 &&
+      excludedCategories.map((param) => {
+        qb.leftJoin('manga.categories', `excludedCategories${param}`);
+        qb.andWhere(
+          `excludedCategories${param}.id != :excludedCategories${param}`,
+          {
+            [`excludedCategories${param}`]: param,
+          },
+        );
+      });
+
+    if (sortby === SortByEnum.createdAt) {
       qb.orderBy('manga.createdAt', orderby);
     }
 
-    if (filter === FilterEnum.views) {
+    if (sortby === SortByEnum.views) {
       qb.orderBy('manga.views', orderby);
     }
 
     const data = await qb.getManyAndCount();
 
-    return this.paginateResponse(data, page, skip);
-  }
+    const [items, count] = data;
 
-  async paginateResponse(data, page, skip) {
-    const [result, total] = data;
-    const lastPage = Math.ceil(total / skip);
-    const nextPage = page + 1 > lastPage ? null : page + 1;
-    const prevPage = page - 1 < 1 ? null : page - 1;
-    return {
-      items: [...result],
-      count: total,
-      // currentPage: page,
-      // nextPage: nextPage,
-      // prevPage: prevPage,
-      // lastPage: lastPage,
-    };
+    return { items, count };
   }
 
   async getMangaById(id: number) {

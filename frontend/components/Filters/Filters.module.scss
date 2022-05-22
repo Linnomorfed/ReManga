@@ -4,6 +4,15 @@
   display: flex;
   padding-top: 18px;
   justify-content: center;
+  transition: opacity 0.15s ease;
+  &Hide {
+    display: none;
+    opacity: 0;
+  }
+  &Show {
+    display: initial;
+    opacity: 1;
+  }
 }
 
 .btn {

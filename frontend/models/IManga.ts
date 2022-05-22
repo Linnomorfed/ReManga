@@ -1,6 +1,6 @@
 import { OutputData } from '@editorjs/editorjs';
 import { ResponseBookmark } from './IBookmarks';
-import { ResponceFilter } from './IFilters';
+import { CatalogFilters, ResponceFilter } from './IFilters';
 import { RatingResponse } from './IRating';
 
 interface mangaImage {
@@ -56,11 +56,18 @@ export interface SearchMangaDto {
   page?: number;
   take?: number;
   skip?: number;
-  filter?: MangaFilterEnum;
+  sortby?: MangaSortEnum;
+  types?: number[];
+  genres?: number[];
+  categories?: number[];
+  restrictions?: number[];
+  statuses?: number[];
+  excludedTypes?: number[];
+  excludedGenres?: number[];
+  excludedCategories?: number[];
 }
 
-export enum MangaFilterEnum {
+export enum MangaSortEnum {
   views = 'views',
   createdAt = 'createdAt',
-  likes = 'likes',
 }
