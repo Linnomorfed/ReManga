@@ -3,10 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
 import { CategoryEntity } from 'src/categories/entities/category.entity';
+import { ChaptersEntity } from 'src/chapters/entities/chapter.entity';
 import { CommentEntity } from 'src/comments/entities/comment.entity';
 import FileEnity from 'src/files/entities/file.entity';
 import { GenresEntity } from 'src/genres/entities/genre.entity';
 import { MangaEntity } from 'src/manga/entities/manga.entity';
+import PageEntity from 'src/pages/entities/page.entity';
 import { RatingEntity } from 'src/rating/entities/rating.entity';
 import { RestrictionEntity } from 'src/restriction/entities/restriction.entity';
 import { StatusEntity } from 'src/status/entities/status.entity';
@@ -36,6 +38,8 @@ import { UserEntity } from 'src/user/entities/user.entity';
           FileEnity,
           BookmarksEntity,
           RatingEntity,
+          ChaptersEntity,
+          PageEntity,
         ],
         synchronize: true,
       }),

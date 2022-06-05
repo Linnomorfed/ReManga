@@ -1,6 +1,7 @@
 import React from 'react';
 import { ResponceCommentItem } from '../../models/IComments';
 import { Api } from '../../services/api';
+import { CommentLoader } from '../UI';
 import AddComment from './AddComment';
 import styles from './Comments.module.scss';
 import CommentsList from './CommentsList';
@@ -10,6 +11,7 @@ interface CommentsProps {
 }
 
 const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [comments, setComments] = React.useState<ResponceCommentItem[]>([]);
   const [pinnedComment, setPinnedComment] =
     React.useState<ResponceCommentItem | null>(null);
@@ -24,6 +26,7 @@ const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
         setComments(comments.items);
         setCommentsCount(comments.count);
         setPinnedComment(comments.pinned);
+        setIsLoading(!isLoading)
       } catch (err) {
         console.warn('Fetch comments', err);
       }
@@ -41,7 +44,9 @@ const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
         Comments {commentsCount > 0 && '(' + commentsCount + ')'}
       </h4>
       <AddComment mangaId={mangaId} updateComments={updateComments} />
-      <CommentsList comments={comments} pinnedComment={pinnedComment} />
+      {isLoading ? Array(3).fill(<CommentLoader />)
+        :
+        <CommentsList comments={comments} pinnedComment={pinnedComment} />}
     </div>
   );
 };

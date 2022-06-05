@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import MangaCard from '../MangaCard';
+import MangaCard from '../UI/Cards/MangaCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './MostPopularList.module.scss';
 import 'swiper/css';

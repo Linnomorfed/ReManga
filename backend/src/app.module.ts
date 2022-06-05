@@ -17,6 +17,8 @@ import { RestrictionModule } from './restriction/restriction.module';
 import { FilesModule } from './files/files.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { RatingModule } from './rating/rating.module';
+import { ChaptersModule } from './chapters/chapters.module';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { RatingModule } from './rating/rating.module';
     FilesModule,
     BookmarksModule,
     RatingModule,
+    ChaptersModule,
+    PagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,15 +6,17 @@ import styles from './SortBy.module.scss';
 import { CatalogSortBy } from '../../utils/static/Catalog';
 
 interface SortByProps {
-  callbackId?: (id: number) => void;
+  callbackId: (id: number) => void;
   currentSortById?: number;
-  callbackOrder?: (order: boolean) => void;
+  callbackOrder: (order: boolean) => void;
+  returnCardVariant: (type: 'list' | 'block') => void;
 }
 
 const SortBy: FC<SortByProps> = ({
   callbackId,
   callbackOrder,
   currentSortById,
+  returnCardVariant,
 }) => {
   const [currentOrder, setCurrentOrder] = React.useState<boolean>(false);
 
@@ -22,11 +24,19 @@ const SortBy: FC<SortByProps> = ({
     setCurrentOrder(!currentOrder);
   };
   React.useEffect(() => {
-    callbackOrder && callbackOrder(currentOrder);
+    callbackOrder(currentOrder);
   }, [currentOrder, callbackOrder]);
 
   const returnId = (id: number[]) => {
-    callbackId && callbackId(id[0]);
+    callbackId(id[0]);
+  };
+
+  const setBlockType = () => {
+    returnCardVariant('block');
+  };
+
+  const setListType = () => {
+    returnCardVariant('list');
   };
 
   return (
@@ -45,10 +55,14 @@ const SortBy: FC<SortByProps> = ({
         </button>
       </div>
       <div className={styles.center}>
-        <button className={classNames(styles.switchBtn, styles.rightBtns)}>
+        <button
+          className={classNames(styles.switchBtn, styles.rightBtns)}
+          onClick={setListType}>
           <ListViewSvg w={24} h={24} fill={'white'} />
         </button>
-        <button className={classNames(styles.switchBtn, styles.rightBtns)}>
+        <button
+          className={classNames(styles.switchBtn, styles.rightBtns)}
+          onClick={setBlockType}>
           <BlockViewSvg w={24} h={24} fill={'white'} />
         </button>
       </div>

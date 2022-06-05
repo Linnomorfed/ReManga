@@ -8,7 +8,6 @@ interface BlueBtnProps {
   disabled?: boolean;
   color?: 'default' | 'white';
   size?: 'sm' | 'normal';
-  fullWidth?: boolean;
   onClick?: () => void;
 }
 
@@ -17,7 +16,6 @@ const BlueBtn: React.FC<BlueBtnProps> = ({
   type = 'default',
   disabled = false,
   size = 'normal',
-  fullWidth = true,
   color = 'default',
   onClick,
 }) => {
@@ -28,7 +26,6 @@ const BlueBtn: React.FC<BlueBtnProps> = ({
       className={classNames(
         styles.btn,
         `${type === 'manga' && styles.btnManga}`,
-        `${fullWidth && styles.btnFullWidth}`,
         `${color === 'white' && styles.btnWhite}`,
         `${size === 'sm' && styles.btnSm}`
       )}>

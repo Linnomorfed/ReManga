@@ -12,9 +12,10 @@ interface MangaProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
   ratedByUser: RatingResponse | null;
+  chaptersCount: number;
 }
 
-const Manga: NextPage<MangaProps> = ({ manga, bookmark, ratedByUser }) => {
+const Manga: NextPage<MangaProps> = ({ manga, bookmark, ratedByUser, chaptersCount }) => {
   return (
     <>
       <Head>
@@ -26,6 +27,7 @@ const Manga: NextPage<MangaProps> = ({ manga, bookmark, ratedByUser }) => {
           manga={manga}
           bookmark={bookmark}
           ratedByUser={ratedByUser}
+          chaptersCount={chaptersCount}
         />
       </MainLayout>
     </>
@@ -38,11 +40,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const id = ctx.params?.id as string;
     const obj = await Api(ctx).manga.getOneById(+id);
+    const chaptersCount = await Api().chapter.getChaptersCount(+id)
     const manga = obj.manga;
     const bookmark = obj.bookmark ? obj.bookmark : null;
-    const ratedByUser = obj.bookmark ? obj.ratedByUser : null;
+    const ratedByUser = obj.ratedByUser ? obj.ratedByUser : null;
 
-    return { props: { manga, bookmark, ratedByUser } };
+    return { props: { manga, bookmark, ratedByUser, chaptersCount } };
   } catch (err) {
     console.warn('Manga loading error', err);
     return {

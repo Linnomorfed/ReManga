@@ -1,0 +1,59 @@
+@import '/styles/_variables.scss';
+
+
+.description {
+  &Block {
+    width: 75%;
+    padding: 8px;
+  }
+}
+
+.altNames {
+  margin: 16px 0px 0px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.title {
+  margin-top: 4px;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.status {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 75%;
+  font-weight: 500;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.stats {
+  display: flex;
+  padding: 16px 16px 16px 0;
+  font-size: 16px;
+  line-height: 24px;
+  flex-direction: row;
+  vertical-align: middle;
+
+  &:first-of-type {
+    cursor: pointer;
+  }
+
+  &:not(:first-of-type) {
+    padding: 16px;
+  }
+
+  &Link {
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: $btn-hover;
+    }
+  }
+}
+
+.span {
+  margin-left: 4px;
+}

@@ -1,0 +1,57 @@
+@import '/styles/_variables.scss';
+
+.stepper {
+  display: flex;
+  align-items: center;
+
+  &Container {
+    padding: 16px 0;
+  }
+
+  & div:last-child {
+    display: none;
+  }
+
+  &Circle {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: $clr-blue;
+    transition: background-color .2s linear;
+  }
+
+  &Divider {
+    display: block;
+    min-width: 40px;
+    border-bottom: 1px solid $clr-blue;
+    transition: border-color .2s linear;
+
+    &Disabled {
+      border-color: $clr-grey  !important;
+    }
+
+    &Wrapper {
+      flex: 1 1 auto
+    }
+  }
+}
+
+.step {
+  display: flex;
+  margin-right: 8px;
+
+  &Disabled {
+    background-color: $clr-grey-light  !important;
+  }
+
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+
+  & span {
+    margin-right: 8px;
+  }
+}

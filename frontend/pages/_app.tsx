@@ -1,7 +1,6 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { parseCookies } from 'nookies';
 import { setUserData } from '../redux/slices/userSlice';
 import { wrapper } from '../redux/store';
 import { Api } from '../services/api';

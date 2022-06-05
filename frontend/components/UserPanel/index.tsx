@@ -4,7 +4,7 @@ import { ResponseUser } from '../../models/IAuth';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { selectUserData } from '../../redux/slices/userSlice';
 import Bookmarks from '../Bookmarks';
-import Header from './Header';
+import Header from './UserPanelHeader';
 import Publishers from './Publishers';
 import styles from './UserPanel.module.scss';
 

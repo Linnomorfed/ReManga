@@ -2,6 +2,7 @@ import axios from 'axios';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import Cookies, { parseCookies } from 'nookies';
 import { BookmarksApi } from './bookmarks';
+import { ChapterApi } from './chapter';
 import { CommentsApi } from './comments';
 import { FilesApi } from './files';
 import { FiltersApi } from './filters';
@@ -17,6 +18,7 @@ export type ApiReturnType = {
   bookmarks: ReturnType<typeof BookmarksApi>;
   files: ReturnType<typeof FilesApi>;
   rating: ReturnType<typeof RatingApi>;
+  chapter: ReturnType<typeof ChapterApi>;
 };
 export const Api = (
   ctx?: NextPageContext | GetServerSidePropsContext
@@ -39,6 +41,7 @@ export const Api = (
     bookmarks: BookmarksApi(instance),
     files: FilesApi(instance),
     rating: RatingApi(instance),
+    chapter: ChapterApi(instance),
   };
 
   return { ...apis };

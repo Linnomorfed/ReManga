@@ -11,13 +11,8 @@
   padding-bottom: 16px;
 }
 
-.querter {
+.querterBody {
   width: 25%;
-  padding: 8px;
-  position: relative;
-  &Body {
-    width: 25%;
-  }
 }
 
 .half {
@@ -30,178 +25,12 @@
   margin-bottom: 8px;
 }
 
-.img {
-  border-radius: 6px;
-  position: relative !important;
-  height: unset !important;
-
-  &Container {
-    & > span > span {
-      padding: 0 !important;
-    }
-  }
-}
-.leftContainer {
-  width: 100%;
-  position: absolute;
-  padding: 12px;
-  background: $clr-bg-secondary;
-  border-radius: 6px;
-  left: -16px;
-}
-
-.altNames {
-  margin: 16px 0px 0px;
-  font-weight: 500;
-  font-size: 20px;
-}
-
-.title {
-  margin-top: 4px;
-  font-weight: 600;
-  font-size: 28px;
-}
-
-.genre {
-  font-size: 0.875rem;
-  font-weight: 400;
-  background-color: rgba(120, 120, 130, 0.07);
-  margin: 2px;
-  display: inline-block;
-  padding: 7px 12px;
-  text-align: center;
-  white-space: nowrap;
-  margin-right: 3px;
-  border-radius: 12px;
-}
-
-.description {
-  margin-top: 16px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-
-  &Block {
-    width: 75%;
-    padding: 8px;
-  }
-}
-
-.descWrapper {
-  max-height: 125px;
-  margin: 8px;
-  overflow: hidden;
-  &Full {
-    max-height: 1000px;
-  }
-}
-
 .subTitle {
   margin: 12px 0px;
   font-weight: 600;
   font-size: 24px;
 }
+
 .rightMangaContainer {
   padding: 0 12px;
-}
-
-.status {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 75%;
-  font-weight: 500;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.stats {
-  display: flex;
-  padding: 16px 16px 16px 0;
-  font-size: 16px;
-  line-height: 24px;
-  flex-direction: row;
-  vertical-align: middle;
-
-  &:first-of-type {
-    cursor: pointer;
-  }
-
-  &:not(:first-of-type) {
-    padding: 16px;
-  }
-
-  &Link {
-    cursor: pointer;
-    border-radius: 6px;
-
-    &:hover {
-      background-color: $btn-hover;
-    }
-  }
-}
-
-.span {
-  margin-left: 4px;
-}
-
-.btnsContainer {
-  padding: 16px 0;
-  position: relative;
-  & > * {
-    margin-bottom: 8px;
-    width: 100%;
-  }
-}
-
-.volume {
-  font-size: 11px;
-  text-transform: initial;
-}
-
-.continue {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.warnBtn {
-  display: flex;
-  margin: auto;
-  width: auto;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  font-size: 14px;
-  color: $clr-text;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $btn-hover;
-  }
-
-  & svg {
-    margin-right: 8px;
-  }
-}
-
-.rateElement {
-  display: flex;
-  align-items: center;
-  border: 1px solid transparent;
-  cursor: pointer;
-  padding: 8px 12px 8px;
-  font-size: 16px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  background-color: $clr-bg-primary;
-
-  & > svg {
-    margin-left: 5px;
-    margin-right: 12px;
-  }
-
-  &Active {
-    border-color: $clr-blue;
-  }
 }

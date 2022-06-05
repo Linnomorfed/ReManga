@@ -1,16 +1,6 @@
-import {
-  configureStore,
-  ThunkAction,
-  Action,
-  combineReducers,
-  AnyAction,
-} from '@reduxjs/toolkit';
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 import { UserReducer } from './slices/userSlice';
-
-const combinedReducer = combineReducers({
-  user: UserReducer,
-});
 
 export function makeStore() {
   return configureStore({

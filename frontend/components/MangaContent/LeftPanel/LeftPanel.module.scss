@@ -1,0 +1,72 @@
+@import '/styles/_variables.scss';
+
+.querter {
+  width: 25%;
+  padding: 8px;
+  position: relative;
+
+}
+
+.img {
+  border-radius: 6px;
+  position: relative !important;
+  height: unset !important;
+
+  &Container {
+    &>span>span {
+      padding: 0 !important;
+    }
+  }
+}
+
+.leftContainer {
+  width: 100%;
+  position: absolute;
+  padding: 12px;
+  background: $clr-bg-secondary;
+  border-radius: 6px;
+  left: -16px;
+}
+
+.btnsContainer {
+  padding: 16px 0;
+  position: relative;
+
+  &>* {
+    margin-bottom: 8px;
+    width: 100%;
+  }
+}
+
+.volume {
+  font-size: 11px;
+  text-transform: initial;
+}
+
+.continue {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.warnBtn {
+  display: flex;
+  margin: auto;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: $clr-text;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $btn-hover;
+  }
+
+  & svg {
+    margin-right: 8px;
+  }
+}

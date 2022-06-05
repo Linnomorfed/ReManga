@@ -1,28 +1,29 @@
 import React from 'react';
 import styles from './MangaContent.module.scss';
-import { TabBtn } from '../UI';
-import VerticalMangaList from '../VerticalMangaList';
-import MangaCartVertical from '../MangaCardVertical';
+import { BlueBtn, ModalBtn, TabBtn } from '../UI';
 import Comments from '../Comments';
 import { ResponceManga } from '../../models/IManga';
 import { ResponseBookmark } from '../../models/IBookmarks';
-import Description from './Description';
 import LeftPanel from './LeftPanel';
 import MangaInfo from './MangaInfo';
 import Chapters from './Chapters';
 import { RatingResponse } from '../../models/IRating';
+import Description from './Description';
 
 interface MangaContentProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
   ratedByUser: RatingResponse | null;
+  chaptersCount: number;
 }
 
 const MangaContent: React.FC<MangaContentProps> = ({
   manga,
   bookmark,
   ratedByUser,
+  chaptersCount
 }) => {
+
   const [activeTab, setActiveTab] = React.useState<number>(1);
 
   const onTabClick = (id: number) => {
@@ -61,20 +62,23 @@ const MangaContent: React.FC<MangaContentProps> = ({
                 Description
               </TabBtn>
               <TabBtn active={activeTab} onClick={onTabClick} id={2}>
-                Chapters (180)
+                Chapters ({chaptersCount})
               </TabBtn>
             </div>
 
             {activeTab === 1 && (
-              <Description
-                genres={manga.genres}
-                categories={manga.categories}
-                blocks={manga.blocks}
-              />
+              <>
+                <Description
+                  genres={manga.genres}
+                  categories={manga.categories}
+                  blocks={manga.blocks}
+                />
+                <Comments mangaId={manga.id} />
+              </>
             )}
 
-            {activeTab === 2 && <Chapters />}
-            <Comments mangaId={manga.id} />
+            {activeTab === 2 && <Chapters mangaId={manga.id} />}
+
           </div>
           <div className={styles.querter}>
             <div className={styles.rightMangaContainer}>

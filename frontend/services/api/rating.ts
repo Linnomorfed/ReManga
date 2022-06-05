@@ -3,7 +3,7 @@ import { RatingDto } from '../../models/IRating';
 
 export const RatingApi = (instance: AxiosInstance) => ({
   async rateManga(dto: RatingDto) {
-    const { data } = await instance.post('rating', dto);
+    const { data } = await instance.post<RatingDto>('rating', dto);
     return data;
   },
 

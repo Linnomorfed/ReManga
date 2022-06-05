@@ -3,11 +3,12 @@ import { CatalogFilters, FiltersDataResponce } from '../../models/IFilters';
 import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CatalogSortBy } from '../../utils/static/Catalog';
-import CatalogMangaList from '../CatalogMangaList';
 import Filters from '../Filters';
 import Pagination from '../Pagination';
 import SortBy from '../SortBy';
 import styles from './Catalog.module.scss';
+import { MangaCard } from '../UI';
+import classNames from 'classnames';
 
 interface CatalogProps {
   filters: FiltersDataResponce;
@@ -20,6 +21,11 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
   const [mangaItems, setMangaItems] = React.useState<ResponceManga[]>(manga);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [totalCount, setTotalCount] = React.useState<number>(itemsCount);
+  const [cardVariant, setCardVariant] = React.useState<'block' | 'list'>(
+    'block'
+  );
+
+  console.log(cardVariant);
 
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
@@ -48,6 +54,10 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
 
   const toggleCurrentPage = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const toggleCardType = (type: 'list' | 'block') => {
+    setCardVariant(type);
   };
 
   const initialRender = React.useRef(true);
@@ -98,8 +108,20 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
             callbackId={callbackId}
             callbackOrder={callbackOrder}
             currentSortById={currentSortById}
+            returnCardVariant={toggleCardType}
           />
-          <CatalogMangaList items={mangaItems} />
+          <div className={classNames(styles.mangaList)}>
+            {mangaItems.map((obj) => (
+              <MangaCard
+                key={obj.id}
+                variant={cardVariant === 'list' ? 'list' : 'catalog'}
+                title={obj.title}
+                url={obj.image.url}
+                mangaId={obj.id}
+                rating={obj.rating}
+              />
+            ))}
+          </div>
           <Pagination
             itemsPerPage={showPerPage}
             totalCount={totalCount}

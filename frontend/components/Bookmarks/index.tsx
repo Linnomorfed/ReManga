@@ -3,7 +3,7 @@ import { Dropdown, TabBtn } from '../UI';
 import styles from './Bookmarks.module.scss';
 import { bookmarkTypes } from '../../utils/static/Bookmarks';
 import { ResponceFilter } from '../../models/IFilters';
-import MangaCard from '../MangaCard';
+import MangaCard from '../UI/Cards/MangaCard';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { Api } from '../../services/api';
 import classNames from 'classnames';

@@ -27,16 +27,30 @@ const Filters: React.FC<FiltersProps> = ({ filters, returnFilters }) => {
   );
   const [resetFilters, setResetFilters] = React.useState<boolean>(false);
 
-  const selectedFilters = {
-    types: selectedTypes,
-    genres: selectedGenres,
-    categories: selectedCategories,
-    statuses: selectedStatuses,
-    restrictions: selectedRestrictions,
-    excludedTypes: excludedTypes,
-    excludedGenres: excludedGenres,
-    excludedCategories: excludedCategories,
-  };
+  const selectedFilters = React.useMemo(
+    () => ({
+      types: selectedTypes,
+      genres: selectedGenres,
+      categories: selectedCategories,
+      statuses: selectedStatuses,
+      restrictions: selectedRestrictions,
+      excludedTypes: excludedTypes,
+      excludedGenres: excludedGenres,
+      excludedCategories: excludedCategories,
+    }),
+    [
+      selectedTypes,
+      selectedGenres,
+      selectedCategories,
+      selectedStatuses,
+      selectedRestrictions,
+      excludedTypes,
+      excludedGenres,
+      excludedCategories,
+    ]
+  );
+
+  React.useEffect(() => {}, [selectedFilters]);
 
   const initialRender = React.useRef(true);
 
@@ -44,18 +58,9 @@ const Filters: React.FC<FiltersProps> = ({ filters, returnFilters }) => {
     if (initialRender.current) {
       initialRender.current = false;
     } else {
-      returnFilters(selectedFilters);
+      return () => returnFilters(selectedFilters);
     }
-  }, [
-    selectedTypes,
-    selectedGenres,
-    selectedCategories,
-    selectedStatuses,
-    selectedRestrictions,
-    excludedTypes,
-    excludedGenres,
-    excludedCategories,
-  ]);
+  }, [selectedFilters]);
 
   const setTypeFilters = (ids: number[]) => {
     setSelectedTypes(ids);

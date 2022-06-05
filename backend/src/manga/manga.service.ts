@@ -37,7 +37,7 @@ export class MangaService {
   }
 
   async addMangaImage(id: number, imageBuffer: Buffer) {
-    const image = await this.filesService.uploadPublicFile(imageBuffer);
+    const image = await this.filesService.uploadMangaImg(imageBuffer);
 
     this.repository.update(+id, {
       image,
@@ -50,19 +50,6 @@ export class MangaService {
 
   async getCategoryByIds(ids: Array<number>) {
     return this.categoriesService.findById(ids);
-  }
-
-  async getMostViewed(query: SearchMangaDto) {
-    const take = query.take || 30;
-    const page = query.page || 1;
-    const orderby = query.orderby || 'DESC';
-    const skip = query.skip || (page - 1) * take;
-
-    const qb = this.repository.createQueryBuilder();
-    qb.orderBy('views', orderby).take(take).skip(skip);
-
-    const [items, total] = await qb.getManyAndCount();
-    return { items, total };
   }
 
   async getMangaByQuery(query: SearchMangaDto) {

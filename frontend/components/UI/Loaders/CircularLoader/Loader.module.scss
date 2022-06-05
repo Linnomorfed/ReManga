@@ -1,0 +1,38 @@
+@import '/styles/_variables.scss';
+
+.loader {
+  animation: Keyframes-circular-dash 1.4s ease-in-out infinite;
+  stroke-dasharray: 80px, 200px;
+  stroke-dashoffset: 0px;
+  stroke: $clr-blue;
+
+  &Wrapper {
+    width: 40px;
+    height: 40px;
+    animation: Keyframes-circular-rotate 1.4s linear infinite;
+  }
+}
+
+@keyframes Keyframes-circular-dash {
+
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0px;
+  }
+
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
+}
+
+@keyframes Keyframes-circular-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

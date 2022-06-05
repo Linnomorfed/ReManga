@@ -1,4 +1,5 @@
 import { CategoryEntity } from 'src/categories/entities/category.entity';
+import { ChaptersEntity } from 'src/chapters/entities/chapter.entity';
 import FileEnity from 'src/files/entities/file.entity';
 import { GenresEntity } from 'src/genres/entities/genre.entity';
 import { RestrictionEntity } from 'src/restriction/entities/restriction.entity';
@@ -12,6 +13,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -33,6 +35,9 @@ export class MangaEntity {
 
   @Column({ type: 'jsonb' })
   blocks: any[];
+
+  @OneToMany(() => ChaptersEntity, (chapters) => chapters.mangaId)
+  chapters: ChaptersEntity[];
 
   @Column({ type: 'real', default: 0 })
   rating: number;

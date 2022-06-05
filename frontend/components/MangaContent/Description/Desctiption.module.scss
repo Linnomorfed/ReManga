@@ -1,0 +1,29 @@
+.description {
+  margin-top: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.descWrapper {
+  max-height: 125px;
+  margin: 8px;
+  overflow: hidden;
+
+  &Full {
+    max-height: 1000px;
+  }
+}
+
+.genre {
+  font-size: 0.875rem;
+  font-weight: 400;
+  background-color: rgba(120, 120, 130, 0.07);
+  margin: 2px;
+  display: inline-block;
+  padding: 7px 12px;
+  text-align: center;
+  white-space: nowrap;
+  margin-right: 3px;
+  border-radius: 12px;
+}

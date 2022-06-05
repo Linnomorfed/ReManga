@@ -8,15 +8,15 @@ import {
   ThemeSvg,
 } from '../../assets/svgs';
 import classnames from 'classnames';
-import UserPopup from '../UserPopup';
+import UserPopup from './UserPopup';
 import Link from 'next/link';
 import classNames from 'classnames';
-import AuthDialog from '../AuthDialog';
+import Auth from '../Auth';
 import { useAppSelector } from '../../hooks/redux';
 import { selectUserData } from '../../redux/slices/userSlice';
 import UserAvatar from '../UI/UserAvatar';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import Search from './Search';
+import Search from './Search/Search';
 
 interface HeaderProps {
   bgTranparent: boolean;
@@ -27,16 +27,11 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
 
   const NotificationCount = 100;
   const [visibleUserPopup, setVisibleUserPopup] = React.useState(false);
-  const [visibleAuthModal, setVisibleAuthModal] = React.useState(false);
 
   const { componentRef, toggleVisibility } = useOutsideClick(
     visibleUserPopup,
     setVisibleUserPopup
   );
-
-  const toggleAuthVisibility = () => {
-    setVisibleAuthModal(!visibleAuthModal);
-  };
 
   return (
     <div className={classNames(styles.header, bgTranparent && styles.headerTr)}>
@@ -90,24 +85,15 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
                   </button>
 
                   {visibleUserPopup && (
-                    <UserPopup nickname={userData.nickname} id={userData.id} />
+                    <UserPopup
+                      nickname={userData.nickname}
+                      id={userData.id}
+                    />
                   )}
                 </div>
               </>
-            ) : (
-              <button
-                className={classNames(styles.btn, styles.btnText)}
-                onClick={toggleAuthVisibility}>
-                Sign in
-              </button>
-            )}
-            {visibleAuthModal && (
-              <AuthDialog
-                toggleModalVisibility={toggleAuthVisibility}
-                setVisible={setVisibleAuthModal}
-                visible={visibleAuthModal}
-              />
-            )}
+            ) : <Auth />
+            }
           </div>
         </div>
       </div>

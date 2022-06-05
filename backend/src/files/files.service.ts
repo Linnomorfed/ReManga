@@ -13,30 +13,11 @@ export class FilesService {
     private repository: Repository<FileEnity>,
     private readonly configService: ConfigService,
   ) {}
-  async uploadPublicFile(dataBuffer: Buffer) {
+  async uploadMangaImg(dataBuffer: Buffer) {
     const s3 = new S3();
     const uploadResult = await s3
       .upload({
-        Bucket: this.configService.get('AWS_PUBLIC_IMAGE_BUCKET'),
-        Body: dataBuffer,
-        Key: `${uuid()}`,
-      })
-      .promise();
-
-    const newFile = this.repository.create({
-      key: uploadResult.Key,
-      url: uploadResult.Location,
-    });
-    await this.repository.save(newFile);
-
-    return newFile;
-  }
-
-  async uploadChapterFiles(dataBuffer: Buffer) {
-    const s3 = new S3();
-    const uploadResult = await s3
-      .upload({
-        Bucket: this.configService.get('AWS_PUBLIC_CHAPTERS_BUCKET'),
+        Bucket: this.configService.get('AWS_MANGA_IMAGE_BUCKET'),
         Body: dataBuffer,
         Key: `${uuid()}`,
       })

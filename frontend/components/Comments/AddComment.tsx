@@ -24,10 +24,8 @@ const AddComment: React.FC<AddCommentProps> = ({
   const replyInput = useAutoFocus();
 
   const [text, setText] = React.useState<string>('');
-  const [isSpoiler, setIsSpoiler] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  console.log(text);
+  const [isSpoiler, setIsSpoiler] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const limitHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
