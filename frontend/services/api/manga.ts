@@ -25,7 +25,40 @@ export const MangaApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get<ResponceMangaData>('manga', {
       params: query,
     });
+    return data;
+  },
 
+  async getNewestPopular() {
+    const { data } = await instance.get<ResponceManga[]>(
+      'manga/popular/newest'
+    );
+    return data;
+  },
+
+  async getTodayPopular(query?: SearchMangaDto) {
+    const { data } = await instance.get<ResponceManga[]>(
+      'manga/popular/today',
+      {
+        params: query,
+      }
+    );
+    return data;
+  },
+
+  async getWeekPopular() {
+    const { data } = await instance.get<ResponceManga[]>('manga/popular/week');
+    return data;
+  },
+
+  async getMangaTopByQuery(query?: SearchMangaDto) {
+    const { data } = await instance.get<ResponceManga[]>('manga/top', {
+      params: query,
+    });
+    return data;
+  },
+
+  async getMangaForPanel(id: number) {
+    const { data } = await instance.get<ResponceManga>(`manga/panel/${id}`);
     return data;
   },
 });

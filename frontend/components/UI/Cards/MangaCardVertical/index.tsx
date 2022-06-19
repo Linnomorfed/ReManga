@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC } from 'react';
+import TimeAgo from 'timeago-react';
 import { ForPaidSvg } from '../../../../assets/svgs';
 import { ResponceManga } from '../../../../models/IManga';
 import styles from './MangaCardVertical.module.scss';
@@ -9,39 +10,47 @@ import styles from './MangaCardVertical.module.scss';
 interface MangaCartVerticalProps {
   isFreshChapter?: boolean;
   data: ResponceManga;
+  chapterVolume?: number;
+  chapterNumber?: number;
+  chapterDate?: string;
+  chapterName?: string | null;
 }
 
 const MangaCartVertical: FC<MangaCartVerticalProps> = ({
   isFreshChapter = false,
   data,
+  chapterVolume,
+  chapterNumber,
+  chapterDate,
+  chapterName
 }) => {
   return (
     <Link href={`/manga/${data.id}`}>
       {isFreshChapter ? (
         <div className={classNames(styles.cart, styles.cartFresh)}>
           <Image
-            className={classNames(styles.img, styles.imgFresh)}
+            className={styles.img}
             src={data.image.url}
             alt={data.title}
             width={63}
             height={96}
           />
-          <div>
+          <div className={styles.cartFreshRight}>
             <div className='d-flex align-center'>
               <p className={classNames(styles.title, styles.titleFresh)}>
-                Absolute god game
+                {data.title}
               </p>
 
-              <ForPaidSvg fill={'#f50057'} w={20} h={20} />
+              {/* <ForPaidSvg fill={'#f50057'} w={20} h={20} /> */}
             </div>
             <div className='d-flex align-center'>
               <p className={classNames(styles.chapter, styles.chapterFresh)}>
-                Volume 1. Chapter 72. Parting
+                Volume {chapterVolume}. Chapter {chapterNumber}. {chapterName && chapterName}
               </p>
-              <small className={styles.small}> + 1 more chapter</small>
+              {/* <small className={styles.small}> + 1 more chapter</small> */}
             </div>
 
-            <small className={styles.small}>1 hour ago</small>
+            <small className={styles.small}>{chapterDate && <TimeAgo datetime={chapterDate} />}</small>
           </div>
         </div>
       ) : (

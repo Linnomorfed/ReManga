@@ -51,6 +51,7 @@ const MangaContent: React.FC<MangaContentProps> = ({
           rating={manga.rating}
           votesCount={manga.votes_count}
           ratedByUser={ratedByUser}
+          likesCount={manga.likes_count}
         />
       </div>
       <div className={styles.body}>

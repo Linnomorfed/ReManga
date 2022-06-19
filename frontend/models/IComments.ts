@@ -5,11 +5,13 @@ export interface CreateCommentDto {
   spoiler: boolean;
   mangaId: number | null;
   replyTo: number | null;
+  chapterId: number | null;
 }
 
 export interface SearchCommentDto {
   mangaId?: number | null;
   replyTo?: number | null;
+  chapterId?: number | null;
 }
 
 export interface ResponceCommentItem {

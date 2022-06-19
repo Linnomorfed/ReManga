@@ -7,6 +7,7 @@ import { ChaptersEntity } from 'src/chapters/entities/chapter.entity';
 import { CommentEntity } from 'src/comments/entities/comment.entity';
 import FileEnity from 'src/files/entities/file.entity';
 import { GenresEntity } from 'src/genres/entities/genre.entity';
+import { LikeEntity } from 'src/likes/entities/like.entity';
 import { MangaEntity } from 'src/manga/entities/manga.entity';
 import PageEntity from 'src/pages/entities/page.entity';
 import { RatingEntity } from 'src/rating/entities/rating.entity';
@@ -40,6 +41,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
           RatingEntity,
           ChaptersEntity,
           PageEntity,
+          LikeEntity,
         ],
         synchronize: true,
       }),

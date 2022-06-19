@@ -36,7 +36,9 @@ export class MangaEntity {
   @Column({ type: 'jsonb' })
   blocks: any[];
 
-  @OneToMany(() => ChaptersEntity, (chapters) => chapters.mangaId)
+  @OneToMany(() => ChaptersEntity, (chapters) => chapters.manga, {
+    cascade: true,
+  })
   chapters: ChaptersEntity[];
 
   @Column({ type: 'real', default: 0 })
@@ -44,6 +46,9 @@ export class MangaEntity {
 
   @Column({ default: 0 })
   votes_count: number;
+
+  @Column({ default: 0 })
+  likes_count: number;
 
   @Column({ default: 0 })
   views: number;

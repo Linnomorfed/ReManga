@@ -1,0 +1,17 @@
+.ce-block--selected {
+
+  background: #2b2a2c;
+
+  & .ce-block__content [contenteditable] {
+    background: #2b2a2c;
+  }
+}
+
+.cdx-text-color {
+  background: red
+}
+
+
+*::selection {
+  background: rgba($clr-grey-light, 0.46);
+}

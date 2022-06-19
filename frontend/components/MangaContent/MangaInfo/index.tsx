@@ -1,6 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
-import { BookmarkSvg, HeartSvg, ShowPassSvg, StarSvg } from '../../../assets/svgs';
+import {
+  BookmarkSvg,
+  HeartSvg,
+  ShowPassSvg,
+  StarSvg,
+} from '../../../assets/svgs';
 import { RatingResponse } from '../../../models/IRating';
 import styles from './MangaInfo.module.scss';
 import RatePanel from '../RatePanel';
@@ -16,6 +21,7 @@ interface MangaInfoProps {
   rating: number;
   votesCount: number;
   ratedByUser: RatingResponse | null;
+  likesCount: number;
 }
 
 const MangaInfo: React.FC<MangaInfoProps> = ({
@@ -29,6 +35,7 @@ const MangaInfo: React.FC<MangaInfoProps> = ({
   rating,
   votesCount,
   ratedByUser,
+  likesCount,
 }) => {
   const [rateOpened, setRateOpened] = React.useState<boolean>(false);
   const [mangaRating, setMangaRating] = React.useState<number>(rating);
@@ -63,15 +70,14 @@ const MangaInfo: React.FC<MangaInfoProps> = ({
 
       <div className='d-flex'>
         <div className={styles.stats} onClick={toogleRateVisibility}>
-          <StarSvg h={24} />
+          <StarSvg h={24} fill='#ffb400' />
           <span className={styles.span}>
-            {' '}
             {mangaRating} (votes: {mangaVotesCount})
           </span>
         </div>
         <div className={styles.stats} title='Total likes on chapters'>
           <HeartSvg h={24} fill={'white'} />
-          <span className={styles.span}> 3.0M</span>
+          <span className={styles.span}>{likesCount}</span>
         </div>
         <div className={styles.stats} title='Total views'>
           <ShowPassSvg h={24} fill={'white'} />

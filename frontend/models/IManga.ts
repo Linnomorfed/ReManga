@@ -3,7 +3,7 @@ import { ResponseBookmark } from './IBookmarks';
 import { CatalogFilters, ResponceFilter } from './IFilters';
 import { RatingResponse } from './IRating';
 
-interface mangaImage {
+interface MangaImage {
   id: number;
   url: string;
   key: string;
@@ -23,9 +23,10 @@ export interface ResponceManga {
   restriction: ResponceFilter;
   genres: ResponceFilter[];
   categories: ResponceFilter[];
-  image: mangaImage;
+  image: MangaImage;
   rating: number;
   votes_count: number;
+  likes_count: number;
 }
 
 export interface ResponceSingleManga {
@@ -43,9 +44,9 @@ export interface CreateMangaDto {
   otherTitles: string;
   blocks: OutputData['blocks'];
   issueYear: number;
-  type: number;
-  restriction: number;
-  status: number;
+  type: number | null;
+  restriction: number | null;
+  status: number | null;
   genreIds: number[];
   categoryIds: number[];
 }
@@ -57,14 +58,15 @@ export interface SearchMangaDto {
   take?: number;
   skip?: number;
   sortby?: MangaSortEnum;
-  types?: number[];
-  genres?: number[];
-  categories?: number[];
-  restrictions?: number[];
-  statuses?: number[];
-  excludedTypes?: number[];
-  excludedGenres?: number[];
-  excludedCategories?: number[];
+  topBy?: 'new' | null;
+  types?: number[] | null;
+  genres?: number[] | null;
+  categories?: number[] | null;
+  restrictions?: number[] | null;
+  statuses?: number[] | null;
+  excludedTypes?: number[] | null;
+  excludedGenres?: number[] | null;
+  excludedCategories?: number[] | null;
 }
 
 export enum MangaSortEnum {

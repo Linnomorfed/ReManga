@@ -8,6 +8,7 @@ import styles from './Comments.module.scss';
 
 interface AddCommentProps {
   mangaId?: number | null;
+  chapterId?: number | null;
   commentId?: number | null;
   hideReply?: () => void;
   updateComments?: (comment: ResponceCommentItem) => void;
@@ -17,6 +18,7 @@ interface AddCommentProps {
 const AddComment: React.FC<AddCommentProps> = ({
   mangaId = null,
   commentId = null,
+  chapterId = null,
   hideReply,
   updateComments,
   replyToName = '',
@@ -35,14 +37,21 @@ const AddComment: React.FC<AddCommentProps> = ({
     setIsSpoiler(!isSpoiler);
   };
 
+  const cancelAction = () => {
+    commentId
+      ? hideReply && hideReply()
+      : setText('');
+  }
+
   const onAddComment = async () => {
     try {
       setIsLoading(true);
       const comment = await Api().comments.createComment({
         text: replyToName + text,
         spoiler: isSpoiler,
-        mangaId: mangaId,
+        mangaId,
         replyTo: commentId,
+        chapterId,
       });
 
       updateComments && updateComments(comment);
@@ -83,7 +92,7 @@ const AddComment: React.FC<AddCommentProps> = ({
 
         <p className={styles.limit}>
           <span
-            className={classNames(`${text.length > 500 && styles.limitRed}`)}>
+            className={classNames(`${text.length > 500 ? styles.limitRed : ''}`)}>
             {text.length}
           </span>
           /500 characters
@@ -95,8 +104,8 @@ const AddComment: React.FC<AddCommentProps> = ({
           <p>Spoiler</p>
         </div>
         <div>
-          {commentId && (
-            <BlueBtn color='white' onClick={hideReply}>
+          {(commentId || text.length > 0) && (
+            <BlueBtn color='white' onClick={cancelAction}>
               Cencel
             </BlueBtn>
           )}

@@ -29,7 +29,7 @@ export class CommentsController {
 
   @Get()
   findAll(@Query() query: SearchCommentDto) {
-    return this.commentsService.findAll(query);
+    return this.commentsService.mangaFindAll(query);
   }
 
   @Get(':id')

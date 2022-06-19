@@ -2,16 +2,9 @@
 
 .card {
   padding: 16px 6px;
-  width: 157px;
-
-  &Small {
-    width: 147px;
-  }
-  &Catalog {
-    padding: 8px;
-    width: 174px;
-  }
+  width: min-content;
 }
+
 .list {
   flex-grow: 0;
   max-width: 50%;
@@ -28,9 +21,31 @@
   border-radius: 8px;
 
   &Container {
-    height: 235px;
     width: 157px;
+    height: 235px;
     position: relative;
+  }
+
+  &Size {
+    &Lg {
+      width: 226px;
+      height: 339px;
+    }
+
+    &Md {
+      width: 171px;
+      height: 257px;
+    }
+
+    &Preview {
+      width: 148px;
+      height: 222px;
+    }
+
+    &Sm {
+      width: 135px;
+      height: 202px;
+    }
   }
 }
 
@@ -98,6 +113,14 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+
+  &Lg {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+
 }
 
 .genre {
@@ -110,6 +133,10 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+
+  &Lg {
+    font-size: 15px;
+  }
 }
 
 .disabledLink {

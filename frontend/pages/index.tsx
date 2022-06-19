@@ -1,52 +1,34 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { parseCookies } from 'nookies';
+import Head from 'next/head';
 import {
-  FreshChaptersList,
-  HotNewsList,
-  MostPopularList,
-  Socials,
-  VerticalMangaList,
+  Dashboard,
 } from '../components';
 import MainLayout from '../layouts/MainLayout';
+import { NewestChapteResult } from '../models/IChapter';
 import { ResponceManga } from '../models/IManga';
 import { Api } from '../services/api';
-import styles from '../styles/Home.module.scss';
 
 interface HomeProps {
   newestManga: ResponceManga[];
+  weekPopular: ResponceManga[];
+  newestPopular: ResponceManga[];
+  todayPopular: ResponceManga[];
+  newestChapters: NewestChapteResult[];
 }
-const newestMangaMinCount = 7;
-const newestMangaMaxCount = 20;
 
-const Home: NextPage<HomeProps> = ({ newestManga }) => {
+const Home: NextPage<HomeProps> = ({ newestManga, todayPopular, weekPopular, newestPopular, newestChapters }) => {
+
   return (
-    <MainLayout>
-      <div className={styles.dashboard}>
-        <MostPopularList />
-        <div className='container d-flex w100p'>
-          <div className={styles.left}>
-            <HotNewsList />
-            <FreshChaptersList />
-          </div>
-          <div className={styles.right}>
-            {/* <VerticalMangaList
-              items={newestManga}
-              title={'popular today'}
-              minCount={2}
-              maxCount={5}
-            /> */}
-            <h5 className={styles.title}>We are in social networks</h5>
-            <Socials />
-            <VerticalMangaList
-              items={newestManga}
-              title={'new manga'}
-              minCount={newestMangaMinCount}
-              maxCount={newestMangaMaxCount}
-            />
-          </div>
-        </div>
-      </div>
-    </MainLayout>
+    <>
+      <Head>
+        <title>Read manga online - ReManga</title>
+        <meta name='description' content='ReManga' />
+        <link rel='icon' href='/icon.png' />
+      </Head>
+      <MainLayout>
+        <Dashboard newestManga={newestManga} weekPopular={weekPopular} todayPopular={todayPopular} newestChapters={newestChapters} newestPopular={newestPopular} />
+      </MainLayout >
+    </>
   );
 };
 
@@ -54,12 +36,16 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const res = await Api(ctx).manga.getMangaByQuery({
-      take: newestMangaMinCount,
-    });
-    const newestManga = res.items;
 
-    return { props: { newestManga } };
+    const newestManga = await Api(ctx).manga.getMangaByQuery({
+      take: Number(process.env.NEXT_PUBLIC_NEWEST_MIN_COUNT),
+    });
+    const todayPopular = await Api(ctx).manga.getTodayPopular();
+    const weekPopular = await Api(ctx).manga.getWeekPopular();
+    const newestPopular = await Api(ctx).manga.getNewestPopular();
+    const newestChapters = await Api(ctx).chapter.getNewestChapters();
+
+    return { props: { newestManga: newestManga.items, todayPopular, weekPopular, newestPopular, newestChapters } };
   } catch (err) {
     console.warn('Newest manga ', err);
     return { props: {} };

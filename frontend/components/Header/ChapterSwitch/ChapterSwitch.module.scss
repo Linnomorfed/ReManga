@@ -1,0 +1,45 @@
+@import '/styles/_variables.scss';
+
+
+.switch {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.switchBtn {
+  border: none;
+  background: transparent;
+  padding: 10px 8px 6px 8px;
+  color: $clr-text;
+  font-size: 16px;
+  display: flex;
+  cursor: pointer;
+  transition: all 0.15s linear;
+
+  &:hover {
+    background: $btn-hover;
+  }
+
+  &:first-of-type {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:last-of-type {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &Disabled {
+    pointer-events: none;
+
+    & svg {
+      fill: $clr-disabled;
+    }
+  }
+}

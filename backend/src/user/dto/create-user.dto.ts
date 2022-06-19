@@ -3,7 +3,6 @@ import { UniqueOnDatabase } from 'src/auth/validations/UniqueValidation';
 import { UserEntity } from '../entities/user.entity';
 
 export class CreateUserDto {
-  @UniqueOnDatabase(UserEntity)
   @Length(3, 32)
   nickname: string;
 

@@ -19,6 +19,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { RatingModule } from './rating/rating.module';
 import { ChaptersModule } from './chapters/chapters.module';
 import { PagesModule } from './pages/pages.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PagesModule } from './pages/pages.module';
     RatingModule,
     ChaptersModule,
     PagesModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

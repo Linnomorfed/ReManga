@@ -3,7 +3,6 @@ import React from 'react';
 import {
   ChangeAvatarSvg,
   CommentSvg,
-  EditSvg,
   HeartSvg,
   ShowPassSvg,
 } from '../../assets/svgs';
@@ -12,12 +11,14 @@ import styles from './UserPanel.module.scss';
 import avatar from '/assets/avatar.jpg';
 import coin from '../../assets/coin.png';
 import ticket from '../../assets/ticket.png';
+import ChangeNickname from './ChangeNickname';
 
 interface HeaderProps {
   nickname: string;
   currentUserId: number | undefined;
   userId: number;
   leftCommentsCount: number;
+  likedChapters: number;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -25,6 +26,7 @@ const Header: React.FC<HeaderProps> = ({
   currentUserId,
   userId,
   leftCommentsCount,
+  likedChapters,
 }) => {
   return (
     <div className={styles.header}>
@@ -47,10 +49,7 @@ const Header: React.FC<HeaderProps> = ({
           <div className={styles.userRightSection}>
             <div className={styles.userInfoTop}>
               <div className={styles.userInfo}>
-                <div className={styles.nicknameContainer}>
-                  <h4 className={styles.nickname}>{nickname}</h4>
-                  <EditSvg fill='#fff' w={22} h={22} />
-                </div>
+                <ChangeNickname nickname={nickname} userId={userId} />
                 <span className={styles.userId}>ID: {userId}</span>
               </div>
               <div>
@@ -74,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({
               </div>
               <div title='Liked chapters' className={styles.userStatElement}>
                 <HeartSvg fill='#fff' w={18} h={18} />
-                <span>5</span>
+                <span>{likedChapters}</span>
               </div>
               <div title='Left comments' className={styles.userStatElement}>
                 <CommentSvg fill='#fff' w={18} h={18} />

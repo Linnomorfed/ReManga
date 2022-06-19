@@ -6,12 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-  UseInterceptors,
-  UploadedFile,
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { OptionalJwtAuthGuard } from 'src/auth/guards/optional-jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { MangaService } from 'src/manga/manga.service';
@@ -34,6 +31,12 @@ export class ChaptersController {
     return this.chaptersService.create(dto, manga);
   }
 
+  @Get('newest')
+  @UseGuards(OptionalJwtAuthGuard)
+  getNewestChapters(@User() user: UserEntity) {
+    return this.chaptersService.getNewestChapters(user);
+  }
+
   @Get()
   @UseGuards(OptionalJwtAuthGuard)
   findAll(@Query() query: SearchChapterDto, @User() user: UserEntity) {
@@ -46,8 +49,9 @@ export class ChaptersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chaptersService.findOne(+id);
+  @UseGuards(OptionalJwtAuthGuard)
+  findOne(@Param('id') id: string, @User() user: UserEntity) {
+    return this.chaptersService.getCertainChapter(+id, user);
   }
 
   @Patch(':id')

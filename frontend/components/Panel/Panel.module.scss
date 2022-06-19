@@ -35,6 +35,8 @@
 }
 
 .editor {
-  background-color: $clr-bg-light;
-  color: $clr-text-dark;
+  margin-top: 5px;
+  background: #1f1f1f;
+  border: 1px solid rgba($clr-grey, 0.25);
+  color: $clr-text;
 }

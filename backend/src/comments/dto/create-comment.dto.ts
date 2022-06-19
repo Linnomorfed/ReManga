@@ -13,6 +13,8 @@ export class CreateCommentDto {
   replyTo: number;
 
   @IsNotEmpty()
-  @IsOptional()
   mangaId: number;
+
+  @IsOptional()
+  chapterId: number;
 }

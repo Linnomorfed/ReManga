@@ -4,6 +4,7 @@ import {
   LoginDto,
   ResponseUser,
   ResponseUserPage,
+  UpdateUserDto,
 } from '../../models/IAuth';
 
 export const UserApi = (instance: AxiosInstance) => ({
@@ -30,6 +31,11 @@ export const UserApi = (instance: AxiosInstance) => ({
 
   async getUserById(id: number) {
     const { data } = await instance.get<ResponseUserPage>(`users/${id}`);
+    return data;
+  },
+
+  async updateCurrentUser(id: number, dto: UpdateUserDto) {
+    const { data } = await instance.patch(`users/${id}`, dto);
     return data;
   },
 });

@@ -15,4 +15,5 @@ export class SearchMangaDto {
   excludedTypes?: number[];
   excludedGenres?: number[];
   excludedCategories?: number[];
+  topBy?: 'new' | null;
 }

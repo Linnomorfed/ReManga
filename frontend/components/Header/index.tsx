@@ -4,10 +4,9 @@ import {
   BookmarkSvg,
   LogoSvg,
   NotificationSvg,
-  RandomSvg,
+  PanelSvg,
   ThemeSvg,
 } from '../../assets/svgs';
-import classnames from 'classnames';
 import UserPopup from './UserPopup';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -17,16 +16,55 @@ import { selectUserData } from '../../redux/slices/userSlice';
 import UserAvatar from '../UI/UserAvatar';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import Search from './Search/Search';
+import ChapterSwitch from './ChapterSwitch';
+import { selectChaptersData } from '../../redux/slices/chapterSlice';
+import { SingleDropdown } from '../UI';
+import { BookmarkTypes } from '../../utils/static/Bookmarks';
+import {
+  selectSortByData,
+  setMangaBookmarkId,
+} from '../../redux/slices/sortBySlice';
 
 interface HeaderProps {
-  bgTranparent: boolean;
+  variant?: 'default' | 'transparent' | 'chapter';
 }
 
-const Header: FC<HeaderProps> = ({ bgTranparent }) => {
+const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
   const userData = useAppSelector(selectUserData);
+  const { currentChapter } = useAppSelector(selectChaptersData);
+  const { mangaBookmarkId } = useAppSelector(selectSortByData);
 
   const NotificationCount = 100;
   const [visibleUserPopup, setVisibleUserPopup] = React.useState(false);
+  const [scrollDirection, setScrollDirection] = React.useState<'down' | 'up'>(
+    'up'
+  );
+
+  React.useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+
+    const onClick = () => {
+      setScrollDirection('up');
+    };
+    const updateScrollDirection = () => {
+      const scrollY = window.pageYOffset;
+      const direction = scrollY > lastScrollY ? 'down' : 'up';
+      if (
+        direction !== scrollDirection &&
+        (scrollY - lastScrollY > 1 || scrollY - lastScrollY < -1)
+      ) {
+        setScrollDirection(direction);
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+    };
+    window.addEventListener('scroll', updateScrollDirection);
+    window.addEventListener('click', onClick);
+
+    return () => {
+      window.removeEventListener('scroll', updateScrollDirection);
+      window.removeEventListener('click', onClick);
+    };
+  }, [scrollDirection]);
 
   const { componentRef, toggleVisibility } = useOutsideClick(
     visibleUserPopup,
@@ -34,7 +72,19 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
   );
 
   return (
-    <div className={classNames(styles.header, bgTranparent && styles.headerTr)}>
+    <div
+      className={classNames(
+        styles.header,
+        `${variant === 'transparent' ? styles.headerTr : ''}`,
+        `${variant === 'chapter' ? styles.headerChapter : ''}`,
+        `${
+          variant === 'chapter'
+            ? scrollDirection === 'down'
+              ? styles.headerChapterHide
+              : styles.headerChapterShow
+            : ''
+        }`
+      )}>
       <div className='container'>
         <div className={styles.wrapper}>
           <div className={styles.left}>
@@ -43,22 +93,60 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
                 <LogoSvg fill={'#f2f2f2'} w={24} h={24} />
               </a>
             </Link>
-            <Link href='/manga'>
-              <a className={classNames(styles.btn, styles.btnText)}>Catalog</a>
-            </Link>
-            <button className={classNames(styles.btn, styles.btnText)}>
-              What to read
-            </button>
-            <button className={styles.btn}>
-              <RandomSvg fill={'#f2f2f2'} w={24} h={24} />
-            </button>
+
+            {variant === 'chapter' ? (
+              <>
+                {currentChapter && (
+                  <Link href={`/manga/${currentChapter?.mangaId}`}>
+                    <a className={classNames(styles.btn, styles.btnChapter)}>
+                      {currentChapter.mangaTitle}
+                    </a>
+                  </Link>
+                )}
+              </>
+            ) : (
+              <>
+                <Link href='/manga'>
+                  <a className={classNames(styles.btn, styles.btnText)}>
+                    Catalog
+                  </a>
+                </Link>
+                <Link href='/manga/top'>
+                  <a className={classNames(styles.btn, styles.btnText)}>
+                    What to read
+                  </a>
+                </Link>
+                {userData && (
+                  <Link href='/panel'>
+                    <a className={styles.btn}>
+                      <PanelSvg fill={'#f2f2f2'} w={24} h={24} />
+                    </a>
+                  </Link>
+                )}
+              </>
+            )}
           </div>
+
+          {variant === 'chapter' && <ChapterSwitch />}
+
           <div className={styles.right}>
-            <Search />
+            {variant === 'chapter' ? (
+              <SingleDropdown
+                items={BookmarkTypes}
+                action={setMangaBookmarkId}
+                defaultTitle='Add to bookmarks'
+                state={mangaBookmarkId}
+                variant='header'
+              />
+            ) : (
+              <Search />
+            )}
+
             <button className={classNames(styles.btn, styles.btnThemes)}>
               <ThemeSvg fill={'#f2f2f2'} w={24} h={24} />
             </button>
             <span className={styles.divider}>|</span>
+
             {userData ? (
               <>
                 <Link href='/user/bookmarks'>
@@ -69,7 +157,7 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
                   </a>
                 </Link>
 
-                <button className={classnames(styles.btn, styles.btnSpace)}>
+                <button className={classNames(styles.btn, styles.btnSpace)}>
                   <div className={styles.relative}>
                     <NotificationSvg fill={'#f2f2f2'} w={24} h={24} />
                     <span className={styles.notificationSpan}>
@@ -85,15 +173,13 @@ const Header: FC<HeaderProps> = ({ bgTranparent }) => {
                   </button>
 
                   {visibleUserPopup && (
-                    <UserPopup
-                      nickname={userData.nickname}
-                      id={userData.id}
-                    />
+                    <UserPopup nickname={userData.nickname} id={userData.id} />
                   )}
                 </div>
               </>
-            ) : <Auth />
-            }
+            ) : (
+              <Auth />
+            )}
           </div>
         </div>
       </div>

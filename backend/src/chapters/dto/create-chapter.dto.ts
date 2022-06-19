@@ -1,9 +1,19 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateChapterDto {
   @IsNotEmpty()
   @IsNumber()
   mangaId: number;
+
+  @IsString()
+  @IsOptional()
+  chapte_name: string;
 
   @IsNotEmpty()
   @IsNumber()
@@ -13,5 +23,7 @@ export class CreateChapterDto {
   @IsNumber()
   chapter: number;
 
-  pages_array?: string[];
+  @IsOptional()
+  @IsBoolean()
+  isPaid: boolean;
 }

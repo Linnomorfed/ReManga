@@ -1,0 +1,49 @@
+@import '/styles/_variables.scss';
+
+.toggleChapter {
+  width: 100%;
+  display: flex;
+  max-width: 900px !important;
+  background: $clr-bg-secondary;
+  justify-content: center;
+
+  &Btn {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 13px;
+    color: white;
+    transition: all 0.15s linear;
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 13px;
+    outline: none;
+
+    &:hover {
+      background-color: $btn-hover;
+    }
+
+    &:first-of-type {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+
+    &:last-of-type {
+      svg {
+        transform: rotate(-90deg);
+      }
+    }
+
+    &Disabled {
+      pointer-events: none;
+      cursor: default;
+      color: $clr-disabled;
+
+      & svg {
+        fill: $clr-disabled;
+      }
+    }
+  }
+}

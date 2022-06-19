@@ -1,8 +1,11 @@
 import { AxiosInstance } from 'axios';
 
 import {
+  ChapterPageResult,
   ChapterResult,
   CreateChapterDto,
+  CreateChapterLikeDto,
+  NewestChapteResult,
   SearchChapterDto,
 } from '../../models/IChapter';
 
@@ -15,8 +18,25 @@ export const ChapterApi = (instance: AxiosInstance) => ({
     return data;
   },
 
-  async addChapterPages(dto: any) {
+  async addChapterPages(dto: FormData) {
     const { data } = await instance.post('pages', dto);
+    return data;
+  },
+
+  async likeTheChapter(dto: CreateChapterLikeDto) {
+    const { data } = await instance.post<CreateChapterLikeDto>('likes', dto);
+    return data;
+  },
+
+  async getNewestChapters() {
+    const { data } = await instance.get<NewestChapteResult[]>(
+      'chapters/newest'
+    );
+    return data;
+  },
+
+  async getCertainChapter(id: number) {
+    const { data } = await instance.get<ChapterPageResult>(`chapters/${id}`);
     return data;
   },
 

@@ -33,6 +33,9 @@ export class CommentEntity {
   @Column({ nullable: true })
   pinned: number;
 
+  @Column({ nullable: true })
+  chapterId: number;
+
   @ManyToOne(() => UserEntity, { nullable: false, eager: true })
   @JoinColumn()
   user: UserEntity;

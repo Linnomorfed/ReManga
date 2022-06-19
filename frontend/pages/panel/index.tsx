@@ -11,7 +11,7 @@ interface PanelProps {
 
 const PanelPage: NextPage<PanelProps> = ({ filters }) => {
   return (
-    <MainLayout showFooter={false} bgTranparent={false}>
+    <MainLayout showFooter={false}>
       <Panel filters={filters} />
     </MainLayout>
   );

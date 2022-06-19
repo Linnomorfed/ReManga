@@ -27,6 +27,7 @@ const UserPanel: React.FC<UserPanelProps> = ({
         nickname={user.nickname}
         currentUserId={userData?.id}
         leftCommentsCount={user.left_comments}
+        likedChapters={user.liked_chapters}
       />
       <div className='container d-flex'>
         <div className={styles.left}>

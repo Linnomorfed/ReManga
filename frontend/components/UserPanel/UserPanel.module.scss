@@ -7,11 +7,13 @@
   border-bottom: $line-divider;
   background-color: $clr-bg-secondary;
 }
+
 .left {
   flex-grow: 0;
   max-width: 25%;
   flex-basis: 25%;
 }
+
 .right {
   flex-grow: 0;
   max-width: 75%;
@@ -28,6 +30,7 @@
   border: 3px solid $clr-user-bg;
   box-shadow: 0 0 7px #000;
   background-color: $clr-user-bg;
+
   &Container {
     display: flex;
     width: 25%;
@@ -38,6 +41,7 @@
   &Img {
     border-radius: 50%;
   }
+
   &Span {
     bottom: -5px;
     left: -5px;
@@ -52,37 +56,48 @@
     background-color: $clr-bg-light;
   }
 }
+
 .subtitle {
   margin: 16px 8px 12px;
   font-weight: 500;
   font-size: 1.5rem;
   text-align: center;
 }
+
 .publishers {
   &Wrapper {
     padding: 0px 16px;
   }
+
   &Btn {
     justify-content: center;
     margin: 16px 0;
     display: flex;
     flex-wrap: wrap;
-    & > button {
+
+    &>button {
       text-transform: none;
       font-size: 14px;
       border-radius: 20px;
     }
   }
 }
+
 .nickname {
   font-size: 2rem;
   color: $clr-text;
   margin-right: 6px;
-  &:hover {
-    text-decoration: underline;
-  }
-  &Container {
+  cursor: default;
+
+  &Owner {
     cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Container {
     display: flex;
     align-items: baseline;
   }
@@ -95,6 +110,7 @@
     justify-content: center;
     flex-direction: column;
   }
+
   &StatElement {
     display: flex;
     align-items: center;
@@ -106,20 +122,24 @@
     font-size: 14px;
     text-align: center;
     margin-right: 3px;
-    & > span {
+
+    &>span {
       margin-left: 3px;
       font-size: 16px;
     }
   }
+
   &Id {
     color: $clr-grey-light;
     font-size: 14px;
     margin-left: 24px;
   }
+
   &Info {
     display: flex;
     align-items: baseline;
     font-weight: 500;
+
     &Top {
       justify-content: space-between;
       display: flex;
@@ -148,4 +168,33 @@
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+}
+
+.changeNickname {
+  &Input {
+    border: 1px solid transparent;
+    background-color: rgba(120, 120, 120, 0.05);
+    border-radius: 4px;
+    padding: 18.5px 14px;
+    width: 100%;
+    color: $clr-text;
+    font-weight: 400;
+    font-size: 16px;
+    outline: none;
+
+    &:focus {
+      border-color: $clr-blue;
+    }
+
+    &:hover {
+      border-color: $clr-blue;
+    }
+
+    &Wrapper {
+      padding: 0px 16px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+  }
 }

@@ -1,0 +1,23 @@
+@import '/styles/_variables.scss';
+
+.title {
+  padding: 20px 12px 4px 8px;
+  font-size: 24px;
+  color: inherit;
+  margin: 0;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.bg {
+  background: $clr-bg-secondary;
+  margin-bottom: 16px;
+}
+
+.tray {
+  width: 3200px !important;
+
+  &Sm {
+    width: 2940px !important;
+  }
+}

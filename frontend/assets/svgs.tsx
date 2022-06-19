@@ -53,7 +53,9 @@ export const HeartSvg = ({ fill, w, h }: SvgProps) => (
 );
 
 export const EmptyHeartSvg = ({ fill, w, h }: SvgProps) => (
-  <svg viewBox="0 0 24 24" fill={fill} width={w} height={h}><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"></path></svg>
+  <svg viewBox='0 0 24 24' fill={fill} width={w} height={h}>
+    <path d='M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z'></path>
+  </svg>
 );
 
 export const CheckboxCheckedSvg = ({ fill, w, h }: SvgProps) => (
@@ -192,7 +194,7 @@ export const LockSvg = ({ fill, w, h }: SvgProps) => (
 );
 
 export const StarSvg = ({ fill, w, h }: SvgProps) => (
-  <svg viewBox='0 0 24 24' fill='#ffb400' width={w} height={h}>
+  <svg viewBox='0 0 24 24' fill={fill} width={w} height={h}>
     <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'></path>
   </svg>
 );
@@ -271,5 +273,20 @@ export const CheckMarkSvg = ({ fill, w, h }: SvgProps) => (
   </svg>
 );
 
+export const ArrowTopSvg = ({ fill, w, h }: SvgProps) => (
+  <svg viewBox='0 0 24 24' fill={fill} width={w} height={h}>
+    <path d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z'></path>
+  </svg>
+);
 
+export const ChaptersSvg = ({ fill, w, h }: SvgProps) => (
+  <svg viewBox='0 0 24 24' fill={fill} width={w} height={h}>
+    <path d='M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z'></path>
+  </svg>
+);
 
+export const PanelSvg = ({ fill, w, h }: SvgProps) => (
+  <svg viewBox='0 0 24 24' fill={fill} width={w} height={h}>
+    <path d='M3 5v6h5L7 7l4 1V3H5c-1.1 0-2 .9-2 2zm5 8H3v6c0 1.1.9 2 2 2h6v-5l-4 1 1-4zm9 4-4-1v5h6c1.1 0 2-.9 2-2v-6h-5l1 4zm2-14h-6v5l4-1-1 4h5V5c0-1.1-.9-2-2-2z'></path>
+  </svg>
+);

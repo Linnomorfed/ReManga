@@ -8,13 +8,12 @@ import {
   ShowPassSvg,
 } from '../../../assets/svgs';
 import styles from '../Auth.module.scss';
-import { formTypeEnum } from '..';
 import ModalBtn from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginFormSchema } from '../../../utils/schemas/loginValidation';
 import { setCookie } from 'nookies';
-import { LoginDto } from '../../../models/IAuth';
+import { formTypeEnum, LoginDto } from '../../../models/IAuth';
 import { useAppDispatch } from '../../../hooks/redux';
 import { setUserData } from '../../../redux/slices/userSlice';
 import { Api } from '../../../services/api';
@@ -115,8 +114,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 className={classNames(
                   styles.input,
                   styles.inputPass,
-                  `${form.formState.errors?.password?.message &&
-                  styles.inputError
+                  `${
+                    form.formState.errors?.password?.message &&
+                    styles.inputError
                   }`
                 )}
                 type={isShowPass ? 'text' : 'password'}

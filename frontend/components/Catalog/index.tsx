@@ -1,14 +1,17 @@
 import React from 'react';
-import { CatalogFilters, FiltersDataResponce } from '../../models/IFilters';
+import { FiltersDataResponce } from '../../models/IFilters';
 import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CatalogSortBy } from '../../utils/static/Catalog';
-import Filters from '../Filters';
-import Pagination from '../Pagination';
-import SortBy from '../SortBy';
+import Filters from './Filters';
+import Pagination from '../UI/Pagination';
+import SortBy from './SortBy';
 import styles from './Catalog.module.scss';
 import { MangaCard } from '../UI';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks/redux';
+import { selectFiltersData } from '../../redux/slices/filtersSlice';
+import { selectSortByData } from '../../redux/slices/sortBySlice';
 
 interface CatalogProps {
   filters: FiltersDataResponce;
@@ -18,35 +21,29 @@ interface CatalogProps {
 
 const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
   const showPerPage = 3;
+
+  const {
+    types,
+    genres,
+    categories,
+    restrictions,
+    statuses,
+    excludedTypes,
+    excludedGenres,
+    excludedCategories,
+  } = useAppSelector(selectFiltersData);
+
+  const { catalogSortBy } = useAppSelector(selectSortByData);
+
   const [mangaItems, setMangaItems] = React.useState<ResponceManga[]>(manga);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [totalCount, setTotalCount] = React.useState<number>(itemsCount);
   const [cardVariant, setCardVariant] = React.useState<'block' | 'list'>(
     'block'
   );
-
-  console.log(cardVariant);
-
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
   );
-
-  const [currentSortById, setCurrentSortById] = React.useState<number>(5);
-  const [currentSortBy, setCurrentSortBy] = React.useState(
-    CatalogSortBy[4].filter
-  );
-
-  const [selectedFilters, setSelectedFilters] =
-    React.useState<CatalogFilters>();
-
-  const updateSelectedFilters = (filters: CatalogFilters) => {
-    setSelectedFilters(filters);
-  };
-
-  const callbackId = (id: number) => {
-    id && setCurrentSortById(id);
-    id && setCurrentSortBy(CatalogSortBy[id - 1].filter);
-  };
 
   const callbackOrder = (order: boolean) => {
     setCurrentOrder(order ? 'ASC' : 'DESC');
@@ -68,18 +65,18 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
     } else {
       (async () => {
         const manga = await Api().manga.getMangaByQuery({
-          sortby: currentSortBy,
+          sortby: CatalogSortBy[catalogSortBy - 1].filter,
           page: currentPage,
           take: showPerPage,
           orderby: currentOrder,
-          types: selectedFilters?.types,
-          genres: selectedFilters?.genres,
-          categories: selectedFilters?.categories,
-          restrictions: selectedFilters?.restrictions,
-          statuses: selectedFilters?.statuses,
-          excludedTypes: selectedFilters?.excludedTypes,
-          excludedGenres: selectedFilters?.excludedGenres,
-          excludedCategories: selectedFilters?.excludedCategories,
+          types,
+          genres,
+          categories,
+          restrictions,
+          statuses,
+          excludedTypes,
+          excludedGenres,
+          excludedCategories,
         });
 
         setMangaItems(manga.items);
@@ -87,11 +84,17 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
       })();
     }
   }, [
-    currentSortById,
-    currentPage,
+    types,
+    genres,
+    categories,
+    restrictions,
+    statuses,
+    excludedTypes,
+    excludedGenres,
+    excludedCategories,
+    catalogSortBy,
     currentOrder,
-    currentSortBy,
-    selectedFilters,
+    currentPage,
   ]);
 
   return (
@@ -99,26 +102,25 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
       <div className={styles.header}>
         <div className='container'>
           <h1 className={styles.title}>Manga catalog</h1>
-          <Filters filters={filters} returnFilters={updateSelectedFilters} />
+          <Filters filters={filters} />
         </div>
       </div>
       <div className='containerSmall'>
         <div className={styles.main}>
           <SortBy
-            callbackId={callbackId}
             callbackOrder={callbackOrder}
-            currentSortById={currentSortById}
             returnCardVariant={toggleCardType}
           />
           <div className={classNames(styles.mangaList)}>
             {mangaItems.map((obj) => (
               <MangaCard
                 key={obj.id}
-                variant={cardVariant === 'list' ? 'list' : 'catalog'}
                 title={obj.title}
                 url={obj.image.url}
                 mangaId={obj.id}
                 rating={obj.rating}
+                type={obj.type.name}
+                genres={obj.genres}
               />
             ))}
           </div>

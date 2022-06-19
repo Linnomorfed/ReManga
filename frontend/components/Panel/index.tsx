@@ -4,36 +4,51 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FiltersDataResponce } from '../../models/IFilters';
+import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { Dropdown } from '../UI';
 import styles from './Panel.module.scss';
 
-const Editor = dynamic(() => import('../Editor').then((m: any) => m.Editor), {
-  ssr: false,
-});
+const Editor = dynamic(
+  () => import('../UI/Editor').then((m: any) => m.Editor),
+  {
+    ssr: false,
+  }
+);
 
 interface MangaPanelProps {
-  data?: any;
+  data?: ResponceManga;
   filters: FiltersDataResponce;
 }
 
 const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
   const router = useRouter();
 
+  const defaultGenres = data ? data.genres.map(({ id }) => id) : [];
+  const defaultCategories = data ? data.categories.map(({ id }) => id) : [];
+
   const [isLoading, setLoading] = useState(false);
-  const [uploadedImg, setUploadedImg] = useState<any>();
+  const [uploadedImg, setUploadedImg] = useState<string | Blob>('');
   const [imagePreview, setImagePreview] = React.useState(
-    'https://api.remanga.org/media/titles/fry-my-life/ece968b2113d49dee6a6ce4bf35be9c5.jpg'
+    data
+      ? data.image.url
+      : 'https://api.remanga.org/media/titles/fry-my-life/ece968b2113d49dee6a6ce4bf35be9c5.jpg'
   );
-  const [title, setTitle] = useState('');
-  const [otherTitles, setOtherTitles] = useState('');
-  const [blocks, setBlocks] = useState([]);
-  const [issueYear, setIssueYear] = useState<number>(2022);
-  const [type, setType] = useState<number[]>([]);
-  const [restriction, setRestriction] = useState<number[]>([]);
-  const [genres, setGenres] = useState<number[]>([]);
-  const [categories, setCategories] = useState<number[]>([]);
-  const [status, setStatus] = useState<number[]>([]);
+  const [title, setTitle] = useState(data ? data.title : '');
+  const [otherTitles, setOtherTitles] = useState(data ? data.otherTitles : '');
+  const [blocks, setBlocks] = useState(data ? data.blocks : []);
+  const [issueYear, setIssueYear] = useState<number>(
+    data ? data.issueYear : 2022
+  );
+  const [type, setType] = useState<number | null>(data ? data.type.id : null);
+  const [restriction, setRestriction] = useState<number | null>(
+    data ? data.restriction.id : null
+  );
+  const [status, setStatus] = useState<number | null>(
+    data ? data.status.id : null
+  );
+  const [genres, setGenres] = useState<number[]>(defaultGenres);
+  const [categories, setCategories] = useState<number[]>(defaultCategories);
 
   const fileUploadHandler = (e: any) => {
     const img = e.target.files[0];
@@ -56,13 +71,13 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
   };
 
   const toggleType = (id: number[]) => {
-    setType(id);
+    setType(id[0]);
   };
   const toggleStatus = (id: number[]) => {
-    setStatus(id);
+    setStatus(id[0]);
   };
   const toggleRestriction = (id: number[]) => {
-    setRestriction(id);
+    setRestriction(id[0]);
   };
   const toggleGenres = (id: number[]) => {
     setGenres(id);
@@ -75,25 +90,28 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
     try {
       setLoading(true);
 
-      const manga = await Api().manga.createManga({
-        title,
-        otherTitles,
-        blocks,
-        issueYear,
-        type: type[0],
-        restriction: restriction[0],
-        status: status[0],
-        genreIds: genres,
-        categoryIds: categories,
-      });
+      if (data) {
+        //update
+      } else {
+        const manga = await Api().manga.createManga({
+          title,
+          otherTitles,
+          blocks,
+          issueYear,
+          type: type,
+          restriction: restriction,
+          status: status,
+          genreIds: genres,
+          categoryIds: categories,
+        });
 
-      const formData = new FormData();
-      formData.append('image', uploadedImg);
-      formData.append('id', manga.id.toString());
+        const formData = new FormData();
+        formData.append('image', uploadedImg);
+        formData.append('id', manga.id.toString());
 
-      const mangaImage = await Api().files.addImage(formData);
-
-      router.push(`/manga/${manga.id}`);
+        await Api().files.addImage(formData);
+        router.push(`/manga/${manga.id}`);
+      }
     } catch (err) {
       console.warn('Creating manga', err);
       alert('Failed to create Manga: ' + err);
@@ -115,9 +133,10 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
             />
           </div>
           <div className={styles.block}>
-            <label>Other name:</label>
+            <label>Other titles:</label>
             <input
               className={styles.input}
+              value={otherTitles}
               type='text'
               onChange={otherTitlesHandler}
             />
@@ -129,6 +148,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
               items={filters.types}
               title={'Types'}
               returnId={toggleType}
+              selected={type}
             />
           </div>
           <div className={styles.block}>
@@ -138,6 +158,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
               items={filters.genres}
               title={'Genres'}
               returnId={toggleGenres}
+              selectedArr={genres}
             />
           </div>
 
@@ -148,6 +169,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
               items={filters.categories}
               title={'Categories'}
               returnId={toggleCategories}
+              selectedArr={categories}
             />
           </div>
 
@@ -158,6 +180,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
               items={filters.statuses}
               title={'Statuses'}
               returnId={toggleStatus}
+              selected={status}
             />
           </div>
 
@@ -168,13 +191,18 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
               items={filters.restrictions}
               title={'Restrictions'}
               returnId={toggleRestriction}
+              selected={restriction}
             />
           </div>
 
           <div className={styles.block}>
             <label>Descrsiption:</label>
             <div className={styles.editor}>
-              <Editor onChange={editorHandler} />
+              <Editor
+                ininialBlocks={blocks}
+                onChange={editorHandler}
+                defaultValue={blocks}
+              />
             </div>
           </div>
 

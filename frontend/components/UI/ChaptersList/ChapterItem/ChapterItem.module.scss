@@ -1,0 +1,124 @@
+@import '/styles/_variables.scss';
+
+.chapter {
+  color: $clr-text-light;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 400;
+  margin: 0;
+
+  &Readed {
+    color: $clr-grey;
+  }
+
+  &Container {
+    margin-top: 4px;
+  }
+
+  &Item {
+    background: rgba(140, 140, 140, .02);
+    margin: 4px 0px;
+    padding: 8px 8px 8px 12px;
+    border-radius: 6px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    user-select: none;
+
+    &Active {
+      background-color: $clr-blue;
+      pointer-events: none;
+    }
+  }
+}
+
+.volume {
+  color: rgba(255, 255, 255, .38);
+  padding: 3px 18px 3px 8px;
+  font-size: 18px;
+  font-weight: 600;
+
+  &Active {
+    color: $clr-text;
+  }
+}
+
+.link {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+
+.team {
+  color: $clr-grey;
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+.rightPart {
+  width: 18%;
+  display: flex;
+  min-width: fit-content;
+  align-items: center;
+  margin-left: 12px;
+  white-space: nowrap;
+}
+
+.lock {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+
+  &>svg {
+    fill: rgba(255, 255, 255, .5);
+  }
+
+  &Chapter {
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+
+    &>svg {
+      fill: rgba(255, 255, 255, .5);
+    }
+  }
+}
+
+.likeBtn {
+  color: $clr-yellow;
+  background-color: transparent;
+  border: none;
+  min-width: 50px;
+  margin: -4px 0;
+  padding: 8px;
+  font-size: inherit;
+  user-select: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &Liked {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  & svg {
+    margin-right: 4px;
+  }
+
+  &:hover {
+    background-color: rgba($clr-yellow, .1);
+  }
+}

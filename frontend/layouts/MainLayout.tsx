@@ -4,17 +4,18 @@ import { Footer, Header } from '../components';
 interface MainLayoutProps {
   children: React.ReactChild | React.ReactNode;
   showFooter?: boolean;
-  bgTranparent?: boolean;
+  headerVariant?: 'default' | 'transparent' | 'chapter';
+
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({
   children,
   showFooter = true,
-  bgTranparent = false,
+  headerVariant = 'default',
 }) => {
   return (
     <>
-      <Header bgTranparent={bgTranparent} />
+      <Header variant={headerVariant} />
       <div className='wrapper'>{children}</div>
       {showFooter && <Footer />}
     </>

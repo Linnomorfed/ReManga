@@ -1,13 +1,24 @@
 import Image from 'next/image';
 import React from 'react';
 import { WarnSvg } from '../../../assets/svgs';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { selectUserData } from '../../../redux/slices/userSlice';
-import { BlueBtn, Dropdown, ModalBtn } from '../../UI';
-import { bookmarkTypes } from '../../../utils/static/Bookmarks';
+import { BlueBtn, ModalBtn, SingleDropdown } from '../../UI';
+import {
+  BookmarkTypes,
+  BookmarkTypesExisted,
+} from '../../../utils/static/Bookmarks';
 import styles from './LeftPanel.module.scss';
 import { ResponseBookmark } from '../../../models/IBookmarks';
 import { Api } from '../../../services/api';
+import {
+  authModalSlice,
+  showAuthModal,
+} from '../../../redux/slices/authModalSlice';
+import {
+  selectSortByData,
+  setMangaBookmarkId,
+} from '../../../redux/slices/sortBySlice';
 
 interface MangaContentProps {
   url: string;
@@ -22,40 +33,50 @@ const LeftPanel: React.FC<MangaContentProps> = ({
   bookmark,
   mangaId,
 }) => {
+  const dispatch = useAppDispatch();
   const userData = useAppSelector(selectUserData);
+  const { mangaBookmarkId } = useAppSelector(selectSortByData);
 
-  const [returnedId, setReturnedId] = React.useState<number>();
+  //dispatch(showAuthModal());
 
-  const toggleBookmarkType = (ids: number[]) => {
-    setReturnedId(ids[0]);
-  };
-
-  const addBookmark = React.useCallback(async () => {
-    if (returnedId)
+  React.useEffect(() => {
+    const addBookmark = async () => {
       try {
-        if (bookmark) {
-          const res = await Api().bookmarks.updateBookmark(bookmark.id, {
-            bookmarkId: returnedId,
-          });
-          console.log('Updated bookmark: ', res);
-        } else {
-          const res = await Api().bookmarks.createBookmark({
-            bookmarkId: returnedId,
-            mangaId: mangaId,
-          });
-
-          console.log('Created bookmark', res);
-        }
+        await Api().bookmarks.createBookmark({
+          bookmarkId: mangaBookmarkId,
+          mangaId: mangaId,
+        });
       } catch (err) {
         console.warn('Bookmark ', err);
       }
-  }, [mangaId, returnedId, , bookmark]);
+    };
+    const updateBookmark = async () => {
+      try {
+        bookmark &&
+          (await Api().bookmarks.updateBookmark(bookmark.id, {
+            bookmarkId: mangaBookmarkId,
+          }));
+      } catch (err) {
+        console.warn('Updating bookmark ', err);
+      }
+    };
+    const deleteBookmark = async () => {
+      try {
+        bookmark && (await Api().bookmarks.deleteBookmark(bookmark.id));
+      } catch (err) {
+        console.warn('Deleting bookmark ', err);
+      }
+    };
+    if (mangaBookmarkId > 0) {
+      bookmark ? updateBookmark() : addBookmark();
+    }
+  }, [mangaBookmarkId]);
 
   React.useEffect(() => {
-    addBookmark();
-  }, [returnedId, addBookmark]);
+    bookmark && dispatch(setMangaBookmarkId(bookmark.bookmarkId));
+  }, []);
 
-  const onContinueReading = () => { };
+  const onContinueReading = () => {};
 
   return (
     <div className={styles.querter}>
@@ -78,12 +99,12 @@ const LeftPanel: React.FC<MangaContentProps> = ({
             <p className={styles.volume}>Volume 2 Chapter 179</p>
           </ModalBtn>
 
-          <Dropdown
-            title={'Add to bookmarks'}
-            items={bookmarkTypes}
-            selected={bookmark?.bookmarkId}
-            type='manga'
-            returnId={toggleBookmarkType}
+          <SingleDropdown
+            items={BookmarkTypes}
+            action={setMangaBookmarkId}
+            defaultTitle='Add to bookmarks'
+            state={mangaBookmarkId}
+            variant='manga'
           />
           {userData && (
             <>

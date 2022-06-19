@@ -8,10 +8,11 @@ import CommentsList from './CommentsList';
 
 interface CommentsProps {
   mangaId: number;
+  chapterId?: number;
 }
 
-const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+const Comments: React.FC<CommentsProps> = ({ mangaId, chapterId = null, }) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [comments, setComments] = React.useState<ResponceCommentItem[]>([]);
   const [pinnedComment, setPinnedComment] =
     React.useState<ResponceCommentItem | null>(null);
@@ -20,13 +21,14 @@ const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
   React.useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const comments = await Api().comments.getComments({
-          mangaId,
+          mangaId, chapterId
         });
         setComments(comments.items);
         setCommentsCount(comments.count);
         setPinnedComment(comments.pinned);
-        setIsLoading(!isLoading)
+        setIsLoading(false)
       } catch (err) {
         console.warn('Fetch comments', err);
       }
@@ -43,10 +45,10 @@ const Comments: React.FC<CommentsProps> = ({ mangaId }) => {
       <h4 className={styles.commentsCount}>
         Comments {commentsCount > 0 && '(' + commentsCount + ')'}
       </h4>
-      <AddComment mangaId={mangaId} updateComments={updateComments} />
-      {isLoading ? Array(3).fill(<CommentLoader />)
+      <AddComment chapterId={chapterId} mangaId={mangaId} updateComments={updateComments} />
+      {isLoading ? Array.from(Array(3), (_, i) => <CommentLoader key={i} />)
         :
-        <CommentsList comments={comments} pinnedComment={pinnedComment} />}
+        <CommentsList commentsCount={commentsCount} comments={comments} pinnedComment={pinnedComment} />}
     </div>
   );
 };

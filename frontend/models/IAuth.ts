@@ -16,6 +16,10 @@ export interface CreateUserDto {
   passwordConfirm?: string;
 }
 
+export interface UpdateUserDto {
+  nickname: string;
+}
+
 export interface ResponseUser {
   createdAt: string;
   left_comments: number;
@@ -23,6 +27,7 @@ export interface ResponseUser {
   id: number;
   nickname: string;
   updatedAt: string;
+  liked_chapters: number;
   access_token: string;
 }
 
@@ -30,4 +35,10 @@ export interface ResponseUserPage {
   data: ResponseUser;
   preloadedData: ResponseBookmark[];
   bookmarksCount: number[];
+}
+
+export enum formTypeEnum {
+  'login',
+  'registration',
+  'recovery',
 }

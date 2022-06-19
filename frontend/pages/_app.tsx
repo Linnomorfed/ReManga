@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { setUserData } from '../redux/slices/userSlice';
 import { wrapper } from '../redux/store';
 import { Api } from '../services/api';
-
 import '../styles/app.scss';
 import '../styles/_helpers.scss';
 
@@ -12,7 +11,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>ReManga</title>
+        <title>Read manga online - ReManga</title>
         <meta name='description' content='ReManga' />
         <link rel='icon' href='/icon.png' />
       </Head>

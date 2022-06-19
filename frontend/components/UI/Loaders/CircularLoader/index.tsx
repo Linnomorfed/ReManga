@@ -1,12 +1,28 @@
-import React from 'react'
-import styles from './Loader.module.scss'
+import classNames from 'classnames';
+import React from 'react';
+import styles from './Loader.module.scss';
 
-const CircularLoader = () => {
-  return (
-    <svg className={styles.loaderWrapper} viewBox="22 22 44 44" width={40}>
-      <circle className={styles.loader} cx="44" cy="44" r="20.2" fill="none" strokeWidth='3.6'></circle>
-    </svg >
-  )
+interface CircularLoaderProps {
+  isSmall?: boolean;
 }
 
-export default CircularLoader
+const CircularLoader: React.FC<CircularLoaderProps> = ({ isSmall = false }) => {
+  return (
+    <svg
+      className={classNames(
+        styles.loaderWrapper,
+        `${isSmall ? styles.loaderWrapperSm : ''}`
+      )}
+      viewBox='22 22 44 44'>
+      <circle
+        className={styles.loader}
+        cx='44'
+        cy='44'
+        r='20.2'
+        fill='none'
+        strokeWidth='3.6'></circle>
+    </svg>
+  );
+};
+
+export default CircularLoader;

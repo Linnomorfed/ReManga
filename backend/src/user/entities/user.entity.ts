@@ -21,6 +21,9 @@ export class UserEntity {
   @Column({ default: 0 })
   left_comments: number;
 
+  @Column({ default: 0 })
+  liked_chapters: number;
+
   @Exclude()
   @Column({ nullable: true })
   password?: string;

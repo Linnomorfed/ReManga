@@ -1,0 +1,59 @@
+@import '/styles/_variables.scss';
+
+
+.chapterList {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &Element {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    padding: 10px 15px;
+    position: relative;
+    font-size: 14px;
+    min-height: unset;
+    transition: all 150ms linear;
+    align-items: center;
+    font-weight: 400;
+    white-space: nowrap;
+    user-select: none;
+
+    &Active {
+      background-color: $btn-hover;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background-color: $btn-hover;
+    }
+
+    &>svg {
+      fill: rgba(140, 140, 140, .5);
+      margin-left: auto;
+    }
+  }
+}
+
+.wrapper {
+  opacity: 1;
+  transform: none;
+  transform-origin: 0px 0px 0px;
+  transition: opacity 359ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 239ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  color: $clr-text-light;
+  background: $clr-user-bg;
+  border: 0;
+  margin: 2px 0 0;
+  padding: 5px 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 95vw;
+  min-width: 160px;
+  z-index: 1000;
+  position: absolute;
+}

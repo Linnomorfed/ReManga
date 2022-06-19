@@ -6,11 +6,12 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { User } from 'src/decorators/user.decorator';
+import { UserEntity } from './entities/user.entity';
 
 @Controller('users')
 export class UserController {
@@ -23,8 +24,8 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('current')
-  getProfile(@Request() req) {
-    return this.userService.findById(req.user.id);
+  getProfile(@User() user: UserEntity) {
+    return this.userService.findById(user.id);
   }
 
   @Get(':id')
@@ -32,14 +33,20 @@ export class UserController {
     return this.userService.getOneById(+id);
   }
 
+  @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  @Patch('current')
-  update(@Request() req, @Body() dto: UpdateUserDto) {
-    return this.userService.update(+req.user.id, dto);
+  update(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+    @Body() dto: UpdateUserDto,
+  ) {
+    console.log(user);
+    console.log(dto);
+    return this.userService.update(+id, dto, +user.id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('current ')
+  @Delete('current')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }

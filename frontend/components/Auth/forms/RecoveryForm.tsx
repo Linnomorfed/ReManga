@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from '../Auth.module.scss';
-import { formTypeEnum } from '../';
 import { ArrowSvg, EmailSvg } from '../../../assets/svgs';
 import classNames from 'classnames';
 import ModalBtn from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RecoveryFormSchema } from '../../../utils/schemas/loginValidation';
-import { RecoveryDto } from '../../../models/IAuth';
+import { formTypeEnum, RecoveryDto } from '../../../models/IAuth';
 
 interface RecoveryFormProps {
   setFormType: (arg: formTypeEnum) => void;

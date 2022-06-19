@@ -15,6 +15,7 @@ export class CommentsService {
   ) {}
   async create(dto: CreateCommentDto, user: UserEntity) {
     const replyTo = dto.replyTo;
+    const chapterId = dto.chapterId || null;
     if (replyTo) {
       this.repository
         .createQueryBuilder('c')
@@ -36,37 +37,57 @@ export class CommentsService {
       manga: { id: dto.mangaId },
       spoiler: dto.spoiler,
       user: user,
-      replyTo: dto.replyTo,
+      replyTo: replyTo,
+      chapterId: chapterId,
     });
   }
 
-  async findAll(query: SearchCommentDto) {
+  async chapterFindAll(query: SearchCommentDto) {
+    const take = 20;
+    const page = query.page || 1;
+    const skip = (page - 1) * take;
+    const mangaId = query.mangaId;
+    const chapterId = query.chapterId;
+  }
+
+  async mangaFindAll(query: SearchCommentDto) {
     const take = 20;
     const page = query.page || 1;
     const skip = (page - 1) * take;
     const mangaId = query.mangaId;
     const replyTo = query.replyTo;
-
+    const chapterId = query.chapterId;
     const pinnedQb = this.repository.createQueryBuilder('pinned');
-    pinnedQb
-      .where('pinned.pinned = :mangaId', {
-        mangaId,
-      })
-      .leftJoinAndSelect('pinned.user', 'user');
-    const pinned = await pinnedQb.getOne();
-    pinnedQb.execute();
+
+    let pinned = null;
+    if (!chapterId) {
+      pinnedQb
+        .where('pinned.pinned = :mangaId', {
+          mangaId,
+        })
+        .leftJoinAndSelect('pinned.user', 'user');
+      pinned = await pinnedQb.getOne();
+    }
 
     const qb = this.repository.createQueryBuilder('c');
     qb.orderBy('c.createdAt', 'DESC').leftJoinAndSelect('c.user', 'user');
 
-    if (mangaId) {
+    if (mangaId && !chapterId) {
       qb.andWhere('c.mangaId = :mangaId', { mangaId })
         .andWhere('c.pinned IS NULL')
-        .andWhere('c.replyTo IS NULL');
+        .andWhere('c.replyTo IS NULL')
+        .andWhere('c.chapterId IS NULL');
     }
 
     if (replyTo) {
       qb.where('c.replyTo = :replyTo', { replyTo });
+    }
+
+    if (mangaId && chapterId) {
+      qb.andWhere('c.mangaId = :mangaId', { mangaId })
+        .andWhere('c.pinned IS NULL')
+        .andWhere('c.replyTo IS NULL')
+        .andWhere('c.chapterId = :chapterId', { chapterId });
     }
 
     qb.take(take).skip(skip);

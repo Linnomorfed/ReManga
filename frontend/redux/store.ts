@@ -1,12 +1,27 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { UserReducer } from './slices/userSlice';
+import { AuthModalReducer } from './slices/authModalSlice';
+import { ChapterReducer } from './slices/chapterSlice';
+import { FiltersReducer } from './slices/filtersSlice';
+import { SortByReducer } from './slices/sortBySlice';
+
+const rootReducer = combineReducers({
+  user: UserReducer,
+  authModal: AuthModalReducer,
+  chapters: ChapterReducer,
+  filters: FiltersReducer,
+  sortBy: SortByReducer,
+});
 
 export function makeStore() {
   return configureStore({
-    reducer: {
-      user: UserReducer,
-    },
+    reducer: rootReducer,
   });
 }
 

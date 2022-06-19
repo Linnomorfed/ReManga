@@ -1,0 +1,77 @@
+@import '/styles/_variables.scss';
+
+
+.panel {
+  overflow: scroll;
+  background: $clr-bg-secondary;
+  border-left: $border-grey;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 100%;
+  display: table;
+  z-index: 1099;
+  position: fixed;
+  text-align: center;
+  padding-top: 60px;
+}
+
+.btn {
+  background-color: transparent;
+  color: $clr-text-light;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  min-width: unset;
+  border: none;
+  border-top: $border-grey;
+  transition: all 150ms linear;
+
+  &Active {
+    background-color: $clr-blue;
+  }
+
+  &:hover {
+    background-color: $clr-blue;
+  }
+
+  &Text {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &Wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  & svg {
+    fill: $clr-text-light;
+  }
+
+  &:last-of-type {
+    border-bottom: $border-grey;
+  }
+}
+
+.notificationSpan {
+  display: flex;
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  transform: scale(1) translate(50%, -50%);
+  transform-origin: 100% 0%;
+  background-color: #4e6baf;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 6px;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 700;
+}

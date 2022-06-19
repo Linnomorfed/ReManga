@@ -3,10 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { CheckMarkSvg, HeartSvg } from '../../../../assets/svgs';
+import { ResponceFilter } from '../../../../models/IFilters';
 import styles from './MangaCard.module.scss';
 
 interface MangaCardProps {
-  variant?: 'default' | 'small' | 'catalog' | 'list';
+  size?: 'default' | 'small' | 'preview' | 'medium' | 'large';
   title: string;
   url: string;
   mangaId: number;
@@ -16,20 +17,27 @@ interface MangaCardProps {
   rating?: number | null;
   likesCount?: number | null;
   bookmarkItemId?: number;
+  genres?: ResponceFilter[];
+  type?: string;
 }
 
 const MangaCard: FC<MangaCardProps> = ({
-  variant = 'default',
   title,
   url,
   mangaId,
+  size = 'default',
   bookmarkType,
   editing = false,
   rating,
   bookmarkItemId,
   likesCount,
   updateSelectedList,
+  genres,
+  type,
 }) => {
+  const sortedGenres = genres ? genres.sort() : null;
+  const firstGenre = sortedGenres ? sortedGenres[0].name : null;
+
   const [selected, setSelected] = React.useState(false);
   const toggleSelected = () => {
     setSelected(!selected);
@@ -37,52 +45,63 @@ const MangaCard: FC<MangaCardProps> = ({
   };
 
   return (
-    <div onClick={toggleSelected}>
-      <div className={`${editing && styles.disabledLink}`}>
+    <div onClick={toggleSelected} className={styles.card}>
+      <div className={`${editing ? styles.disabledLink : ''}`}>
         <Link href={`/manga/${mangaId}`} passHref>
           <a>
-            <div
-              className={classNames(
-                styles.card,
-                variant === 'small' ? styles.cardSmall : '',
-                variant === 'catalog' ? styles.cardCatalog : ''
-              )}>
-              <div className={styles.top}>
-                <div className={classNames(styles.imgContainer)}>
-                  <Image
-                    className={styles.img}
-                    src={url}
-                    alt={title}
-                    placeholder='blur'
-                    blurDataURL={`/_next/image?url=${url}&w=16&q=75`}
-                    layout='fill'
-                    objectFit='cover'
-                  />
-                </div>
-
-                {editing && selected && (
-                  <div className={styles.selected}>
-                    <CheckMarkSvg fill='white' h={24} />
-                  </div>
-                )}
-                {rating! >= 0 && <div className={styles.rating}>{rating}</div>}
-                {rating !== 0 && !rating && likesCount && (
-                  <div className={styles.likes}>
-                    <HeartSvg fill='white' w={15} h={15} />
-                    <div className={styles.likesCount}>{likesCount}</div>
-                  </div>
-                )}
-                {bookmarkType && (
-                  <div className={styles.status}>{bookmarkType}</div>
-                )}
+            <div className={styles.top}>
+              <div
+                className={classNames(
+                  styles.imgContainer,
+                  `${size === 'large' ? styles.imgSizeLg : ''}`,
+                  `${size === 'medium' ? styles.imgSizeMd : ''}`,
+                  `${size === 'small' ? styles.imgSizeSm : ''}`,
+                  `${size === 'preview' ? styles.imgSizePreview : ''}`
+                )}>
+                <Image
+                  className={styles.img}
+                  src={url}
+                  alt={title}
+                  placeholder='blur'
+                  blurDataURL={`/_next/image?url=${url}&w= 16&q=75`}
+                  layout='fill'
+                  objectFit='cover'
+                />
               </div>
-              {variant === 'list' ? (
-                <div>123</div>
-              ) : (
-                <div>
-                  <h4 className={styles.title}>{title}</h4>
-                  <p className={styles.genre}>Manhwa Action</p>
+
+              {editing && selected && (
+                <div className={styles.selected}>
+                  <CheckMarkSvg fill='white' h={24} />
                 </div>
+              )}
+              {rating! >= 0 && <div className={styles.rating}>{rating}</div>}
+              {rating !== 0 && !rating && likesCount && (
+                <div className={styles.likes}>
+                  <HeartSvg fill='white' w={15} h={15} />
+                  <div className={styles.likesCount}>{likesCount}</div>
+                </div>
+              )}
+              {bookmarkType && (
+                <div className={styles.status}>{bookmarkType}</div>
+              )}
+            </div>
+
+            <div>
+              <h4
+                className={classNames(
+                  styles.title,
+                  `${size === 'large' ? styles.titleLg : ''}`
+                )}>
+                {title}
+              </h4>
+              {type && genres && (
+                <p
+                  className={classNames(
+                    styles.genre,
+                    `${size === 'large' ? styles.genreLg : ''}`
+                  )}>
+                  {type} {firstGenre}
+                </p>
               )}
             </div>
           </a>

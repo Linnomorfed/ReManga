@@ -5,15 +5,13 @@ import LoginForm from './forms/LoginForm';
 import RecoveryForm from './forms/RecoveryForm';
 import RegistrationForm from './forms/RegistrationForm';
 import styles from './Auth.module.scss';
-
-export enum formTypeEnum {
-  'login',
-  'registration',
-  'recovery',
-}
-
+import { useAppSelector } from '../../hooks/redux';
+import { selectAuthModalData } from '../../redux/slices/authModalSlice';
+import { formTypeEnum } from '../../models/IAuth';
 
 const Auth: React.FC = () => {
+  const authModalVisibility = useAppSelector(selectAuthModalData);
+
   const [formType, setFormType] = React.useState<formTypeEnum>(
     formTypeEnum.login
   );
@@ -22,6 +20,16 @@ const Auth: React.FC = () => {
   const toggleAuthVisibility = () => {
     setVisibleAuthModal(!visibleAuthModal);
   };
+
+  const initialRender = React.useRef(true);
+
+  React.useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      setVisibleAuthModal(true);
+    }
+  }, [authModalVisibility]);
 
   return (
     <>
@@ -54,7 +62,8 @@ const Auth: React.FC = () => {
               toggleLoginVisibility={toggleAuthVisibility}
             />
           )}
-        </ModalBlock>)}
+        </ModalBlock>
+      )}
     </>
   );
 };

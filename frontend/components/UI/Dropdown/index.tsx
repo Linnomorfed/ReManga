@@ -11,8 +11,9 @@ interface DropdownProps {
   items: ResponceFilter[];
   title?: string;
   selected?: number | null;
+  selectedArr?: number[];
   type: 'default' | 'sortBy' | 'manga';
-  returnId?: (ids: number[]) => void;
+  returnId: (ids: number[]) => void;
   resetFilters?: boolean;
   toggleResetFilters?: () => void;
 }
@@ -25,20 +26,20 @@ const Dropdown: React.FC<DropdownProps> = ({
   returnId,
   resetFilters,
   toggleResetFilters,
+  selectedArr,
 }) => {
-  const defaultSelected = selected ? [selected] : [];
+  const defaultSingleSelected = selected ? [selected] : [];
   const selectedOne = items.filter((obj) => obj.id === selected);
+
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [defaultTitle, setDefaultTitle] = useState<string>();
-  const [selectedId, setSelectedId] = useState<number[]>(defaultSelected);
+  const [selectedId, setSelectedId] = useState<number[]>(
+    selectedArr ? selectedArr : defaultSingleSelected
+  );
 
   const toggleTitle = (returnedTitle: string) => {
     setDefaultTitle(returnedTitle);
   };
-
-  // const toggleVisibility = () => {
-  //   setIsOpened(!isOpened);
-  // };
 
   const { componentRef, toggleVisibility } = useOutsideClick(
     isOpened,

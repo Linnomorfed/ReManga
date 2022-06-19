@@ -1,7 +1,6 @@
 import React from 'react';
 import { setCookie } from 'nookies';
 import styles from '../Auth.module.scss';
-import { formTypeEnum } from '../';
 import {
   ArrowSvg,
   EmailSvg,
@@ -18,7 +17,7 @@ import ModalBtn from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegistrationFormSchema } from '../../../utils/schemas/loginValidation';
-import { CreateUserDto } from '../../../models/IAuth';
+import { CreateUserDto, formTypeEnum } from '../../../models/IAuth';
 import { Api } from '../../../services/api';
 
 interface RegistrationFormProps {
@@ -102,7 +101,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               className={classNames(
                 styles.input,
                 styles.inputSvg,
-                `${form.formState.errors?.nickname?.message && styles.inputError
+                `${
+                  form.formState.errors?.nickname?.message && styles.inputError
                 }`
               )}
               type='text'
@@ -150,7 +150,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               className={classNames(
                 styles.input,
                 styles.inputRegister,
-                `${form.formState.errors?.password?.message && styles.inputError
+                `${
+                  form.formState.errors?.password?.message && styles.inputError
                 }`
               )}
               type={isShowPass ? 'text' : 'password'}
@@ -183,8 +184,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               className={classNames(
                 styles.input,
                 styles.inputRegister,
-                `${form.formState.errors?.passwordConfirm?.message &&
-                styles.inputError
+                `${
+                  form.formState.errors?.passwordConfirm?.message &&
+                  styles.inputError
                 }`
               )}
               type={isShowPass ? 'text' : 'password'}

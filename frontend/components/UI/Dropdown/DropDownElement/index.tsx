@@ -40,7 +40,8 @@ const DropDownElement: FC<DropDownElementProps> = ({
     <div
       className={classNames(
         styles.dropDownElement,
-        `${isChecked && styles.dropDownElementChecked}`
+        `${isChecked ? styles.dropDownElementChecked : ''}`,
+        `${type === 'default' ? styles.dropDownElementCheckedDef : ''}`
       )}
       onClick={onClickElement}>
       {type === 'default' && (

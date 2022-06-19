@@ -1,3 +1,6 @@
+@import '/styles/_variables.scss';
+
+
 .dropDownElement {
   display: flex;
   align-items: center;
@@ -12,16 +15,18 @@
   &:hover {
     background-color: rgba(140, 140, 140, 0.05);
   }
+
   & svg {
     margin: 9px;
     margin-left: 0px;
   }
 
   &Checked {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(140, 140, 140, 0.05);
+    cursor: default;
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.08);
+    &Def {
+      cursor: pointer;
     }
   }
 }

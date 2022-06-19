@@ -7,7 +7,32 @@
   &Tr {
     background: transparent;
   }
+
+  &Chapter {
+    background-color: rgba(23, 23, 23, .95);
+    padding: 3px 2px;
+    top: 0;
+    left: auto;
+    right: 0;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: $border-grey;
+    transition: all .2s linear;
+
+    &Hide {
+      top: -55px;
+    }
+
+    &Show {
+      top: 0;
+    }
+  }
+
 }
+
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -17,6 +42,7 @@
   display: flex;
   align-items: center;
 }
+
 .right {
   display: flex;
   align-items: center;
@@ -36,8 +62,8 @@
   justify-content: center;
   background-color: transparent;
   cursor: pointer;
-  transition: backgound-color 0.2s linear;
-  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: all 150ms linear;
+
 
   &:hover {
     background-color: rgba(140, 140, 140, 0.1);
@@ -46,9 +72,16 @@
   &Text {
     padding: 10px 12.4px;
   }
+
+  &Chapter {
+    padding: 6px 8px;
+    min-height: 0;
+  }
+
   &Logo {
     margin-right: 9px;
   }
+
   &Themes {
     margin: 0 4px;
   }
@@ -75,7 +108,7 @@
   padding: 0 6px;
   font-size: 12px;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .relative {

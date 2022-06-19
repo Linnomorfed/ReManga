@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
 import { getRepository, Repository } from 'typeorm';
@@ -28,6 +32,12 @@ export class UserService {
   }
 
   async getOneById(id: number) {
+    const user = await this.repository.findOne(id);
+
+    if (!user) {
+      throw new NotFoundException("User with this id doesn't exist");
+    }
+
     const bookmarksPreload = await getRepository(BookmarksEntity)
       .createQueryBuilder('bookmarks')
       .leftJoinAndSelect('bookmarks.manga', 'manga')
@@ -68,8 +78,6 @@ export class UserService {
 
     const [preloadedData, readingCount] = bookmarksPreload;
 
-    const user = await this.repository.findOne(id);
-
     return {
       data: user,
       preloadedData,
@@ -92,10 +100,14 @@ export class UserService {
     return this.repository.findOne({ email });
   }
 
-  update(id: number, dto: UpdateUserDto) {
-    return this.repository.update(id, dto);
+  update(id: number, dto: UpdateUserDto, userId: number) {
+    if (id !== userId) {
+      throw new ForbiddenException(
+        "You don't have permissions to update the user",
+      );
+    }
+    return this.repository.update(userId, { nickname: dto.nickname });
   }
-
   remove(id: number) {
     return this.repository.delete(id);
   }

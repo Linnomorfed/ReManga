@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dropdown, TabBtn } from '../UI';
+import { Dropdown, SingleDropdown, TabBtn } from '../UI';
 import styles from './Bookmarks.module.scss';
-import { bookmarkTypes } from '../../utils/static/Bookmarks';
+import { BookmarkTypes } from '../../utils/static/Bookmarks';
 import { ResponceFilter } from '../../models/IFilters';
 import MangaCard from '../UI/Cards/MangaCard';
 import { ResponseBookmark } from '../../models/IBookmarks';
@@ -9,6 +9,11 @@ import { Api } from '../../services/api';
 import classNames from 'classnames';
 import { DeleteSvg, EditSvg, HistorySvg, SettingsSvg } from '../../assets/svgs';
 import { bookmarkListFilters } from '../../utils/static/BookmarkListFilters';
+import {
+  selectSortByData,
+  setBookmarksSortBy,
+} from '../../redux/slices/sortBySlice';
+import { useAppSelector } from '../../hooks/redux';
 
 interface BookmarksProps {
   preloadedData: ResponseBookmark[];
@@ -23,6 +28,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   userId,
   type = 'default',
 }) => {
+  const { bookmarksSortBy } = useAppSelector(selectSortByData);
   const [showEditor, setShowEditor] = React.useState(false);
   const [items, setItems] = React.useState<ResponseBookmark[]>(preloadedData);
   const [selected, setSelected] = React.useState<number[]>([]);
@@ -41,21 +47,29 @@ const Bookmarks: React.FC<BookmarksProps> = ({
     setShowEditor(!showEditor);
   };
 
-  const updateBookmarks = (id: number) => {
-    selected.map(async (obj) => {
+  const updateBookmarks = async (bookmarkId: number) => {
+    let arr = bookmarksCount;
+    let newItems = items;
+
+    selected.forEach(async (selectedId) => {
       try {
-        const updatedBookmark = await Api().bookmarks.updateBookmark(obj, {
-          bookmarkId: id,
+        await Api().bookmarks.updateBookmark(selectedId, {
+          bookmarkId,
         });
 
-        console.log('UpdatedBookmark: ', updatedBookmark);
+        arr[activeTab - 1] = arr[activeTab - 1] - 1;
+        arr[bookmarkId - 1] = arr[bookmarkId - 1] + 1;
+
+        newItems = newItems.filter((obj) => obj.id !== selectedId);
+
+        setItems(newItems);
+        setBookmarksCount(arr);
+        setSelected([]);
+        setShowEditor(false);
       } catch (err) {
         console.warn('Updating ', err);
       }
     });
-
-    setSelected([]);
-    setShowEditor(false);
   };
 
   const deleteBookmarks = () => {
@@ -102,7 +116,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
           styles.tabs,
           `${type === 'bookmarks' && styles.tabsBookmarks}`
         )}>
-        {bookmarkTypes.map((obj: ResponceFilter) => (
+        {BookmarkTypes.map((obj: ResponceFilter) => (
           <TabBtn
             key={obj.id}
             onClick={toogleActiveTab}
@@ -118,10 +132,11 @@ const Bookmarks: React.FC<BookmarksProps> = ({
           {type === 'bookmarks' && (
             <div className={styles.filter}>
               <div>
-                <Dropdown
+                <SingleDropdown
                   items={bookmarkListFilters}
-                  title='Bookmark modified date'
-                  type='sortBy'
+                  variant='sortBy'
+                  action={setBookmarksSortBy}
+                  state={bookmarksSortBy}
                 />
               </div>
               <div className='d-flex'>
@@ -146,7 +161,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
 
           {showEditor && (
             <div className={styles.editorWrapper}>
-              {bookmarkTypes.map((obj) => (
+              {BookmarkTypes.map((obj) => (
                 <button
                   key={obj.id}
                   onClick={() => updateBookmarks(obj.id)}
@@ -170,7 +185,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({
                   key={obj.id}
                   mangaId={obj.manga.id}
                   bookmarkItemId={obj.id}
-                  variant='catalog'
                   title={obj.manga.title}
                   url={obj.manga.image.url}
                   editing={showEditor && true}

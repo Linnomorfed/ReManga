@@ -1,10 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
-import { CategoriesService } from 'src/categories/categories.service';
 import { FilesService } from 'src/files/files.service';
-import { GenresService } from 'src/genres/genres.service';
 import { RatingEntity } from 'src/rating/entities/rating.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { getRepository, Repository } from 'typeorm';
 import { CreateMangaDto } from './dto/create-manga.dto';
 import { SearchMangaDto } from './dto/search-manga.dto';
@@ -18,8 +17,6 @@ export class MangaService {
     @InjectRepository(MangaEntity)
     private repository: Repository<MangaEntity>,
     private filesService: FilesService,
-    private genresService: GenresService,
-    private categoriesService: CategoriesService,
   ) {}
 
   async create(dto: CreateMangaDto, genres, categories) {
@@ -44,18 +41,210 @@ export class MangaService {
     });
   }
 
-  async getGenreByIds(ids: Array<number>) {
-    return this.genresService.findById(ids);
+  async getMangaTopByQuery(query: SearchMangaDto) {
+    const take = +query.take || 9;
+    const orderby = 'DESC';
+    const types = query.types;
+    const genres = query.genres;
+    const categories = query.categories;
+    const monthAgo = new Date();
+    const topBy = query.topBy || null;
+    monthAgo.setDate(monthAgo.getDate() - 30);
+
+    const qb = this.repository.createQueryBuilder('manga');
+    qb.leftJoinAndSelect('manga.image', 'image')
+      .leftJoinAndSelect('manga.type', 'type')
+      .leftJoinAndSelect('manga.genres', 'genres')
+      .leftJoin('manga.chapters', 'chapters')
+      .leftJoin('chapters.likes', 'likes')
+      .addSelect('COUNT(likes)', 'count')
+      .andWhere('likes.createdAt > :monthAgo', { monthAgo })
+      .groupBy('manga.id')
+      .addGroupBy('chapters.id')
+      .addGroupBy('likes.id')
+      .addGroupBy('image.id')
+      .addGroupBy('type.id')
+      .addGroupBy('genres.id')
+      .take(take)
+      .orderBy('count', orderby);
+
+    if (topBy === 'new') {
+      qb.andWhere('chapters.createdAt > :monthAgo', { monthAgo });
+    }
+
+    types &&
+      types.length > 0 &&
+      qb.andWhere('manga.type IN (:...types)', { types: types });
+
+    genres &&
+      genres.length > 0 &&
+      genres.map((param) => {
+        qb.leftJoin('manga.genres', `genresFilter${param}`);
+        qb.andWhere(`genresFilter${param}.id  = :genres${param}`, {
+          [`genres${param}`]: param,
+        });
+      });
+
+    categories &&
+      categories.length > 0 &&
+      categories.map((param) => {
+        qb.leftJoin('manga.categories', `categoriesFilter${param}`);
+        qb.andWhere(`categoriesFilter${param}.id = :categories${param}`, {
+          [`categories${param}`]: param,
+        });
+      });
+
+    const content = await qb.getMany();
+
+    return content;
   }
 
-  async getCategoryByIds(ids: Array<number>) {
-    return this.categoriesService.findById(ids);
+  async getNewestPopular() {
+    let extraData = [];
+    const take = 20;
+    const monthAgo = new Date();
+    monthAgo.setDate(monthAgo.getDate() - 30);
+
+    const qb = this.repository
+      .createQueryBuilder('manga')
+      .leftJoinAndSelect('manga.image', 'image')
+      .leftJoinAndSelect('manga.type', 'type')
+      .leftJoinAndSelect('manga.genres', 'genres')
+      .leftJoin('manga.chapters', 'chapters')
+      .leftJoin('chapters.likes', 'likes')
+      //.where('COUNT(chapters) < 20')
+      ///.where('manga.createdAt  > :monthAgo', { monthAgo: monthAgo })
+      .addSelect('COUNT(likes)', 'count')
+      .groupBy('manga.id')
+      .addGroupBy('chapters.id')
+      .addGroupBy('likes.id')
+      .addGroupBy('image.id')
+      .addGroupBy('type.id')
+      .addGroupBy('genres.id')
+      .orderBy('count', 'DESC')
+      .take(take);
+
+    const res = await qb.getMany();
+
+    //  For tests
+    if (res.length < take) {
+      const qb = this.repository
+        .createQueryBuilder('manga')
+        .leftJoinAndSelect('manga.image', 'image')
+        .leftJoinAndSelect('manga.type', 'type')
+        .leftJoinAndSelect('manga.genres', 'genres')
+        .leftJoin('manga.chapters', 'chapters')
+        .leftJoin('chapters.likes', 'likes')
+        .addSelect('COUNT(likes)', 'count')
+        .groupBy('manga.id')
+        .addGroupBy('chapters.id')
+        .addGroupBy('likes.id')
+        .addGroupBy('image.id')
+        .addGroupBy('type.id')
+        .addGroupBy('genres.id')
+        .orderBy('count', 'DESC')
+        .take(take - res.length);
+
+      const newRes = await qb.getMany();
+
+      extraData = newRes.filter((obj) => !res.find(({ id }) => obj.id === id));
+    }
+
+    const content = [...res, ...extraData];
+
+    return content;
+  }
+
+  async getTodayPopular(query: SearchMangaDto) {
+    const take = +query.take || 3;
+    const skip = +query.skip || 0;
+
+    const lastDay = new Date();
+    lastDay.setDate(lastDay.getDate() - 1);
+
+    const qb = this.repository
+      .createQueryBuilder('manga')
+      .leftJoinAndSelect('manga.image', 'image')
+      .leftJoinAndSelect('manga.type', 'type')
+      .leftJoin('manga.chapters', 'chapters')
+      .leftJoin('chapters.likes', 'likes')
+      //.where('chapters.createdAt > :lastDay', { lastDay: lastDay })
+      .where('likes.createdAt > :lastDay', { lastDay: lastDay })
+      .addSelect('COUNT(likes)', 'count')
+      .groupBy('manga.id')
+      .addGroupBy('chapters.id')
+      .addGroupBy('likes.id')
+      .addGroupBy('image.id')
+      .addGroupBy('type.id')
+      .orderBy('count', 'DESC')
+      .take(take)
+      .skip(skip);
+
+    const res = await qb.getMany();
+
+    return res;
+  }
+
+  async getWeekPopular() {
+    let extraData = [];
+    const take = 20;
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+
+    const qb = this.repository
+      .createQueryBuilder('manga')
+      .leftJoinAndSelect('manga.image', 'image')
+      .leftJoinAndSelect('manga.type', 'type')
+      .leftJoinAndSelect('manga.genres', 'genres')
+      .leftJoin('manga.chapters', 'chapters')
+      .leftJoin('chapters.likes', 'likes')
+      .where('likes.createdAt  > :weekAgo', { weekAgo: weekAgo })
+      .addSelect('COUNT(likes)', 'count')
+      .groupBy('manga.id')
+      .addGroupBy('chapters.id')
+      .addGroupBy('likes.id')
+      .addGroupBy('image.id')
+      .addGroupBy('type.id')
+      .addGroupBy('genres.id')
+      .addGroupBy('image.id')
+      .orderBy('count', 'DESC')
+      .take(take);
+
+    const res = await qb.getMany();
+
+    //  For tests
+    if (res.length < take) {
+      const qb = this.repository
+        .createQueryBuilder('manga')
+        .leftJoinAndSelect('manga.image', 'image')
+        .leftJoinAndSelect('manga.type', 'type')
+        .leftJoinAndSelect('manga.genres', 'genres')
+        .leftJoin('manga.chapters', 'chapters')
+        .leftJoin('chapters.likes', 'likes')
+        .addSelect('COUNT(likes)', 'count')
+        .groupBy('manga.id')
+        .addGroupBy('chapters.id')
+        .addGroupBy('likes.id')
+        .addGroupBy('image.id')
+        .addGroupBy('type.id')
+        .addGroupBy('genres.id')
+        .orderBy('count', 'DESC')
+        .take(take - res.length);
+
+      const newRes = await qb.getMany();
+
+      extraData = newRes.filter((obj) => !res.find(({ id }) => obj.id === id));
+    }
+
+    const content = [...res, ...extraData];
+
+    return content;
   }
 
   async getMangaByQuery(query: SearchMangaDto) {
-    const take = query.take || 30;
-    const page = query.page || 1;
-    const skip = query.skip || (page - 1) * take;
+    const take = +query.take || 30;
+    const page = +query.page || 1;
+    const skip = +query.skip || (page - 1) * take;
     const orderby = query.orderby || 'DESC';
     const types = query.types;
     const restrictions = query.restrictions;
@@ -175,6 +364,11 @@ export class MangaService {
     throw new NotFoundException("Manga with this id doesn't exist");
   }
 
+  async getOneForUpdate(id: number, user: UserEntity) {
+    //if(manga.publisher !== user.pablishersId){throw new ForbiddenException("You don't have permission to update")}
+    const manga = await this.getMangaById(+id);
+    return manga;
+  }
   async findOneById(id: number, userId?: number) {
     this.repository
       .createQueryBuilder('manga')
