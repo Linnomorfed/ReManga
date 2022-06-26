@@ -28,10 +28,11 @@ export const ChapterApi = (instance: AxiosInstance) => ({
     return data;
   },
 
-  async getNewestChapters() {
-    const { data } = await instance.get<NewestChapteResult[]>(
-      'chapters/newest'
-    );
+  async getNewestChapters(query?: SearchChapterDto) {
+    const { data } = await instance.get<
+      SearchChapterDto,
+      { data: NewestChapteResult[] }
+    >('chapters/newest', { params: query });
     return data;
   },
 

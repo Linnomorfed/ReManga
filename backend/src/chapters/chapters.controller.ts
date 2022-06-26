@@ -33,8 +33,11 @@ export class ChaptersController {
 
   @Get('newest')
   @UseGuards(OptionalJwtAuthGuard)
-  getNewestChapters(@User() user: UserEntity) {
-    return this.chaptersService.getNewestChapters(user);
+  getNewestChapters(
+    @Query() query: SearchChapterDto,
+    @User() user: UserEntity,
+  ) {
+    return this.chaptersService.getNewestChapters(query, user);
   }
 
   @Get()

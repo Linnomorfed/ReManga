@@ -46,7 +46,7 @@ const RecoveryForm: React.FC<RecoveryFormProps> = ({
         onSubmit={form.handleSubmit(onSubmit)}
         autoComplete='off'
         className={styles.form}>
-        <div className='reletive'>
+        <div className='relative'>
           {form.formState.errors?.email?.message && (
             <p className={styles.errorMsg}>
               {form.formState.errors.email.message}

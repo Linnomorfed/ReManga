@@ -33,6 +33,7 @@ export interface ChapterPage {
 
 export type NewestChapteResult = ChapterResult & {
   manga: ResponceManga;
+  repeatsCount: number;
 };
 
 export interface CreateChapterDto {
@@ -41,8 +42,9 @@ export interface CreateChapterDto {
   volume: number;
 }
 export interface SearchChapterDto {
-  mangaId: number;
+  mangaId?: number;
   orderBy?: 'DESC' | 'ASC';
+  isOnlyMyBookmarks?: 0 | 1;
 }
 
 export interface CreateChapterLikeDto {

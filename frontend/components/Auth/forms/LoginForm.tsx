@@ -84,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className={styles.form}
           autoComplete='off'>
-          <div className='reletive d-flex'>
+          <div className='relative d-flex'>
             {form.formState.errors?.email?.message && (
               <p className={styles.errorMsg}>
                 {form.formState.errors.email.message}
@@ -101,7 +101,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               placeholder='Email...'
             />
           </div>
-          <div className='reletive'>
+          <div className='relative'>
             {form.formState.errors?.password?.message && (
               <p className={styles.errorMsg}>
                 {form.formState.errors.password.message}

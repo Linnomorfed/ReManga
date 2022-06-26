@@ -18,7 +18,7 @@ const Carousel: FC<SliderProps> = ({ items, title, variant }) => {
 
       <CarouselProvider
         naturalSlideWidth={variant === 'popular' ? 170 : 138}
-        naturalSlideHeight={variant === 'popular' ? 330 : 300}
+        naturalSlideHeight={variant === 'popular' ? 350 : 300}
         totalSlides={20}
         visibleSlides={variant === 'popular' ? 12 : 6}>
         <Slider

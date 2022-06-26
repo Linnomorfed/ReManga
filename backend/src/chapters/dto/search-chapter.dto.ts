@@ -1,4 +1,6 @@
 export class SearchChapterDto {
-  mangaId: string;
+  mangaId?: string;
   orderBy?: 'DESC' | 'ASC';
+
+  isOnlyMyBookmarks?: 1 | 0;
 }

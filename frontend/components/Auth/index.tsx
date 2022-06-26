@@ -8,6 +8,7 @@ import styles from './Auth.module.scss';
 import { useAppSelector } from '../../hooks/redux';
 import { selectAuthModalData } from '../../redux/slices/authModalSlice';
 import { formTypeEnum } from '../../models/IAuth';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 const Auth: React.FC = () => {
   const authModalVisibility = useAppSelector(selectAuthModalData);
@@ -21,14 +22,8 @@ const Auth: React.FC = () => {
     setVisibleAuthModal(!visibleAuthModal);
   };
 
-  const initialRender = React.useRef(true);
-
-  React.useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else {
-      setVisibleAuthModal(true);
-    }
+  useDidMountEffect(() => {
+    setVisibleAuthModal(true);
   }, [authModalVisibility]);
 
   return (

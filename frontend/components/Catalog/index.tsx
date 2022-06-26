@@ -8,10 +8,10 @@ import Pagination from '../UI/Pagination';
 import SortBy from './SortBy';
 import styles from './Catalog.module.scss';
 import { MangaCard } from '../UI';
-import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/redux';
 import { selectFiltersData } from '../../redux/slices/filtersSlice';
 import { selectSortByData } from '../../redux/slices/sortBySlice';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 interface CatalogProps {
   filters: FiltersDataResponce;
@@ -57,32 +57,26 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
     setCardVariant(type);
   };
 
-  const initialRender = React.useRef(true);
+  useDidMountEffect(() => {
+    (async () => {
+      const manga = await Api().manga.getMangaByQuery({
+        sortby: CatalogSortBy[catalogSortBy - 1].filter,
+        page: currentPage,
+        take: showPerPage,
+        orderby: currentOrder,
+        types,
+        genres,
+        categories,
+        restrictions,
+        statuses,
+        excludedTypes,
+        excludedGenres,
+        excludedCategories,
+      });
 
-  React.useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else {
-      (async () => {
-        const manga = await Api().manga.getMangaByQuery({
-          sortby: CatalogSortBy[catalogSortBy - 1].filter,
-          page: currentPage,
-          take: showPerPage,
-          orderby: currentOrder,
-          types,
-          genres,
-          categories,
-          restrictions,
-          statuses,
-          excludedTypes,
-          excludedGenres,
-          excludedCategories,
-        });
-
-        setMangaItems(manga.items);
-        setTotalCount(manga.count);
-      })();
-    }
+      setMangaItems(manga.items);
+      setTotalCount(manga.count);
+    })();
   }, [
     types,
     genres,
@@ -111,7 +105,7 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
             callbackOrder={callbackOrder}
             returnCardVariant={toggleCardType}
           />
-          <div className={classNames(styles.mangaList)}>
+          <div className={styles.mangaList}>
             {mangaItems.map((obj) => (
               <MangaCard
                 key={obj.id}

@@ -14,6 +14,8 @@ interface MangaCartVerticalProps {
   chapterNumber?: number;
   chapterDate?: string;
   chapterName?: string | null;
+  isPaid?: boolean;
+  repeatsCount?: number;
 }
 
 const MangaCartVertical: FC<MangaCartVerticalProps> = ({
@@ -22,7 +24,9 @@ const MangaCartVertical: FC<MangaCartVerticalProps> = ({
   chapterVolume,
   chapterNumber,
   chapterDate,
-  chapterName
+  chapterName,
+  isPaid = false,
+  repeatsCount,
 }) => {
   return (
     <Link href={`/manga/${data.id}`}>
@@ -41,16 +45,24 @@ const MangaCartVertical: FC<MangaCartVerticalProps> = ({
                 {data.title}
               </p>
 
-              {/* <ForPaidSvg fill={'#f50057'} w={20} h={20} /> */}
+              {isPaid && <ForPaidSvg fill={'#f50057'} w={20} h={20} />}
             </div>
             <div className='d-flex align-center'>
               <p className={classNames(styles.chapter, styles.chapterFresh)}>
-                Volume {chapterVolume}. Chapter {chapterNumber}. {chapterName && chapterName}
+                Volume {chapterVolume}. Chapter {chapterNumber}.{' '}
+                {chapterName && chapterName}
               </p>
-              {/* <small className={styles.small}> + 1 more chapter</small> */}
+              {repeatsCount && repeatsCount > 1 && (
+                <small className={styles.small}>
+                  {' '}
+                  +{repeatsCount} more chapters
+                </small>
+              )}
             </div>
 
-            <small className={styles.small}>{chapterDate && <TimeAgo datetime={chapterDate} />}</small>
+            <small className={styles.small}>
+              {chapterDate && <TimeAgo datetime={chapterDate} />}
+            </small>
           </div>
         </div>
       ) : (

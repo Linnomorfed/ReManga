@@ -85,7 +85,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className={styles.form}
         autoComplete='off'>
-        <div className='reletive'>
+        <div className='relative'>
           {form.formState.errors?.nickname?.message && (
             <p className={styles.errorMsg}>
               {form.formState.errors.nickname.message}
@@ -111,7 +111,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </div>
         </div>
 
-        <div className='reletive'>
+        <div className='relative'>
           {form.formState.errors?.email?.message && (
             <p className={styles.errorMsg}>
               {form.formState.errors.email.message}
@@ -135,7 +135,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </div>
         </div>
 
-        <div className='reletive'>
+        <div className='relative'>
           {form.formState.errors?.password?.message && (
             <p className={styles.errorMsg}>
               {form.formState.errors.password.message}
@@ -168,7 +168,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </div>
         </div>
 
-        <div className='reletive'>
+        <div className='relative'>
           {form.formState.errors?.passwordConfirm?.message && (
             <p className={styles.errorMsg}>
               {form.formState.errors.passwordConfirm.message}

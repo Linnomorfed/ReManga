@@ -1,5 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
 import { MangaEntity } from 'src/manga/entities/manga.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { getRepository, Repository } from 'typeorm';
@@ -127,7 +132,6 @@ export class ChaptersService {
       .getMany();
 
     const index = AllChapters.map((obj) => obj.id).indexOf(result.id);
-    console.log(index);
 
     const lastIndex = AllChapters.length - 1;
 
@@ -140,8 +144,15 @@ export class ChaptersService {
     return { content, nextPageId, prevPageId };
   }
 
-  async getNewestChapters(user?: UserEntity) {
+  async getNewestChapters(query: SearchChapterDto, user?: UserEntity) {
     const take = 20;
+    const isOnlyMyBookmarks = +query.isOnlyMyBookmarks || 0;
+
+    console.log(isOnlyMyBookmarks, 'isOnlyMyBookmarks');
+
+    if (isOnlyMyBookmarks && !user) {
+      throw new ForbiddenException('Not authorized');
+    }
 
     const qb = this.repository
       .createQueryBuilder('chapters')
@@ -155,44 +166,43 @@ export class ChaptersService {
       .orderBy('chapters.createdAt', 'DESC')
       .take(take);
 
+    if (isOnlyMyBookmarks === 1) {
+      const mangaRes = await getRepository(BookmarksEntity)
+        .createQueryBuilder('bookmarks')
+        .leftJoinAndSelect('bookmarks.manga', 'manga')
+        .where('bookmarks.userId = :userId', { userId: user.id })
+        .select('manga.id', 'id')
+        .getRawMany();
+
+      const ids = mangaRes.map((obj) => obj.id);
+      qb.andWhere('manga.id IN (:...ids)', { ids });
+    }
+
     const res = await qb.getMany();
 
-    return res;
+    const counts = {};
 
-    //TODO: TA
-    //const take = 20
-    //let newRes=[]
+    res.forEach((el) => {
+      counts[el.manga.id] = (counts[el.manga.id] || 0) + 1;
+    });
 
-    //const count = {};
-    //...
-    // arr.forEach(element => {
-    //count[element] = (count[element] || 0) + 1;
-    //});
+    let newArr = [];
+    res.map(
+      (obj) =>
+        (newArr = [
+          ...newArr,
+          {
+            ...obj,
+            repeatsCount: counts[obj.manga.id],
+          },
+        ]),
+    );
 
-    //...
-    // function uniq(items: number[]) {
-    //   return Array.from(new Set(items));
-    // }
-    // ...
-    // const items =  await qb.getMany().
-    //  ...
-    // const sortedArr = uniq(items)
-    //const newCount = sortedArr.count
-    //...loop...
-    // ...
-    // if(newCount < take) {
-    // ...
-    // qb.skip(take)
-    // qb.take(take*2 - newCount)
-    // ...
-    // newRes = await qb.getMany()
-    // ... new loop?
-    // const newResUniq = uniq(newRes)
-    //
-    // }
-    // const content = [...sortedArr,...newRes]
-    //return content
-    //
+    const uniqueArr = Object.values(
+      newArr.reduce((acc, obj) => ({ ...acc, [obj.manga.id]: obj }), {}),
+    );
+
+    return uniqueArr;
   }
 
   update(id: number, dto: UpdateChapterDto) {

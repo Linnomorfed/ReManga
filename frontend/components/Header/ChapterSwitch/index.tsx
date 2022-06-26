@@ -1,6 +1,7 @@
 import { useWhyDidYouUpdate } from 'ahooks';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { SelectSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
@@ -11,17 +12,15 @@ import ChapterList from '../ChapterList';
 import styles from './ChapterSwitch.module.scss';
 
 const ChapterSwitch = () => {
+  const router = useRouter();
+
   const { currentChapter, nextPageId, prevPageId, isLoading } =
     useAppSelector(selectChaptersData);
 
   const [chapterListVisible, setChapterListVisible] =
     React.useState<boolean>(false);
 
-  const toggleChapterListVisibility = () => {
-    setChapterListVisible(!chapterListVisible);
-  };
-
-  const { componentRef } = useOutsideClick(
+  const { toggleVisibility, componentRef } = useOutsideClick(
     chapterListVisible,
     setChapterListVisible
   );
@@ -34,32 +33,39 @@ const ChapterSwitch = () => {
     );
   }
 
+  const toNextChapter = () => {
+    nextPageId &&
+      router.push(`/manga/${currentChapter?.mangaId}/${nextPageId}`);
+    setChapterListVisible(false);
+  };
+  const toPrevChapter = () => {
+    prevPageId &&
+      router.push(`/manga/${currentChapter?.mangaId}/${prevPageId}`);
+    setChapterListVisible(false);
+  };
+
   return (
     <div ref={componentRef}>
       <div className={styles.switch}>
-        <Link href={`/manga/${currentChapter?.mangaId}/${prevPageId}`}>
-          <a
-            className={classNames(
-              styles.switchBtn,
-              `${!prevPageId ? styles.switchBtnDisabled : ''}`
-            )}>
-            <SelectSvg w={24} fill='white' />
-          </a>
-        </Link>
         <button
-          className={styles.switchBtn}
-          onClick={toggleChapterListVisibility}>
+          onClick={toPrevChapter}
+          className={classNames(
+            styles.switchBtn,
+            `${!prevPageId ? styles.switchBtnDisabled : ''}`
+          )}>
+          <SelectSvg w={24} fill='white' />
+        </button>
+        <button className={styles.switchBtn} onClick={toggleVisibility}>
           Chapter {currentChapter?.chapter_number}
         </button>
-        <Link href={`/manga/${currentChapter?.mangaId}/${nextPageId}`}>
-          <a
-            className={classNames(
-              styles.switchBtn,
-              `${!nextPageId ? styles.switchBtnDisabled : ''}`
-            )}>
-            <SelectSvg w={24} fill='white' />
-          </a>
-        </Link>
+        <button
+          onClick={toNextChapter}
+          className={classNames(
+            styles.switchBtn,
+            `${!nextPageId ? styles.switchBtnDisabled : ''}`
+          )}>
+          <SelectSvg w={24} fill='white' />
+        </button>
       </div>
       {chapterListVisible && <ChapterList />}
     </div>
