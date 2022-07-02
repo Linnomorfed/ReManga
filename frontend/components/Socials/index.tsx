@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { DiscordSvg, TelegramSvg, TiktokSvg, VKSvg } from '../../assets/svgs';
 import styles from './Socials.module.scss';
 
-const Socials: FC = () => {
+export const Socials: FC = () => {
   return (
     <div className={styles.socials}>
       <VKSvg fill='white' w={25} h={25} />
@@ -12,5 +12,3 @@ const Socials: FC = () => {
     </div>
   );
 };
-
-export default Socials;

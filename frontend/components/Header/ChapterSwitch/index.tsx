@@ -6,12 +6,12 @@ import React from 'react';
 import { SelectSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { selectChaptersData } from '../../../redux/slices/chapterSlice';
+import { selectChaptersData } from '../../../redux/Chapter/selectors';
 import { CircularLoader } from '../../UI';
-import ChapterList from '../ChapterList';
+import { ChapterList } from '../ChapterList';
 import styles from './ChapterSwitch.module.scss';
 
-const ChapterSwitch = () => {
+export const ChapterSwitch = () => {
   const router = useRouter();
 
   const { currentChapter, nextPageId, prevPageId, isLoading } =
@@ -71,5 +71,3 @@ const ChapterSwitch = () => {
     </div>
   );
 };
-
-export default ChapterSwitch;

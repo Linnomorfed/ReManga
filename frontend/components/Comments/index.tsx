@@ -2,17 +2,20 @@ import React from 'react';
 import { ResponceCommentItem } from '../../models/IComments';
 import { Api } from '../../services/api';
 import { CommentLoader } from '../UI';
-import AddComment from './AddComment';
+import { AddComment } from './AddComment';
 import styles from './Comments.module.scss';
-import CommentsList from './CommentsList';
+import { CommentsList } from './CommentsList';
 
 interface CommentsProps {
   mangaId: number;
   chapterId?: number;
 }
 
-const Comments: React.FC<CommentsProps> = ({ mangaId, chapterId = null, }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+export const Comments: React.FC<CommentsProps> = ({
+  mangaId,
+  chapterId = null,
+}) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [comments, setComments] = React.useState<ResponceCommentItem[]>([]);
   const [pinnedComment, setPinnedComment] =
     React.useState<ResponceCommentItem | null>(null);
@@ -23,12 +26,13 @@ const Comments: React.FC<CommentsProps> = ({ mangaId, chapterId = null, }) => {
       try {
         setIsLoading(true);
         const comments = await Api().comments.getComments({
-          mangaId, chapterId
+          mangaId,
+          chapterId,
         });
         setComments(comments.items);
         setCommentsCount(comments.count);
         setPinnedComment(comments.pinned);
-        setIsLoading(false)
+        setIsLoading(false);
       } catch (err) {
         console.warn('Fetch comments', err);
       }
@@ -45,12 +49,20 @@ const Comments: React.FC<CommentsProps> = ({ mangaId, chapterId = null, }) => {
       <h4 className={styles.commentsCount}>
         Comments {commentsCount > 0 && '(' + commentsCount + ')'}
       </h4>
-      <AddComment chapterId={chapterId} mangaId={mangaId} updateComments={updateComments} />
-      {isLoading ? Array.from(Array(3), (_, i) => <CommentLoader key={i} />)
-        :
-        <CommentsList commentsCount={commentsCount} comments={comments} pinnedComment={pinnedComment} />}
+      <AddComment
+        chapterId={chapterId}
+        mangaId={mangaId}
+        updateComments={updateComments}
+      />
+      {isLoading ? (
+        Array.from(Array(3), (_, i) => <CommentLoader key={i} />)
+      ) : (
+        <CommentsList
+          commentsCount={commentsCount}
+          comments={comments}
+          pinnedComment={pinnedComment}
+        />
+      )}
     </div>
   );
 };
-
-export default Comments;

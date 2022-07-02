@@ -2,11 +2,11 @@ import React from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { ResponseUser } from '../../models/IAuth';
 import { ResponseBookmark } from '../../models/IBookmarks';
-import { selectUserData } from '../../redux/slices/userSlice';
-import Bookmarks from '../Bookmarks';
-import Header from './UserPanelHeader';
-import Publishers from './Publishers';
+import { Bookmarks } from '../Bookmarks';
+import { Header } from './UserPanelHeader';
+import { Publishers } from './Publishers';
 import styles from './UserPanel.module.scss';
+import { selectUserData } from '../../redux/User/selectors';
 
 interface UserPanelProps {
   user: ResponseUser;
@@ -14,7 +14,7 @@ interface UserPanelProps {
   bookmarksCount: number[];
 }
 
-const UserPanel: React.FC<UserPanelProps> = ({
+export const UserPanel: React.FC<UserPanelProps> = ({
   user,
   preloadedData,
   bookmarksCount,
@@ -44,5 +44,3 @@ const UserPanel: React.FC<UserPanelProps> = ({
     </>
   );
 };
-
-export default UserPanel;

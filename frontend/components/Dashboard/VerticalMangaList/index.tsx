@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { ResponceManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
-import MangaCartVertical from '../../UI/Cards/MangaCardVertical';
-import ShowMoreButton from '../../UI/ShowMoreButton';
+import { MangaCartVertical } from '../../UI/Cards/MangaCardVertical';
+import { ShowMoreButton } from '../../UI/ShowMoreButton';
 import styles from './VerticalMangaList.module.scss';
 
 interface VerticalMangaListProps {
@@ -13,7 +13,7 @@ interface VerticalMangaListProps {
   variant: 'newest' | 'popularToday';
 }
 
-const VerticalMangaList: FC<VerticalMangaListProps> = ({
+export const VerticalMangaList: FC<VerticalMangaListProps> = ({
   title = 'title',
   minCount,
   maxCount,
@@ -67,5 +67,3 @@ const VerticalMangaList: FC<VerticalMangaListProps> = ({
     </>
   );
 };
-
-export default VerticalMangaList;

@@ -7,29 +7,27 @@ import {
   PanelSvg,
   ThemeSvg,
 } from '../../assets/svgs';
-import UserPopup from './UserPopup';
+import { UserPopup } from './UserPopup';
 import Link from 'next/link';
 import classNames from 'classnames';
-import Auth from '../Auth';
+import { Auth } from '../Auth';
 import { useAppSelector } from '../../hooks/redux';
-import { selectUserData } from '../../redux/slices/userSlice';
-import UserAvatar from '../UI/UserAvatar';
+import { UserAvatar } from '../UI/UserAvatar';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import Search from './Search/Search';
-import ChapterSwitch from './ChapterSwitch';
-import { selectChaptersData } from '../../redux/slices/chapterSlice';
+import { Search } from './Search/Search';
+import { ChapterSwitch } from './ChapterSwitch';
 import { SingleDropdown } from '../UI';
 import { BookmarkTypes } from '../../utils/static/Bookmarks';
-import {
-  selectSortByData,
-  setMangaBookmarkId,
-} from '../../redux/slices/sortBySlice';
+import { selectUserData } from '../../redux/User/selectors';
+import { selectChaptersData } from '../../redux/Chapter/selectors';
+import { selectSortByData } from '../../redux/SortBy/selectors';
+import { setMangaBookmarkId } from '../../redux/SortBy/slice';
 
 interface HeaderProps {
   variant?: 'default' | 'transparent' | 'chapter';
 }
 
-const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
+export const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
   const userData = useAppSelector(selectUserData);
   const { currentChapter } = useAppSelector(selectChaptersData);
   const { mangaBookmarkId } = useAppSelector(selectSortByData);
@@ -186,5 +184,3 @@ const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
     </div>
   );
 };
-
-export default Header;

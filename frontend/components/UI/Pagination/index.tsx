@@ -8,7 +8,7 @@ interface PaginationProps {
   totalCount: number;
 }
 
-const Pagination: FC<PaginationProps> = ({
+export const Pagination: FC<PaginationProps> = ({
   itemsPerPage,
   totalCount,
   toggleCurrentPage,
@@ -52,5 +52,3 @@ const Pagination: FC<PaginationProps> = ({
     </>
   );
 };
-
-export default Pagination;

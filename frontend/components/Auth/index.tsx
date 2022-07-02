@@ -1,16 +1,16 @@
 import classNames from 'classnames';
 import React from 'react';
-import ModalBlock from '../ModalBlock';
-import LoginForm from './forms/LoginForm';
-import RecoveryForm from './forms/RecoveryForm';
-import RegistrationForm from './forms/RegistrationForm';
+import { ModalBlock } from '../ModalBlock';
+import { LoginForm } from './forms/LoginForm';
+import { RecoveryForm } from './forms/RecoveryForm';
+import { RegistrationForm } from './forms/RegistrationForm';
 import styles from './Auth.module.scss';
 import { useAppSelector } from '../../hooks/redux';
-import { selectAuthModalData } from '../../redux/slices/authModalSlice';
 import { formTypeEnum } from '../../models/IAuth';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import { selectAuthModalData } from '../../redux/Auth/selectors';
 
-const Auth: React.FC = () => {
+export const Auth: React.FC = () => {
   const authModalVisibility = useAppSelector(selectAuthModalData);
 
   const [formType, setFormType] = React.useState<formTypeEnum>(
@@ -62,5 +62,3 @@ const Auth: React.FC = () => {
     </>
   );
 };
-
-export default Auth;

@@ -13,7 +13,7 @@ import {
   ShowPassSvg,
 } from '../../../assets/svgs';
 import classNames from 'classnames';
-import ModalBtn from '../../UI/ModalBtn';
+import { ModalBtn } from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegistrationFormSchema } from '../../../utils/schemas/loginValidation';
@@ -25,7 +25,7 @@ interface RegistrationFormProps {
   toggleLoginVisibility: () => void;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({
+export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   setFormType,
   toggleLoginVisibility,
 }) => {
@@ -224,5 +224,3 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     </div>
   );
 };
-
-export default RegistrationForm;

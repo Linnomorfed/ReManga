@@ -11,7 +11,7 @@ interface BlueBtnProps {
   onClick?: () => void;
 }
 
-const BlueBtn: React.FC<BlueBtnProps> = ({
+export const BlueBtn: React.FC<BlueBtnProps> = ({
   children,
   type = 'default',
   disabled = false,
@@ -33,5 +33,3 @@ const BlueBtn: React.FC<BlueBtnProps> = ({
     </button>
   );
 };
-
-export default BlueBtn;

@@ -6,7 +6,9 @@ interface CircularLoaderProps {
   isSmall?: boolean;
 }
 
-const CircularLoader: React.FC<CircularLoaderProps> = ({ isSmall = false }) => {
+export const CircularLoader: React.FC<CircularLoaderProps> = ({
+  isSmall = false,
+}) => {
   return (
     <svg
       className={classNames(
@@ -24,5 +26,3 @@ const CircularLoader: React.FC<CircularLoaderProps> = ({ isSmall = false }) => {
     </svg>
   );
 };
-
-export default CircularLoader;

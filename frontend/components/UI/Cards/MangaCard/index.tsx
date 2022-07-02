@@ -21,7 +21,7 @@ interface MangaCardProps {
   type?: string;
 }
 
-const MangaCard: FC<MangaCardProps> = ({
+export const MangaCard: FC<MangaCardProps> = ({
   title,
   url,
   mangaId,
@@ -35,7 +35,11 @@ const MangaCard: FC<MangaCardProps> = ({
   genres,
   type,
 }) => {
-  const sortedGenres = genres ? genres.sort() : null;
+  const sortedGenres = genres
+    ? [...genres].sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      )
+    : null;
   const firstGenre = sortedGenres ? sortedGenres[0].name : null;
 
   const [selected, setSelected] = React.useState(false);
@@ -110,5 +114,3 @@ const MangaCard: FC<MangaCardProps> = ({
     </div>
   );
 };
-
-export default MangaCard;

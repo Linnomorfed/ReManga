@@ -1,29 +1,28 @@
 import React from 'react';
 import styles from './MangaContent.module.scss';
-import { BlueBtn, ModalBtn, TabBtn } from '../UI';
-import Comments from '../Comments';
+import { TabBtn } from '../UI';
+import { Comments } from '../Comments';
 import { ResponceManga } from '../../models/IManga';
 import { ResponseBookmark } from '../../models/IBookmarks';
-import LeftPanel from './LeftPanel';
-import MangaInfo from './MangaInfo';
-import Chapters from './Chapters';
 import { RatingResponse } from '../../models/IRating';
-import Description from './Description';
+import { Description } from './Description';
+import { LeftPanel } from './LeftPanel';
+import { MangaInfo } from './MangaInfo';
+import { Chapters } from './Chapters';
 
-interface MangaContentProps {
+export interface MangaContentProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
   ratedByUser: RatingResponse | null;
   chaptersCount: number;
 }
 
-const MangaContent: React.FC<MangaContentProps> = ({
+export const MangaContent: React.FC<MangaContentProps> = ({
   manga,
   bookmark,
   ratedByUser,
-  chaptersCount
+  chaptersCount,
 }) => {
-
   const [activeTab, setActiveTab] = React.useState<number>(1);
 
   const onTabClick = (id: number) => {
@@ -79,7 +78,6 @@ const MangaContent: React.FC<MangaContentProps> = ({
             )}
 
             {activeTab === 2 && <Chapters mangaId={manga.id} />}
-
           </div>
           <div className={styles.querter}>
             <div className={styles.rightMangaContainer}>
@@ -93,5 +91,3 @@ const MangaContent: React.FC<MangaContentProps> = ({
     </>
   );
 };
-
-export default MangaContent;

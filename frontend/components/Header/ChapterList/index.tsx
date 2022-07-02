@@ -3,10 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import { LockSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
-import { selectChaptersData } from '../../../redux/slices/chapterSlice';
+import { selectChaptersData } from '../../../redux/Chapter/selectors';
 import styles from './ChapterList.module.scss';
 
-const ChapterList: React.FC = () => {
+export const ChapterList: React.FC = () => {
   const { mangaChapters, currentChapter } = useAppSelector(selectChaptersData);
 
   return (
@@ -33,5 +33,3 @@ const ChapterList: React.FC = () => {
     </div>
   );
 };
-
-export default ChapterList;

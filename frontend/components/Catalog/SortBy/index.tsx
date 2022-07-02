@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
-import Dropdown from '../../UI/Dropdown';
 import { BlockViewSvg, ListViewSvg, SwitchSvg } from '../../../assets/svgs';
 import classNames from 'classnames';
 import styles from './SortBy.module.scss';
 import { CatalogSortBy } from '../../../utils/static/Catalog';
 import { SingleDropdown } from '../../UI';
 import { useAppSelector } from '../../../hooks/redux';
-import {
-  selectSortByData,
-  setCatalogSortBy,
-} from '../../../redux/slices/sortBySlice';
+import { selectSortByData } from '../../../redux/SortBy/selectors';
+import { setCatalogSortBy } from '../../../redux/SortBy/slice';
 
 interface SortByProps {
   callbackOrder: (order: boolean) => void;
   returnCardVariant: (type: 'list' | 'block') => void;
 }
 
-const SortBy: FC<SortByProps> = ({ callbackOrder, returnCardVariant }) => {
+export const SortBy: FC<SortByProps> = ({
+  callbackOrder,
+  returnCardVariant,
+}) => {
   const { catalogSortBy } = useAppSelector(selectSortByData);
 
   const [currentOrder, setCurrentOrder] = React.useState<boolean>(false);
@@ -66,5 +66,3 @@ const SortBy: FC<SortByProps> = ({ callbackOrder, returnCardVariant }) => {
     </div>
   );
 };
-
-export default SortBy;

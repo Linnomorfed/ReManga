@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import React from 'react';
 import { EditSvg } from '../../assets/svgs';
 import { useAppSelector } from '../../hooks/redux';
-import { selectUserData } from '../../redux/slices/userSlice';
+import { selectUserData } from '../../redux/User/selectors';
 import { Api } from '../../services/api';
-import ModalBlock from '../ModalBlock';
+import { ModalBlock } from '../ModalBlock';
 import { ModalBtn } from '../UI';
 import styles from './UserPanel.module.scss';
 
@@ -13,7 +13,7 @@ interface ChangeNicknameProps {
   userId: number;
 }
 
-const ChangeNickname: React.FC<ChangeNicknameProps> = ({
+export const ChangeNickname: React.FC<ChangeNicknameProps> = ({
   nickname,
   userId,
 }) => {
@@ -76,5 +76,3 @@ const ChangeNickname: React.FC<ChangeNicknameProps> = ({
     </>
   );
 };
-
-export default ChangeNickname;

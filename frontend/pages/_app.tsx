@@ -1,11 +1,11 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { setUserData } from '../redux/slices/userSlice';
 import { wrapper } from '../redux/store';
 import { Api } from '../services/api';
 import '../styles/app.scss';
 import '../styles/_helpers.scss';
+import { setUserData } from '../redux/User/slice';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -27,14 +27,8 @@ App.getInitialProps = wrapper.getInitialAppProps(
         const userData = await Api(ctx).user.getCurrentUser();
 
         store.dispatch(setUserData(userData));
-      } catch (error) {
-        console.log(error);
-        if (ctx.asPath === '/panel') {
-          ctx.res?.writeHead(302, {
-            Location: '/',
-          });
-          ctx.res?.end();
-        }
+      } catch (err) {
+        console.log(err);
       }
 
       return {

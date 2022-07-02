@@ -1,35 +1,25 @@
 import React from 'react';
-import { NewestChapteResult } from '../../models/IChapter';
-import { ResponceManga } from '../../models/IManga';
-import FreshChaptersList from './FreshChaptersList';
-import Socials from '../Socials';
+import { FreshChaptersList } from './FreshChaptersList';
+import { Socials } from '../Socials';
 import { Carousel } from '../UI';
-import VerticalMangaList from './VerticalMangaList';
+import { VerticalMangaList } from './VerticalMangaList';
 import styles from './Dashboard.module.scss';
+import { selectDashboardData } from '../../redux/Dashboard/selectors';
+import { useAppSelector } from '../../hooks/redux';
 
-interface DashboardProps {
-  newestManga: ResponceManga[];
-  weekPopular: ResponceManga[];
-  newestPopular: ResponceManga[];
-  todayPopular: ResponceManga[];
-  newestChapters: NewestChapteResult[];
-}
+export const Dashboard: React.FC = ({}) => {
+  const { weekPopular, newestPopular, todayPopular, newestManga } =
+    useAppSelector(selectDashboardData);
 
-const Dashboard: React.FC<DashboardProps> = ({
-  weekPopular,
-  todayPopular,
-  newestManga,
-  newestPopular,
-  newestChapters,
-}) => {
   return (
     <div className={styles.dashboard}>
       <Carousel items={weekPopular} variant='popular' />
       <div className='container d-flex w100p'>
         <div className={styles.left}>
           <Carousel items={newestPopular} variant='new' title='Hot news' />
-          <FreshChaptersList items={newestChapters} />
+          <FreshChaptersList />
         </div>
+
         <div className={styles.right}>
           <VerticalMangaList
             items={todayPopular}
@@ -52,5 +42,3 @@ const Dashboard: React.FC<DashboardProps> = ({
     </div>
   );
 };
-
-export default Dashboard;

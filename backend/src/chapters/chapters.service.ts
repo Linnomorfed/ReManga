@@ -148,8 +148,6 @@ export class ChaptersService {
     const take = 20;
     const isOnlyMyBookmarks = +query.isOnlyMyBookmarks || 0;
 
-    console.log(isOnlyMyBookmarks, 'isOnlyMyBookmarks');
-
     if (isOnlyMyBookmarks && !user) {
       throw new ForbiddenException('Not authorized');
     }

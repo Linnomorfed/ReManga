@@ -11,11 +11,11 @@ interface SingleDropdownProps {
   variant?: 'default' | 'sortBy' | 'manga' | 'header';
   items: ResponceFilter[];
   action: ActionCreatorWithPayload<number, string>;
-  state: number;
+  state: number | null;
   defaultTitle?: string;
 }
 
-const SingleDropdown: React.FC<SingleDropdownProps> = ({
+export const SingleDropdown: React.FC<SingleDropdownProps> = ({
   variant = 'default',
   items,
   action,
@@ -26,7 +26,7 @@ const SingleDropdown: React.FC<SingleDropdownProps> = ({
 
   const [isOpened, setIsOpened] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>(
-    defaultTitle ? defaultTitle : items[state - 1].name
+    defaultTitle ? defaultTitle : state ? items[state - 1].name : ''
   );
 
   const { componentRef, toggleVisibility } = useOutsideClick(
@@ -85,5 +85,3 @@ const SingleDropdown: React.FC<SingleDropdownProps> = ({
     </div>
   );
 };
-
-export default SingleDropdown;

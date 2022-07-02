@@ -1,9 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-
-export interface AuthModalState {
-  visible: boolean;
-}
+import { createSlice } from '@reduxjs/toolkit';
+import { AuthModalState } from './types';
 
 const initialState: AuthModalState = { visible: false };
 
@@ -18,8 +14,5 @@ export const authModalSlice = createSlice({
 });
 
 export const { showAuthModal } = authModalSlice.actions;
-
-export const selectAuthModalData = (state: RootState) =>
-  state.authModal.visible;
 
 export const AuthModalReducer = authModalSlice.reducer;

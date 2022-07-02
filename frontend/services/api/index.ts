@@ -27,7 +27,7 @@ export const Api = (
   const token = cookies.remangaToken;
 
   const instance = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: process.env.NEXT_PUBLIC_NODE_URL,
     headers: {
       Authorization: 'Bearer ' + token,
     },

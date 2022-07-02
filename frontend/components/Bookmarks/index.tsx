@@ -1,28 +1,21 @@
 import React from 'react';
-import { Dropdown, SingleDropdown, TabBtn } from '../UI';
+import { SingleDropdown, TabBtn } from '../UI';
 import styles from './Bookmarks.module.scss';
 import { BookmarkTypes } from '../../utils/static/Bookmarks';
 import { ResponceFilter } from '../../models/IFilters';
-import MangaCard from '../UI/Cards/MangaCard';
+import { MangaCard } from '../UI/Cards/MangaCard';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { Api } from '../../services/api';
 import classNames from 'classnames';
 import { DeleteSvg, EditSvg, HistorySvg, SettingsSvg } from '../../assets/svgs';
 import { bookmarkListFilters } from '../../utils/static/BookmarkListFilters';
-import {
-  selectSortByData,
-  setBookmarksSortBy,
-} from '../../redux/slices/sortBySlice';
+
 import { useAppSelector } from '../../hooks/redux';
+import { selectSortByData } from '../../redux/SortBy/selectors';
+import { setBookmarksSortBy } from '../../redux/SortBy/slice';
+import { BookmarksProps } from './IBookmarksProps';
 
-interface BookmarksProps {
-  preloadedData: ResponseBookmark[];
-  preloadedBookmarksCount: number[];
-  userId: number;
-  type?: 'default' | 'bookmarks';
-}
-
-const Bookmarks: React.FC<BookmarksProps> = ({
+export const Bookmarks: React.FC<BookmarksProps> = ({
   preloadedData,
   preloadedBookmarksCount,
   userId,
@@ -197,5 +190,3 @@ const Bookmarks: React.FC<BookmarksProps> = ({
     </>
   );
 };
-
-export default Bookmarks;

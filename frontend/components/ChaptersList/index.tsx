@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { fetchChapters } from '../../../redux/actions/chapterActions';
-import { selectChaptersData } from '../../../redux/slices/chapterSlice';
-import BlueBtn from '../BlueBtn';
-import CircularLoader from '../Loaders/CircularLoader';
-import ChapterItem from './ChapterItem';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchChapters } from '../../redux/Chapter/actions';
+import { selectChaptersData } from '../../redux/Chapter/selectors';
+import { BlueBtn } from '../UI/BlueBtn';
+import { CircularLoader } from '../UI/Loaders/CircularLoader';
+import { ChapterItem } from './ChapterItem';
 import styles from './ChaptersList.module.scss';
 
 interface ChapterListProps {
@@ -12,7 +12,7 @@ interface ChapterListProps {
   mangaId?: number;
 }
 
-const ChaptersList: React.FC<ChapterListProps> = ({
+export const ChaptersList: React.FC<ChapterListProps> = ({
   variant = 'manga',
   mangaId,
 }) => {
@@ -87,5 +87,3 @@ const ChaptersList: React.FC<ChapterListProps> = ({
     </>
   );
 };
-
-export default ChaptersList;

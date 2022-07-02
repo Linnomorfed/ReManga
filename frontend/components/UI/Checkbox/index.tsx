@@ -1,21 +1,21 @@
-import React from 'react'
-import { CheckboxCheckedSvg, CheckboxSvg } from '../../../assets/svgs'
-import styles from './Checkbox.module.scss'
+import React from 'react';
+import { CheckboxCheckedSvg, CheckboxSvg } from '../../../assets/svgs';
+import useDidMountEffect from '../../../hooks/useDidMountEffect';
+import styles from './Checkbox.module.scss';
 interface CheckboxProps {
   returnValue: (checked: boolean) => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ returnValue }) => {
-
+export const Checkbox: React.FC<CheckboxProps> = ({ returnValue }) => {
   const [checked, setChecked] = React.useState(false);
 
   const toggleCheckBox = () => {
-    setChecked(!checked)
-  }
+    setChecked(!checked);
+  };
 
-  React.useEffect(() => {
-    returnValue(checked)
-  }, [checked])
+  useDidMountEffect(() => {
+    returnValue(checked);
+  }, [checked]);
 
   return (
     <div className={styles.checkboxContainer}>
@@ -31,7 +31,5 @@ const Checkbox: React.FC<CheckboxProps> = ({ returnValue }) => {
         <CheckboxSvg fill={'white'} w={24} h={24} />
       )}
     </div>
-  )
-}
-
-export default Checkbox
+  );
+};

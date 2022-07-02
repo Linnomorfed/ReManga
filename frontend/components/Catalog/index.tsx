@@ -3,15 +3,15 @@ import { FiltersDataResponce } from '../../models/IFilters';
 import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CatalogSortBy } from '../../utils/static/Catalog';
-import Filters from './Filters';
-import Pagination from '../UI/Pagination';
-import SortBy from './SortBy';
+import { Filters } from './Filters';
+import { Pagination } from '../UI/Pagination';
+import { SortBy } from './SortBy';
 import styles from './Catalog.module.scss';
 import { MangaCard } from '../UI';
 import { useAppSelector } from '../../hooks/redux';
-import { selectFiltersData } from '../../redux/slices/filtersSlice';
-import { selectSortByData } from '../../redux/slices/sortBySlice';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import { selectFiltersData } from '../../redux/Filters/selectors';
+import { selectSortByData } from '../../redux/SortBy/selectors';
 
 interface CatalogProps {
   filters: FiltersDataResponce;
@@ -19,7 +19,11 @@ interface CatalogProps {
   itemsCount: number;
 }
 
-const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
+export const Catalog: React.FC<CatalogProps> = ({
+  filters,
+  manga,
+  itemsCount,
+}) => {
   const showPerPage = 3;
 
   const {
@@ -128,5 +132,3 @@ const Catalog: React.FC<CatalogProps> = ({ filters, manga, itemsCount }) => {
     </>
   );
 };
-
-export default Catalog;

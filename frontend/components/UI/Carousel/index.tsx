@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styles from './Carousel.module.scss';
 import { ResponceManga } from '../../../models/IManga';
-import MangaCard from '../Cards/MangaCard';
+import { MangaCard } from '../Cards/MangaCard';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -11,7 +11,7 @@ interface SliderProps {
   variant: 'popular' | 'new';
 }
 
-const Carousel: FC<SliderProps> = ({ items, title, variant }) => {
+export const Carousel: FC<SliderProps> = ({ items, title, variant }) => {
   return (
     <div className={`${variant === 'popular' ? styles.bg : ''}`}>
       {title && <h5 className={styles.title}>{title}</h5>}
@@ -42,5 +42,3 @@ const Carousel: FC<SliderProps> = ({ items, title, variant }) => {
     </div>
   );
 };
-
-export default Carousel;

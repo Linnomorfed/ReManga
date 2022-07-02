@@ -11,7 +11,7 @@ import styles from './UserPanel.module.scss';
 import avatar from '/assets/avatar.jpg';
 import coin from '../../assets/coin.png';
 import ticket from '../../assets/ticket.png';
-import ChangeNickname from './ChangeNickname';
+import { ChangeNickname } from './ChangeNickname';
 
 interface HeaderProps {
   nickname: string;
@@ -21,7 +21,7 @@ interface HeaderProps {
   likedChapters: number;
 }
 
-const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<HeaderProps> = ({
   nickname,
   currentUserId,
   userId,
@@ -86,5 +86,3 @@ const Header: React.FC<HeaderProps> = ({
     </div>
   );
 };
-
-export default Header;

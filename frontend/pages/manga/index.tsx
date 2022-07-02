@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import { Catalog } from '../../components';
-import MainLayout from '../../layouts/MainLayout';
+import { MainLayout } from '../../layouts/MainLayout';
 import { FiltersDataResponce } from '../../models/IFilters';
 import { MangaSortEnum, ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
@@ -11,6 +11,10 @@ interface MangaCatalogProps {
   manga: ResponceManga[];
   itemsCount: number;
 }
+
+const Catalog = dynamic<MangaCatalogProps>(() =>
+  import('../../components').then((mod) => mod.Catalog)
+);
 
 const MangaCatalog: NextPage<MangaCatalogProps> = ({
   filters,

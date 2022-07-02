@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import Socials from '../Socials';
+import { Socials } from '../Socials';
 import styles from './Footer.module.scss';
 
-const Footer: FC = () => {
+export const Footer: FC = () => {
   return (
     <div className={styles.footer}>
       <div className='container'>
@@ -44,5 +44,3 @@ const Footer: FC = () => {
     </div>
   );
 };
-
-export default Footer;

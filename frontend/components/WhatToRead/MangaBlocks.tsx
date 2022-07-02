@@ -2,7 +2,7 @@ import React from 'react';
 import { MangaCardBlock } from '../UI';
 import styles from './WhatToRead.module.scss';
 
-const MangaBlocks = () => {
+export const MangaBlocks = () => {
   return (
     <div className='container'>
       <div className={styles.blocksWrapper}>
@@ -14,5 +14,3 @@ const MangaBlocks = () => {
     </div>
   );
 };
-
-export default MangaBlocks;

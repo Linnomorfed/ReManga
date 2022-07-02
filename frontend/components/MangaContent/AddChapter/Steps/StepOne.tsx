@@ -5,7 +5,7 @@ import styles from './Steps.module.scss';
 interface StepOneProps {
   returnData: (volume: number, chapter: number) => void;
 }
-const StepOne: React.FC<StepOneProps> = ({ returnData }) => {
+export const StepOne: React.FC<StepOneProps> = ({ returnData }) => {
   const [chapter, setChapter] = React.useState<number>(1);
   const [volume, setVolume] = React.useState<number>(1);
   const [checked, setChecked] = React.useState<boolean>(false);
@@ -61,5 +61,3 @@ const StepOne: React.FC<StepOneProps> = ({ returnData }) => {
     </div>
   );
 };
-
-export default StepOne;

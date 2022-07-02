@@ -2,7 +2,7 @@ import React from 'react';
 import { BlueBtn } from '../UI';
 import styles from './UserPanel.module.scss';
 
-const Publishers = () => {
+export const Publishers = () => {
   return (
     <div className={styles.publishersWrapper}>
       <h5 className={styles.subtitle}>Within the teams:</h5>
@@ -12,5 +12,3 @@ const Publishers = () => {
     </div>
   );
 };
-
-export default Publishers;

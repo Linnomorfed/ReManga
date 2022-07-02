@@ -5,18 +5,22 @@ import {
   combineReducers,
 } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import { UserReducer } from './slices/userSlice';
-import { AuthModalReducer } from './slices/authModalSlice';
-import { ChapterReducer } from './slices/chapterSlice';
-import { FiltersReducer } from './slices/filtersSlice';
-import { SortByReducer } from './slices/sortBySlice';
+import { UserReducer } from './User/slice';
+import { ChapterReducer } from './Chapter/slice';
+import { FiltersReducer } from './Filters/slice';
+import { SortByReducer } from './SortBy/slice';
+import { AuthModalReducer } from './Auth/slice';
+import { MangaFiltersReducer } from './MangaFilters/slice';
+import { DashboardReducer } from './Dashboard/slice';
 
 const rootReducer = combineReducers({
   user: UserReducer,
   authModal: AuthModalReducer,
-  chapters: ChapterReducer,
+  chapter: ChapterReducer,
   filters: FiltersReducer,
   sortBy: SortByReducer,
+  mangaFilters: MangaFiltersReducer,
+  dashboard: DashboardReducer,
 });
 
 export function makeStore() {

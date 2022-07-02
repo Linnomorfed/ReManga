@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import { ResponseUser } from '../../models/IAuth';
-import { RootState } from '../store';
-
-export interface UserState {
-  data: ResponseUser | null;
-}
+import { UserState } from './types';
 
 const initialState: UserState = { data: null };
 
@@ -22,7 +18,7 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log('HYDRATE', state, action.payload);
+      console.log('HYDRATE_USER', state, action.payload);
       return {
         ...state,
         ...action.payload.user,
@@ -32,7 +28,5 @@ export const userSlice = createSlice({
 });
 
 export const { setUserData, clearUserData } = userSlice.actions;
-
-export const selectUserData = (state: RootState) => state.user.data;
 
 export const UserReducer = userSlice.reducer;

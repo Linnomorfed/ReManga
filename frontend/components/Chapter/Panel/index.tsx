@@ -7,15 +7,13 @@ import {
   WarnSvg,
 } from '../../../assets/svgs';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import {
-  selectChaptersData,
-  setActivePanelId,
-} from '../../../redux/slices/chapterSlice';
+import { selectChaptersData } from '../../../redux/Chapter/selectors';
+import { setActivePanelId } from '../../../redux/Chapter/slice';
 import { ChaptersList } from '../../UI';
 import styles from './Panel.module.scss';
-import Section from './Section';
+import { Section } from './Section';
 
-const ChapterPanel = () => {
+export const ChapterPanel = () => {
   const dispatch = useAppDispatch();
   const titles = ['Content', 'Comments', 'Settings'];
   const [activeId, setActiveId] = React.useState<number>(0);
@@ -93,5 +91,3 @@ const ChapterPanel = () => {
     </>
   );
 };
-
-export default ChapterPanel;

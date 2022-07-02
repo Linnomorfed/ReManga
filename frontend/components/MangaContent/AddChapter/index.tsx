@@ -1,9 +1,9 @@
 import React from 'react';
 import { ChapterSteps } from '../../../utils/static/ChapterSteps';
-import ModalBlock from '../../ModalBlock';
+import { ModalBlock } from '../../ModalBlock';
 import { Stepper } from '../../UI';
-import StepOne from './Steps/StepOne';
-import StepTwo from './Steps/StepTwo';
+import { StepOne } from './Steps/StepOne';
+import { StepTwo } from './Steps/StepTwo';
 
 interface AddChaptersProps {
   mangaId: number;
@@ -12,14 +12,13 @@ interface AddChaptersProps {
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddChapters: React.FC<AddChaptersProps> = ({
+export const AddChapters: React.FC<AddChaptersProps> = ({
   mangaId,
   toggleVisibility,
   state,
   setState,
 }) => {
   const [currentStep, setCurrentStep] = React.useState(1);
-
   const [chapterNumber, setChapterNumber] = React.useState(1);
   const [volumeNumber, setVolumeNumber] = React.useState(1);
 
@@ -60,5 +59,3 @@ const AddChapters: React.FC<AddChaptersProps> = ({
     </ModalBlock>
   );
 };
-
-export default AddChapters;

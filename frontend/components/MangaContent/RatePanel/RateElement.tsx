@@ -11,7 +11,7 @@ interface RateElementProps {
   ratedByUser: RatingResponse | null;
 }
 
-const RateElement: React.FC<RateElementProps> = ({
+export const RateElement: React.FC<RateElementProps> = ({
   value,
   text,
   onClick,
@@ -31,5 +31,3 @@ const RateElement: React.FC<RateElementProps> = ({
     </div>
   );
 };
-
-export default RateElement;

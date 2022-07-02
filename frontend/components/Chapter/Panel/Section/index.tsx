@@ -8,7 +8,11 @@ interface SectionProps {
   setActiveId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Section: React.FC<SectionProps> = ({ title, children, setActiveId }) => {
+export const Section: React.FC<SectionProps> = ({
+  title,
+  children,
+  setActiveId,
+}) => {
   const closePanel = () => {
     setActiveId(0);
   };
@@ -22,5 +26,3 @@ const Section: React.FC<SectionProps> = ({ title, children, setActiveId }) => {
     </div>
   );
 };
-
-export default Section;

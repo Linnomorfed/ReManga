@@ -11,7 +11,7 @@ interface StepTwoProps {
   close: () => void;
 }
 
-const StepTwo: React.FC<StepTwoProps> = ({
+export const StepTwo: React.FC<StepTwoProps> = ({
   mangaId,
   volume,
   chapter,
@@ -95,5 +95,3 @@ const StepTwo: React.FC<StepTwoProps> = ({
     </>
   );
 };
-
-export default StepTwo;

@@ -11,10 +11,10 @@ interface ModalBlockProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
-  variant?: 'small' | 'large'
+  variant?: 'small' | 'large';
 }
 
-const ModalBlock: React.FC<ModalBlockProps> = ({
+export const ModalBlock: React.FC<ModalBlockProps> = ({
   children,
   toggleModalVisibility,
   visible,
@@ -26,14 +26,19 @@ const ModalBlock: React.FC<ModalBlockProps> = ({
 
   React.useEffect(() => {
     if (visible) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     }
-  }, [visible])
+  }, [visible]);
 
   return (
     <div className={styles.modal}>
       <FocusLock>
-        <div className={classNames(styles.content, `${variant === 'large' ? styles.contentLarge : ''}`)} ref={componentRef}>
+        <div
+          className={classNames(
+            styles.content,
+            `${variant === 'large' ? styles.contentLarge : ''}`
+          )}
+          ref={componentRef}>
           <div className={styles.header}>
             {title && <h4 className={styles.headerTitle}>{title}</h4>}
             <button className={styles.closeBtn} onClick={toggleModalVisibility}>
@@ -46,5 +51,3 @@ const ModalBlock: React.FC<ModalBlockProps> = ({
     </div>
   );
 };
-
-export default ModalBlock;

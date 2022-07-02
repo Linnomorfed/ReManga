@@ -8,22 +8,22 @@ import {
   ShowPassSvg,
 } from '../../../assets/svgs';
 import styles from '../Auth.module.scss';
-import ModalBtn from '../../UI/ModalBtn';
+import { ModalBtn } from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginFormSchema } from '../../../utils/schemas/loginValidation';
 import { setCookie } from 'nookies';
 import { formTypeEnum, LoginDto } from '../../../models/IAuth';
 import { useAppDispatch } from '../../../hooks/redux';
-import { setUserData } from '../../../redux/slices/userSlice';
 import { Api } from '../../../services/api';
+import { setUserData } from '../../../redux/User/slice';
 
 interface LoginFormProps {
   setFormType: (arg: formTypeEnum) => void;
   toggleLoginVisibility: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
+export const LoginForm: React.FC<LoginFormProps> = ({
   setFormType,
   toggleLoginVisibility,
 }) => {
@@ -50,6 +50,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       });
       setErrorMassage('');
       dispatch(setUserData(data));
+
       toggleLoginVisibility();
     } catch (error: any) {
       console.warn('Login error', error);
@@ -156,5 +157,3 @@ const LoginForm: React.FC<LoginFormProps> = ({
     </>
   );
 };
-
-export default LoginForm;

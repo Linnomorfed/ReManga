@@ -8,7 +8,7 @@ interface ModalBtnProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const ModalBtn: React.FC<ModalBtnProps> = ({
+export const ModalBtn: React.FC<ModalBtnProps> = ({
   onClick,
   children,
   type,
@@ -24,5 +24,3 @@ const ModalBtn: React.FC<ModalBtnProps> = ({
     </button>
   );
 };
-
-export default ModalBtn;

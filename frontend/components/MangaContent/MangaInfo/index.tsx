@@ -8,7 +8,7 @@ import {
 } from '../../../assets/svgs';
 import { RatingResponse } from '../../../models/IRating';
 import styles from './MangaInfo.module.scss';
-import RatePanel from '../RatePanel';
+import { RatePanel } from '../RatePanel';
 
 interface MangaInfoProps {
   otherTitles: string;
@@ -24,7 +24,7 @@ interface MangaInfoProps {
   likesCount: number;
 }
 
-const MangaInfo: React.FC<MangaInfoProps> = ({
+export const MangaInfo: React.FC<MangaInfoProps> = ({
   otherTitles,
   title,
   mangaId,
@@ -93,5 +93,3 @@ const MangaInfo: React.FC<MangaInfoProps> = ({
     </div>
   );
 };
-
-export default MangaInfo;

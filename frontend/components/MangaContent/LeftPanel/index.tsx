@@ -2,23 +2,14 @@ import Image from 'next/image';
 import React from 'react';
 import { WarnSvg } from '../../../assets/svgs';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { selectUserData } from '../../../redux/slices/userSlice';
 import { BlueBtn, ModalBtn, SingleDropdown } from '../../UI';
-import {
-  BookmarkTypes,
-  BookmarkTypesExisted,
-} from '../../../utils/static/Bookmarks';
+import { BookmarkTypes } from '../../../utils/static/Bookmarks';
 import styles from './LeftPanel.module.scss';
 import { ResponseBookmark } from '../../../models/IBookmarks';
 import { Api } from '../../../services/api';
-import {
-  authModalSlice,
-  showAuthModal,
-} from '../../../redux/slices/authModalSlice';
-import {
-  selectSortByData,
-  setMangaBookmarkId,
-} from '../../../redux/slices/sortBySlice';
+import { selectUserData } from '../../../redux/User/selectors';
+import { selectSortByData } from '../../../redux/SortBy/selectors';
+import { setMangaBookmarkId } from '../../../redux/SortBy/slice';
 
 interface MangaContentProps {
   url: string;
@@ -27,7 +18,7 @@ interface MangaContentProps {
   mangaId: number;
 }
 
-const LeftPanel: React.FC<MangaContentProps> = ({
+export const LeftPanel: React.FC<MangaContentProps> = ({
   url,
   title,
   bookmark,
@@ -119,5 +110,3 @@ const LeftPanel: React.FC<MangaContentProps> = ({
     </div>
   );
 };
-
-export default LeftPanel;

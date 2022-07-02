@@ -5,7 +5,7 @@ interface SwitchProps {
   toogleSwitch: () => void;
 }
 
-const Switch: React.FC<SwitchProps> = ({ checked, toogleSwitch }) => {
+export const Switch: React.FC<SwitchProps> = ({ checked, toogleSwitch }) => {
   return (
     <label className={styles.togleSwitch}>
       <input
@@ -18,5 +18,3 @@ const Switch: React.FC<SwitchProps> = ({ checked, toogleSwitch }) => {
     </label>
   );
 };
-
-export default Switch;

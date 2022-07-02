@@ -1,27 +1,31 @@
-import { GetServerSideProps, NextPage } from 'next'
-import React from 'react'
-import WhatToRead from '../../components/WhatToRead'
-import MainLayout from '../../layouts/MainLayout'
-import { ResponceManga } from '../../models/IManga'
-import { Api } from '../../services/api'
+import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import React from 'react';
+import { MainLayout } from '../../layouts/MainLayout';
+import { ResponceManga } from '../../models/IManga';
+import { Api } from '../../services/api';
 
 interface TopPageProps {
-  manga: ResponceManga[]
+  manga: ResponceManga[];
 }
+
+const WhatToRead = dynamic<TopPageProps>(() =>
+  import('../../components').then((mod) => mod.WhatToRead)
+);
 
 const TopPage: NextPage<TopPageProps> = ({ manga }) => {
   return (
     <MainLayout>
       <WhatToRead manga={manga} />
     </MainLayout>
-  )
-}
+  );
+};
 
-export default TopPage
+export default TopPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const manga = await Api().manga.getMangaTopByQuery({ take: 6 })
+    const manga = await Api().manga.getMangaTopByQuery({ take: 6 });
 
     return { props: { manga } };
   } catch (err) {

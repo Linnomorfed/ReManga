@@ -3,10 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import { SelectSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
-import { selectChaptersData } from '../../../redux/slices/chapterSlice';
+import { selectChaptersData } from '../../../redux/Chapter/selectors';
 import styles from './ToggleChapter.module.scss';
 
-const ToggleChapter: React.FC = () => {
+export const ToggleChapter: React.FC = () => {
   const { currentChapter, nextPageId, prevPageId } =
     useAppSelector(selectChaptersData);
 
@@ -37,5 +37,3 @@ const ToggleChapter: React.FC = () => {
     </div>
   );
 };
-
-export default ToggleChapter;

@@ -1,18 +1,22 @@
 import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
-import { Panel } from '../../components';
 import { Api } from '../../services/api';
 import { FiltersDataResponce } from '../../models/IFilters';
-import MainLayout from '../../layouts/MainLayout';
+import { MainLayout } from '../../layouts/MainLayout';
+import dynamic from 'next/dynamic';
 
 interface PanelProps {
   filters: FiltersDataResponce;
 }
 
+const MangaPanel = dynamic<PanelProps>(() =>
+  import('../../components').then((mod) => mod.Panel)
+);
+
 const PanelPage: NextPage<PanelProps> = ({ filters }) => {
   return (
     <MainLayout showFooter={false}>
-      <Panel filters={filters} />
+      <MangaPanel filters={filters} />
     </MainLayout>
   );
 };
@@ -31,6 +35,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return { props: { filters } };
   } catch (err) {
     console.warn('Filters loading error', err);
+    return { props: { filters: null } };
   }
-  return { props: { filters: null } };
 };

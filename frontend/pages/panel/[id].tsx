@@ -1,15 +1,20 @@
 import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
-import { Panel } from '../../components';
 import { Api } from '../../services/api';
 import { FiltersDataResponce } from '../../models/IFilters';
-import MainLayout from '../../layouts/MainLayout';
+import { MainLayout } from '../../layouts/MainLayout';
 import { ResponceManga } from '../../models/IManga';
+import dynamic from 'next/dynamic';
+import { MangaPanelProps } from '../../components/Panel/IPanelProps';
 
 interface EditMangaPanelProps {
   filters: FiltersDataResponce;
   manga: ResponceManga;
 }
+
+const Panel = dynamic<MangaPanelProps>(() =>
+  import('../../components').then((mod) => mod.Panel)
+);
 
 const EditMangaPanel: NextPage<EditMangaPanelProps> = ({ filters, manga }) => {
   return (

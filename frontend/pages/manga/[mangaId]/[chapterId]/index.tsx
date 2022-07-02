@@ -1,8 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
-import { Chapter } from '../../../../components';
-import MainLayout from '../../../../layouts/MainLayout';
+import { MainLayout } from '../../../../layouts/MainLayout';
 import { CertainChaptersResult } from '../../../../models/IChapter';
 import { Api } from '../../../../services/api';
 
@@ -11,6 +11,10 @@ interface ChapterPageProps {
   nextPageId: number | null;
   prevPageId: number | null;
 }
+
+const Chapter = dynamic<ChapterPageProps>(() =>
+  import('../../../../components').then((mod) => mod.Chapter)
+);
 
 const ChapterPage: NextPage<ChapterPageProps> = ({
   chapter,

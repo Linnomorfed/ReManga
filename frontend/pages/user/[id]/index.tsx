@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import { UserPanel } from '../../../components';
-import MainLayout from '../../../layouts/MainLayout';
+import { MainLayout } from '../../../layouts/MainLayout';
 import { ResponseUser } from '../../../models/IAuth';
 import { ResponseBookmark } from '../../../models/IBookmarks';
 import { Api } from '../../../services/api';
@@ -11,6 +11,10 @@ interface UserPageProps {
   preloadedData: ResponseBookmark[];
   bookmarksCount: number[];
 }
+
+const UserPanel = dynamic<UserPageProps>(() =>
+  import('../../../components').then((mod) => mod.UserPanel)
+);
 
 const UserPage: NextPage<UserPageProps> = ({
   user,

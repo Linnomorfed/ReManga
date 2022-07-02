@@ -3,10 +3,21 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { FiltersDataResponce } from '../../models/IFilters';
-import { ResponceManga } from '../../models/IManga';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { selectMangaFiltersData } from '../../redux/MangaFilters/selectors';
+import {
+  resetMangaFilters,
+  setDefaultCategories,
+  setDefaultGenres,
+  setMangaCategories,
+  setMangaGenres,
+  setMangaRestriction,
+  setMangaStatus,
+  setMangaType,
+} from '../../redux/MangaFilters/slice';
 import { Api } from '../../services/api';
-import { Dropdown } from '../UI';
+import { MultipleDropdown, SingleDropdown } from '../UI';
+import { MangaPanelProps } from './IPanelProps';
 import styles from './Panel.module.scss';
 
 const Editor = dynamic(
@@ -16,13 +27,17 @@ const Editor = dynamic(
   }
 );
 
-interface MangaPanelProps {
-  data?: ResponceManga;
-  filters: FiltersDataResponce;
-}
-
-const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
+export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const {
+    mangaType,
+    mangaGenres,
+    mangaCategories,
+    mangaRestriction,
+    mangaStatus,
+  } = useAppSelector(selectMangaFiltersData);
 
   const defaultGenres = data ? data.genres.map(({ id }) => id) : [];
   const defaultCategories = data ? data.categories.map(({ id }) => id) : [];
@@ -40,15 +55,17 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
   const [issueYear, setIssueYear] = useState<number>(
     data ? data.issueYear : 2022
   );
-  const [type, setType] = useState<number | null>(data ? data.type.id : null);
-  const [restriction, setRestriction] = useState<number | null>(
-    data ? data.restriction.id : null
-  );
-  const [status, setStatus] = useState<number | null>(
-    data ? data.status.id : null
-  );
-  const [genres, setGenres] = useState<number[]>(defaultGenres);
-  const [categories, setCategories] = useState<number[]>(defaultCategories);
+
+  React.useEffect(() => {
+    const loadData = () => {
+      dispatch(setDefaultGenres(defaultGenres));
+      dispatch(setDefaultCategories(defaultCategories));
+      data && dispatch(setMangaType(data.type.id));
+      data && dispatch(setMangaRestriction(data.restriction.id));
+      data && dispatch(setMangaStatus(data.status.id));
+    };
+    data && loadData();
+  }, []);
 
   const fileUploadHandler = (e: any) => {
     const img = e.target.files[0];
@@ -70,22 +87,6 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
     setIssueYear(Number(e.target.value));
   };
 
-  const toggleType = (id: number[]) => {
-    setType(id[0]);
-  };
-  const toggleStatus = (id: number[]) => {
-    setStatus(id[0]);
-  };
-  const toggleRestriction = (id: number[]) => {
-    setRestriction(id[0]);
-  };
-  const toggleGenres = (id: number[]) => {
-    setGenres(id);
-  };
-  const toggleCategories = (id: number[]) => {
-    setCategories(id);
-  };
-
   const onCreateManga = async () => {
     try {
       setLoading(true);
@@ -98,11 +99,11 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
           otherTitles,
           blocks,
           issueYear,
-          type: type,
-          restriction: restriction,
-          status: status,
-          genreIds: genres,
-          categoryIds: categories,
+          type: mangaType,
+          restriction: mangaRestriction,
+          status: mangaStatus,
+          genreIds: mangaGenres,
+          categoryIds: mangaCategories,
         });
 
         const formData = new FormData();
@@ -110,6 +111,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
         formData.append('id', manga.id.toString());
 
         await Api().files.addImage(formData);
+        dispatch(resetMangaFilters());
         router.push(`/manga/${manga.id}`);
       }
     } catch (err) {
@@ -143,55 +145,51 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
           </div>
           <div className={styles.block}>
             <label>Type:</label>
-            <Dropdown
-              type='manga'
+            <SingleDropdown
+              variant='manga'
               items={filters.types}
-              title={'Types'}
-              returnId={toggleType}
-              selected={type}
+              action={setMangaType}
+              state={mangaType}
+              defaultTitle='Types'
             />
           </div>
           <div className={styles.block}>
             <label>Genres:</label>
-            <Dropdown
-              type='default'
+            <MultipleDropdown
               items={filters.genres}
-              title={'Genres'}
-              returnId={toggleGenres}
-              selectedArr={genres}
+              defaultTitle='Genres'
+              action={setMangaGenres}
+              state={mangaGenres}
             />
           </div>
 
           <div className={styles.block}>
             <label>Categories:</label>
-            <Dropdown
-              type='default'
+            <MultipleDropdown
               items={filters.categories}
-              title={'Categories'}
-              returnId={toggleCategories}
-              selectedArr={categories}
+              defaultTitle='Categories'
+              action={setMangaCategories}
+              state={mangaCategories}
             />
           </div>
 
           <div className={styles.block}>
             <label>Status:</label>
-            <Dropdown
-              type='manga'
+            <SingleDropdown
               items={filters.statuses}
-              title={'Statuses'}
-              returnId={toggleStatus}
-              selected={status}
+              defaultTitle='Statuses'
+              action={setMangaStatus}
+              state={mangaStatus}
             />
           </div>
 
           <div className={styles.block}>
             <label>Restriction:</label>
-            <Dropdown
-              type='manga'
+            <SingleDropdown
               items={filters.restrictions}
-              title={'Restrictions'}
-              returnId={toggleRestriction}
-              selected={restriction}
+              defaultTitle='Restrictions'
+              action={setMangaRestriction}
+              state={mangaRestriction}
             />
           </div>
 
@@ -199,6 +197,7 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
             <label>Descrsiption:</label>
             <div className={styles.editor}>
               <Editor
+                // @ts-ignore
                 ininialBlocks={blocks}
                 onChange={editorHandler}
                 defaultValue={blocks}
@@ -239,5 +238,3 @@ const MangaPanel: React.FC<MangaPanelProps> = ({ data, filters }) => {
     </>
   );
 };
-
-export default MangaPanel;

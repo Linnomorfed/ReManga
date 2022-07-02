@@ -3,18 +3,18 @@ import styles from './UserPopup.module.scss';
 import coin from '../../../assets/coin.png';
 import ticket from '../../../assets/ticket.png';
 import Image from 'next/image';
-import UserAvatar from '../../UI/UserAvatar';
+import { UserAvatar } from '../../UI/UserAvatar';
 import Link from 'next/link';
 import { destroyCookie } from 'nookies';
 import { useAppDispatch } from '../../../hooks/redux';
-import { clearUserData } from '../../../redux/slices/userSlice';
+import { clearUserData } from '../../../redux/User/slice';
 
 interface UserPopupProps {
   nickname: string;
   id: number;
 }
 
-const UserPopup: React.FC<UserPopupProps> = ({ nickname, id }) => {
+export const UserPopup: React.FC<UserPopupProps> = ({ nickname, id }) => {
   const dispatch = useAppDispatch();
 
   const logout = () => {
@@ -59,5 +59,3 @@ const UserPopup: React.FC<UserPopupProps> = ({ nickname, id }) => {
     </div>
   );
 };
-
-export default UserPopup;

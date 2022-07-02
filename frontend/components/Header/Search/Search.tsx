@@ -6,7 +6,7 @@ import { ResponceManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
 import styles from './Search.module.scss';
 
-const Search = () => {
+export const Search = () => {
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState<ResponceManga[]>([]);
 
@@ -87,5 +87,3 @@ const Search = () => {
     </div>
   );
 };
-
-export default Search;

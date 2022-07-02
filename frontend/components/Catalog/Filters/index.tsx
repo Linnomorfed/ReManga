@@ -4,7 +4,6 @@ import { MultipleDropdown } from '../../UI';
 import { FiltersDataResponce } from '../../../models/IFilters';
 import {
   resetFilters,
-  selectFiltersData,
   setCategories,
   setExcludedCategories,
   setExcludedGenres,
@@ -13,14 +12,15 @@ import {
   setRestrictions,
   setStatuses,
   setTypes,
-} from '../../../redux/slices/filtersSlice';
+} from '../../../redux/Filters/slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { selectFiltersData } from '../../../redux/Filters/selectors';
 
 interface FiltersProps {
   filters: FiltersDataResponce;
 }
 
-const Filters: React.FC<FiltersProps> = ({ filters }) => {
+export const Filters: React.FC<FiltersProps> = ({ filters }) => {
   const dispatch = useAppDispatch();
   const {
     types,
@@ -131,5 +131,3 @@ const Filters: React.FC<FiltersProps> = ({ filters }) => {
     </div>
   );
 };
-
-export default Filters;

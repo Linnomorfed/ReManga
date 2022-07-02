@@ -1,7 +1,7 @@
 import React from 'react';
-import { EmptyHeartSvg, HeartSvg, LockSvg } from '../../../../assets/svgs';
+import { EmptyHeartSvg, HeartSvg, LockSvg } from '../../../assets/svgs';
 import classNames from 'classnames';
-import { Api } from '../../../../services/api';
+import { Api } from '../../../services/api';
 import Link from 'next/link';
 import styles from './ChapterItem.module.scss';
 
@@ -18,7 +18,7 @@ interface ChapterItemProps {
   isPaid: boolean;
 }
 
-const ChapterItem: React.FC<ChapterItemProps> = ({
+export const ChapterItem: React.FC<ChapterItemProps> = ({
   chapter,
   volume,
   createdAt,
@@ -91,5 +91,3 @@ const ChapterItem: React.FC<ChapterItemProps> = ({
     </Link>
   );
 };
-
-export default ChapterItem;

@@ -9,7 +9,7 @@ interface TabBtnProps {
   id: number;
 }
 
-const TabBtn: React.FC<TabBtnProps> = ({
+export const TabBtn: React.FC<TabBtnProps> = ({
   children,
   active = false,
   onClick,
@@ -32,5 +32,3 @@ const TabBtn: React.FC<TabBtnProps> = ({
     </>
   );
 };
-
-export default TabBtn;

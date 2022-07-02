@@ -1,16 +1,13 @@
-import classNames from 'classnames';
 import Image from 'next/image';
 import React from 'react';
-import { useAppSelector } from '../../../hooks/redux';
 import { ChapterPage } from '../../../models/IChapter';
-import { selectChaptersData } from '../../../redux/slices/chapterSlice';
 import styles from './ChapterImages.module.scss';
 
 interface ChapterImagesProps {
   images: ChapterPage[];
 }
 
-const ChapterImages: React.FC<ChapterImagesProps> = ({ images }) => {
+export const ChapterImages: React.FC<ChapterImagesProps> = ({ images }) => {
   return (
     <div className={styles.imagesContainer}>
       <div className={styles.imagesElement}>
@@ -30,5 +27,3 @@ const ChapterImages: React.FC<ChapterImagesProps> = ({ images }) => {
     </div>
   );
 };
-
-export default ChapterImages;

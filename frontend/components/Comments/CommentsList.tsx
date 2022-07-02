@@ -1,7 +1,10 @@
 import React from 'react';
+import { useAppSelector } from '../../hooks/redux';
 import { ResponceCommentItem } from '../../models/IComments';
-import { BlueBtn, Dropdown } from '../UI';
-import CommentElement from './CommentElement';
+import { selectSortByData } from '../../redux/SortBy/selectors';
+import { setCommentsSortBy } from '../../redux/SortBy/slice';
+import { BlueBtn, SingleDropdown } from '../UI';
+import { CommentElement } from './CommentElement';
 import styles from './Comments.module.scss';
 
 const sortBy = [
@@ -15,26 +18,21 @@ interface CommentsListProps {
   commentsCount: number;
 }
 
-const CommentsList: React.FC<CommentsListProps> = ({
+export const CommentsList: React.FC<CommentsListProps> = ({
   comments,
   pinnedComment,
   commentsCount,
 }) => {
-  const [currentSortById, setCurrentSortById] = React.useState<number>(1);
-
-  const toggleId = (id: number[]) => {
-    setCurrentSortById(id[0]);
-  };
+  const { commentsSortBy } = useAppSelector(selectSortByData);
 
   return (
     <div className={styles.commentsList}>
       {comments.length > 1 && (
-        <Dropdown
-          type='sortBy'
-          title='New one first'
+        <SingleDropdown
+          variant='sortBy'
           items={sortBy}
-          selected={currentSortById}
-          returnId={toggleId}
+          state={commentsSortBy}
+          action={setCommentsSortBy}
         />
       )}
 
@@ -70,5 +68,3 @@ const CommentsList: React.FC<CommentsListProps> = ({
     </div>
   );
 };
-
-export default CommentsList;

@@ -18,7 +18,7 @@ interface MangaCartVerticalProps {
   repeatsCount?: number;
 }
 
-const MangaCartVertical: FC<MangaCartVerticalProps> = ({
+export const MangaCartVertical: FC<MangaCartVerticalProps> = ({
   isFreshChapter = false,
   data,
   chapterVolume,
@@ -85,5 +85,3 @@ const MangaCartVertical: FC<MangaCartVerticalProps> = ({
     </Link>
   );
 };
-
-export default MangaCartVertical;

@@ -2,8 +2,8 @@ import React from 'react';
 import { RatingResponse } from '../../../models/IRating';
 import { Api } from '../../../services/api';
 import { RateList } from '../../../utils/static/RateList';
-import ModalBlock from '../../ModalBlock';
-import RateElement from './RateElement';
+import { ModalBlock } from '../../ModalBlock';
+import { RateElement } from './RateElement';
 
 interface RatePanelProps {
   toggleModalVisibility: () => void;
@@ -16,7 +16,7 @@ interface RatePanelProps {
   ratedByUser: RatingResponse | null;
 }
 
-const RatePanel: React.FC<RatePanelProps> = ({
+export const RatePanel: React.FC<RatePanelProps> = ({
   toggleModalVisibility,
   setMangaRating,
   setMangaVotesCount,
@@ -24,9 +24,8 @@ const RatePanel: React.FC<RatePanelProps> = ({
   visible,
   setVisible,
   mangaId,
-  ratedByUser
+  ratedByUser,
 }) => {
-
   const sendRate = async (rate: number) => {
     try {
       if (ratedByUser) {
@@ -71,5 +70,3 @@ const RatePanel: React.FC<RatePanelProps> = ({
     </ModalBlock>
   );
 };
-
-export default RatePanel;

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { ResponceFilter } from '../../../models/IFilters';
 import { ShowMoreButton } from '../../UI';
-import styles from './Desctiption.module.scss'
+import styles from './Desctiption.module.scss';
 
 interface DescriptionProps {
   genres: ResponceFilter[];
@@ -11,7 +11,7 @@ interface DescriptionProps {
   blocks: OutputData['blocks'];
 }
 
-const Description: React.FC<DescriptionProps> = ({
+export const Description: React.FC<DescriptionProps> = ({
   genres,
   categories,
   blocks,
@@ -66,5 +66,3 @@ const Description: React.FC<DescriptionProps> = ({
     </>
   );
 };
-
-export default Description;

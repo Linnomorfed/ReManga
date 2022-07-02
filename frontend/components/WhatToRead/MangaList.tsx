@@ -2,14 +2,14 @@ import React from 'react';
 import { ResponceManga } from '../../models/IManga';
 import { WhatToReadItems } from '../../utils/static/WhatToRead';
 import { MangaCard } from '../UI';
-import Section from './Section';
+import { Section } from './Section';
 import styles from './WhatToRead.module.scss';
 
 interface MangaListProps {
   manga: ResponceManga[];
 }
 
-const MangaList: React.FC<MangaListProps> = ({ manga }) => {
+export const MangaList: React.FC<MangaListProps> = ({ manga }) => {
   const [items, setItems] = React.useState<ResponceManga[]>(manga);
 
   return (
@@ -45,5 +45,3 @@ const MangaList: React.FC<MangaListProps> = ({ manga }) => {
     </div>
   );
 };
-
-export default MangaList;

@@ -1,13 +1,13 @@
 import React from 'react';
 import { BlueBtn, ChaptersList } from '../../UI';
-import AddChapters from '../AddChapter';
+import { AddChapters } from '../AddChapter';
 import styles from './Chapters.module.scss';
 
 interface ChaptersProps {
   mangaId: number;
 }
 
-const Chapters: React.FC<ChaptersProps> = ({ mangaId }) => {
+export const Chapters: React.FC<ChaptersProps> = ({ mangaId }) => {
   const [chapterPanelVisibility, setChapterPanelVisibility] =
     React.useState<boolean>(false);
 
@@ -35,5 +35,3 @@ const Chapters: React.FC<ChaptersProps> = ({ mangaId }) => {
     </div>
   );
 };
-
-export default Chapters;

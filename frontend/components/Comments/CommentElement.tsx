@@ -6,9 +6,9 @@ import { ResponseUser } from '../../models/IAuth';
 import { ResponceCommentItem } from '../../models/IComments';
 import { Api } from '../../services/api';
 import { ShowMoreButton } from '../UI';
-import UserAvatar from '../UI/UserAvatar';
-import AddComment from './AddComment';
-import CommentReply from './CommentReply';
+import { UserAvatar } from '../UI/UserAvatar';
+import { AddComment } from './AddComment';
+import { CommentReply } from './CommentReply';
 import styles from './Comments.module.scss';
 
 interface CommentElementProps {
@@ -23,7 +23,7 @@ interface CommentElementProps {
   commentId: number;
 }
 
-const CommentElement: React.FC<CommentElementProps> = ({
+export const CommentElement: React.FC<CommentElementProps> = ({
   body,
   isSpoiler,
   isPinned = false,
@@ -194,5 +194,3 @@ const CommentElement: React.FC<CommentElementProps> = ({
     </div>
   );
 };
-
-export default CommentElement;

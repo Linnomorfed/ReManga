@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../Auth.module.scss';
 import { ArrowSvg, EmailSvg } from '../../../assets/svgs';
 import classNames from 'classnames';
-import ModalBtn from '../../UI/ModalBtn';
+import { ModalBtn } from '../../UI/ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RecoveryFormSchema } from '../../../utils/schemas/loginValidation';
@@ -13,7 +13,7 @@ interface RecoveryFormProps {
   toggleLoginVisibility: () => void;
 }
 
-const RecoveryForm: React.FC<RecoveryFormProps> = ({
+export const RecoveryForm: React.FC<RecoveryFormProps> = ({
   setFormType,
   toggleLoginVisibility,
 }) => {
@@ -79,5 +79,3 @@ const RecoveryForm: React.FC<RecoveryFormProps> = ({
     </div>
   );
 };
-
-export default RecoveryForm;

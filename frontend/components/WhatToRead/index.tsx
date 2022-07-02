@@ -2,15 +2,15 @@ import React from 'react';
 import { ResponceManga } from '../../models/IManga';
 import { WhatToReadTabs } from '../../utils/static/WhatToRead';
 import { TabBtn } from '../UI';
-import MangaBlocks from './MangaBlocks';
-import MangaList from './MangaList';
+import { MangaBlocks } from './MangaBlocks';
+import { MangaList } from './MangaList';
 import styles from './WhatToRead.module.scss';
 
 interface WhatToReadProps {
   manga: ResponceManga[];
 }
 
-const WhatToRead: React.FC<WhatToReadProps> = ({ manga }) => {
+export const WhatToRead: React.FC<WhatToReadProps> = ({ manga }) => {
   const [activeTab, setActiveTab] = React.useState<number>(2);
   const [blockViewMode, setBlockViewMode] = React.useState<boolean>(true);
 
@@ -40,5 +40,3 @@ const WhatToRead: React.FC<WhatToReadProps> = ({ manga }) => {
     </>
   );
 };
-
-export default WhatToRead;

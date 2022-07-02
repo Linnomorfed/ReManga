@@ -1,17 +1,21 @@
 import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import { Bookmarks } from '../../components';
-import MainLayout from '../../layouts/MainLayout';
+import { BookmarksProps } from '../../components/Bookmarks/IBookmarksProps';
+import { MainLayout } from '../../layouts/MainLayout';
 import { ResponseUser } from '../../models/IAuth';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { Api } from '../../services/api';
-import styles from './BookmarksPage.module.scss';
 
 interface BookmarksPageProps {
   user: ResponseUser;
   preloadedData: ResponseBookmark[];
   bookmarksCount: number[];
 }
+
+const Bookmarks = dynamic<BookmarksProps>(() =>
+  import('../../components').then((mod) => mod.Bookmarks)
+);
 
 const BookmarksPage: NextPage<BookmarksPageProps> = ({
   user,

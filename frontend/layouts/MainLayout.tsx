@@ -5,10 +5,9 @@ interface MainLayoutProps {
   children: React.ReactChild | React.ReactNode;
   showFooter?: boolean;
   headerVariant?: 'default' | 'transparent' | 'chapter';
-
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({
+export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
   showFooter = true,
   headerVariant = 'default',
@@ -21,5 +20,3 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     </>
   );
 };
-
-export default MainLayout;

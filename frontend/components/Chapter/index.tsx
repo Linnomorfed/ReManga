@@ -2,21 +2,22 @@ import classNames from 'classnames';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { CertainChaptersResult } from '../../models/IChapter';
-import { fetchChapters } from '../../redux/actions/chapterActions';
+import { fetchChapters } from '../../redux/Chapter/actions';
+import { selectChaptersData } from '../../redux/Chapter/selectors';
 import {
-  selectChaptersData,
   setCurrentChapter,
   setNextPageId,
   setPrevPageId,
-} from '../../redux/slices/chapterSlice';
-import Comments from '../Comments';
+} from '../../redux/Chapter/slice';
+
+import { Comments } from '../Comments';
 import styles from './Chapter.module.scss';
-import ChapterImages from './ChapterImages';
-import ChapterPanel from './Panel';
-import ScrollTopBtn from './ScrollTopBtn';
-import ToggleChapter from './ToggleChapter';
-import TranslatorTeam from './TranslatorTeam';
-import Сompletion from './Сompletion';
+import { ChapterImages } from './ChapterImages';
+import { ChapterPanel } from './Panel';
+import { ScrollTopBtn } from './ScrollTopBtn';
+import { ToggleChapter } from './ToggleChapter';
+import { TranslatorTeam } from './TranslatorTeam';
+import { Сompletion } from './Сompletion';
 
 interface ChapterProps {
   chapter: CertainChaptersResult;
@@ -24,7 +25,7 @@ interface ChapterProps {
   prevPageId: number | null;
 }
 
-const Chapter: React.FC<ChapterProps> = ({
+export const Chapter: React.FC<ChapterProps> = ({
   chapter,
   prevPageId,
   nextPageId,
@@ -63,5 +64,3 @@ const Chapter: React.FC<ChapterProps> = ({
     </div>
   );
 };
-
-export default Chapter;

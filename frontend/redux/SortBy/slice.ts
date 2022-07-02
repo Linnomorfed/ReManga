@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
 const initialState: Record<string, number> = {
   catalogSortBy: 5,
   bookmarksSortBy: 3,
   mangaBookmarkId: 0,
+  commentsSortBy: 1,
 };
 
 export const SortBySlice = createSlice({
@@ -20,12 +20,17 @@ export const SortBySlice = createSlice({
     setMangaBookmarkId: (state, action: PayloadAction<number>) => {
       state.mangaBookmarkId = action.payload;
     },
+    setCommentsSortBy: (state, action: PayloadAction<number>) => {
+      state.commentsSortBy = action.payload;
+    },
   },
 });
 
-export const { setCatalogSortBy, setBookmarksSortBy, setMangaBookmarkId } =
-  SortBySlice.actions;
-
-export const selectSortByData = (state: RootState) => state.sortBy;
+export const {
+  setCatalogSortBy,
+  setBookmarksSortBy,
+  setMangaBookmarkId,
+  setCommentsSortBy,
+} = SortBySlice.actions;
 
 export const SortByReducer = SortBySlice.reducer;

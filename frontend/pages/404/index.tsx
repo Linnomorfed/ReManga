@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
-import { wrapper } from '../../redux/store';
+import { MainLayout } from '../../layouts/MainLayout';
 import styles from './404.module.scss';
 
 const NotFoundPage: React.FC = () => {

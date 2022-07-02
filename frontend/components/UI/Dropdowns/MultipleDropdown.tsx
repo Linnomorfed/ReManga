@@ -18,7 +18,7 @@ interface MultipleDropdownProps {
   state: number[];
 }
 
-const MultipleDropdown: React.FC<MultipleDropdownProps> = ({
+export const MultipleDropdown: React.FC<MultipleDropdownProps> = ({
   defaultTitle,
   items,
   action,
@@ -78,5 +78,3 @@ const MultipleDropdown: React.FC<MultipleDropdownProps> = ({
     </div>
   );
 };
-
-export default MultipleDropdown;

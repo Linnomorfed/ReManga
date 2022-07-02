@@ -5,8 +5,8 @@ import { LikeSvg, ReplySvg } from '../../assets/svgs';
 import { ResponceCommentItem } from '../../models/IComments';
 import { ResponseUser } from '../../models/IAuth';
 import { ShowMoreButton } from '../UI';
-import UserAvatar from '../UI/UserAvatar';
-import AddComment from './AddComment';
+import { UserAvatar } from '../UI/UserAvatar';
+import { AddComment } from './AddComment';
 import styles from './Comments.module.scss';
 
 interface CommentBodyProps {
@@ -20,7 +20,7 @@ interface CommentBodyProps {
   updateComments?: (comment: ResponceCommentItem) => void;
 }
 
-const CommentReply: React.FC<CommentBodyProps> = ({
+export const CommentReply: React.FC<CommentBodyProps> = ({
   body,
   isSpoiler,
   updateComments,
@@ -128,5 +128,3 @@ const CommentReply: React.FC<CommentBodyProps> = ({
     </div>
   );
 };
-
-export default CommentReply;

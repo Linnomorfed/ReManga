@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import styles from './TranslatorTeam.module.scss';
 
-const TranslatorTeam = () => {
+export const TranslatorTeam = () => {
   return (
     <div className={styles.completionTeam}>
       <h5 className={styles.teamTitle}> Tried for you:</h5>
@@ -27,5 +27,3 @@ const TranslatorTeam = () => {
     </div>
   );
 };
-
-export default TranslatorTeam;

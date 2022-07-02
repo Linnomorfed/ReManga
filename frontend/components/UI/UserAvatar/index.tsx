@@ -10,7 +10,7 @@ interface UserAvatarProps {
   size?: 'medium' | 'default';
 }
 
-const UserAvatar: React.FC<UserAvatarProps> = ({
+export const UserAvatar: React.FC<UserAvatarProps> = ({
   avatarUrl,
   nickname,
   size = 'default',
@@ -38,5 +38,3 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
     </div>
   );
 };
-
-export default UserAvatar;

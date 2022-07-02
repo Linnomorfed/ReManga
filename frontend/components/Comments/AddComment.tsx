@@ -15,7 +15,7 @@ interface AddCommentProps {
   replyToName?: string;
 }
 
-const AddComment: React.FC<AddCommentProps> = ({
+export const AddComment: React.FC<AddCommentProps> = ({
   mangaId = null,
   commentId = null,
   chapterId = null,
@@ -38,10 +38,8 @@ const AddComment: React.FC<AddCommentProps> = ({
   };
 
   const cancelAction = () => {
-    commentId
-      ? hideReply && hideReply()
-      : setText('');
-  }
+    commentId ? hideReply && hideReply() : setText('');
+  };
 
   const onAddComment = async () => {
     try {
@@ -92,7 +90,9 @@ const AddComment: React.FC<AddCommentProps> = ({
 
         <p className={styles.limit}>
           <span
-            className={classNames(`${text.length > 500 ? styles.limitRed : ''}`)}>
+            className={classNames(
+              `${text.length > 500 ? styles.limitRed : ''}`
+            )}>
             {text.length}
           </span>
           /500 characters
@@ -119,5 +119,3 @@ const AddComment: React.FC<AddCommentProps> = ({
     </div>
   );
 };
-
-export default AddComment;

@@ -1,23 +1,17 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { Dashboard } from '../components';
+import { MainLayout } from '../layouts/MainLayout';
 import {
-  Dashboard,
-} from '../components';
-import MainLayout from '../layouts/MainLayout';
-import { NewestChapteResult } from '../models/IChapter';
-import { ResponceManga } from '../models/IManga';
+  setNewestManga,
+  setNewestPopular,
+  setTodayPopular,
+  setWeekPopular,
+} from '../redux/Dashboard/slice';
+import { wrapper } from '../redux/store';
 import { Api } from '../services/api';
 
-interface HomeProps {
-  newestManga: ResponceManga[];
-  weekPopular: ResponceManga[];
-  newestPopular: ResponceManga[];
-  todayPopular: ResponceManga[];
-  newestChapters: NewestChapteResult[];
-}
-
-const Home: NextPage<HomeProps> = ({ newestManga, todayPopular, weekPopular, newestPopular, newestChapters }) => {
-
+const Home: NextPage = () => {
   return (
     <>
       <Head>
@@ -26,28 +20,31 @@ const Home: NextPage<HomeProps> = ({ newestManga, todayPopular, weekPopular, new
         <link rel='icon' href='/icon.png' />
       </Head>
       <MainLayout>
-        <Dashboard newestManga={newestManga} weekPopular={weekPopular} todayPopular={todayPopular} newestChapters={newestChapters} newestPopular={newestPopular} />
-      </MainLayout >
+        <Dashboard />
+      </MainLayout>
     </>
   );
 };
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  try {
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async (ctx) => {
+    try {
+      const newestManga = await Api(ctx).manga.getMangaByQuery({
+        take: Number(process.env.NEXT_PUBLIC_NEWEST_MIN_COUNT),
+      });
+      const todayPopular = await Api(ctx).manga.getTodayPopular();
+      const weekPopular = await Api(ctx).manga.getWeekPopular();
+      const newestPopular = await Api(ctx).manga.getNewestPopular();
+      const newestChapters = await Api(ctx).chapter.getNewestChapters();
 
-    const newestManga = await Api(ctx).manga.getMangaByQuery({
-      take: Number(process.env.NEXT_PUBLIC_NEWEST_MIN_COUNT),
-    });
-    const todayPopular = await Api(ctx).manga.getTodayPopular();
-    const weekPopular = await Api(ctx).manga.getWeekPopular();
-    const newestPopular = await Api(ctx).manga.getNewestPopular();
-    const newestChapters = await Api(ctx).chapter.getNewestChapters();
-
-    return { props: { newestManga: newestManga.items, todayPopular, weekPopular, newestPopular, newestChapters } };
-  } catch (err) {
-    console.warn('Newest manga ', err);
+      store.dispatch(setWeekPopular(weekPopular));
+      store.dispatch(setTodayPopular(todayPopular));
+      store.dispatch(setNewestPopular(newestPopular));
+      store.dispatch(setNewestManga(newestManga.items));
+    } catch (err) {
+      console.warn('Newest manga ', err);
+    }
     return { props: {} };
-  }
-};
+  });

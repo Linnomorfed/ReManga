@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
 const initialState: Record<string, number[]> = {
   types: [],
@@ -82,7 +81,5 @@ export const {
   setExcludedCategories,
   resetFilters,
 } = FiltersSlice.actions;
-
-export const selectFiltersData = (state: RootState) => state.filters;
 
 export const FiltersReducer = FiltersSlice.reducer;

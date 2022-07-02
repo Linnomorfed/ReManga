@@ -3,7 +3,7 @@ import React from 'react';
 import { HeartSvg, ShowPassSvg, StarSvg } from '../../../../assets/svgs';
 import styles from './MangaCardBlock.module.scss';
 
-const MangaCardBlock = () => {
+export const MangaCardBlock = () => {
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.card}>
@@ -34,5 +34,3 @@ const MangaCardBlock = () => {
     </div>
   );
 };
-
-export default MangaCardBlock;

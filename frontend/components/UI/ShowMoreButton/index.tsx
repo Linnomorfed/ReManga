@@ -8,7 +8,7 @@ interface ShowMoreButtonProps {
   type?: 'default' | 'comment';
 }
 
-const ShowMoreButton: FC<ShowMoreButtonProps> = ({
+export const ShowMoreButton: FC<ShowMoreButtonProps> = ({
   isShowMore,
   onClick,
   type = 'default',
@@ -24,5 +24,3 @@ const ShowMoreButton: FC<ShowMoreButtonProps> = ({
     </button>
   );
 };
-
-export default ShowMoreButton;

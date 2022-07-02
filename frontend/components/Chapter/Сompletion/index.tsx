@@ -10,7 +10,7 @@ interface СompletionProps {
   likesCount: number;
 }
 
-const Сompletion: React.FC<СompletionProps> = ({
+export const Сompletion: React.FC<СompletionProps> = ({
   chapterId,
   rated,
   likesCount,
@@ -61,5 +61,3 @@ const Сompletion: React.FC<СompletionProps> = ({
     </div>
   );
 };
-
-export default Сompletion;

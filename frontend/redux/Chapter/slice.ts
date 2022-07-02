@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChapterResult } from '../../models/IChapter';
-import { fetchChapters } from '../actions/chapterActions';
-import { RootState } from '../store';
-
-export interface ChaptersState {
-  isLoading: boolean;
-  error: string;
-  mangaChapters: ChapterResult[];
-  currentChapter: ChapterResult | null;
-  nextPageId: number | null;
-  prevPageId: number | null;
-  activePanelId: number;
-}
+import { fetchChapters } from './actions';
+import { ChaptersState } from './types';
 
 const initialState: ChaptersState = {
   isLoading: false,
@@ -65,7 +55,5 @@ export const {
   setPrevPageId,
   setActivePanelId,
 } = chapterSlice.actions;
-
-export const selectChaptersData = (state: RootState) => state.chapters;
 
 export const ChapterReducer = chapterSlice.reducer;
