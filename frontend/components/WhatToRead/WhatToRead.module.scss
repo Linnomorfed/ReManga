@@ -12,6 +12,15 @@
   line-height: 1.23;
   margin: 0;
   margin-top: 12px;
+
+
+  &Type {
+    cursor: pointer;
+
+    & svg {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 .tabsWrapper {
@@ -38,6 +47,7 @@
 }
 
 .moreBtn {
+  background-color: transparent;
   color: $clr-blue;
   font-size: 18px;
   text-transform: uppercase;
@@ -87,5 +97,7 @@
   &Wrapper {
     margin: 16px 0;
     padding: 24px 24px;
+    display: flex;
+    flex-wrap: wrap;
   }
 }

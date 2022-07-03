@@ -15,6 +15,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta name='description' content='ReManga' />
         <link rel='icon' href='/icon.png' />
       </Head>
+
       <Component {...pageProps} />
     </>
   );

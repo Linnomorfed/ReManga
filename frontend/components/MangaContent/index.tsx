@@ -10,7 +10,7 @@ import { LeftPanel } from './LeftPanel';
 import { MangaInfo } from './MangaInfo';
 import { Chapters } from './Chapters';
 
-export interface MangaContentProps {
+interface MangaContentProps {
   manga: ResponceManga;
   bookmark: ResponseBookmark | null;
   ratedByUser: RatingResponse | null;

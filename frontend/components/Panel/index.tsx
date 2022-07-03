@@ -16,7 +16,7 @@ import {
   setMangaType,
 } from '../../redux/MangaFilters/slice';
 import { Api } from '../../services/api';
-import { MultipleDropdown, SingleDropdown } from '../UI';
+import { BlueBtn, MultipleDropdown, SingleDropdown } from '../UI';
 import { MangaPanelProps } from './IPanelProps';
 import styles from './Panel.module.scss';
 
@@ -28,6 +28,7 @@ const Editor = dynamic(
 );
 
 export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
+  const inputFileRef = React.useRef<HTMLInputElement>(null);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -55,6 +56,10 @@ export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
   const [issueYear, setIssueYear] = useState<number>(
     data ? data.issueYear : 2022
   );
+
+  const retargetClick = () => {
+    inputFileRef.current?.click();
+  };
 
   React.useEffect(() => {
     const loadData = () => {
@@ -146,7 +151,6 @@ export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
           <div className={styles.block}>
             <label>Type:</label>
             <SingleDropdown
-              variant='manga'
               items={filters.types}
               action={setMangaType}
               state={mangaType}
@@ -221,18 +225,22 @@ export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
           </div>
 
           <div className={styles.block}>
-            <label>Picture:</label>
-            <input
-              className={styles.input}
-              type='file'
-              onChange={fileUploadHandler}
-            />
+            <div className={styles.selectFile}>
+              <label>Picture:</label>
+              <BlueBtn onClick={retargetClick}>Select file</BlueBtn>
+              <input
+                ref={inputFileRef}
+                className={styles.inputFile}
+                type='file'
+                onChange={fileUploadHandler}
+              />
+            </div>
             <Image src={imagePreview} width={150} height={225} alt='img' />
           </div>
 
-          <button disabled={isLoading} onClick={onCreateManga}>
-            Create Manga
-          </button>
+          <BlueBtn type='manga' disabled={isLoading} onClick={onCreateManga}>
+            {data ? 'Update Manga' : 'Create Manga'}
+          </BlueBtn>
         </div>
       </div>
     </>

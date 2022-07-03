@@ -1,11 +1,9 @@
 import classNames from 'classnames';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { CheckMarkSvg } from '../../../assets/svgs';
 import { BlueBtn } from '../BlueBtn';
 import styles from './Stepper.module.scss';
-import { useContextualRouting } from 'next-use-contextual-routing';
 
 interface StepperProps {
   children: React.ReactChild | React.ReactNode;
@@ -19,7 +17,6 @@ export const Stepper: React.FC<StepperProps> = ({
   returnStep,
 }) => {
   const router = useRouter();
-  const { makeContextualHref, returnHref } = useContextualRouting();
   const [currentStep, setCurrentStep] = React.useState<number>(1);
 
   const nextStep = () => {
@@ -28,8 +25,6 @@ export const Stepper: React.FC<StepperProps> = ({
   const previousStep = () => {
     currentStep >= steps.length - 1 && setCurrentStep(currentStep - 1);
   };
-  const as = router.asPath;
-  const href = router.asPath + `?step${currentStep}`;
 
   React.useEffect(() => {
     returnStep(currentStep);

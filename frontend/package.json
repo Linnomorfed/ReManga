@@ -18,7 +18,6 @@
     "classnames": "^2.3.1",
     "next": "^12.2.0",
     "next-redux-wrapper": "^7.0.5",
-    "next-use-contextual-routing": "^2.3.0",
     "nookies": "^2.5.2",
     "pure-react-carousel": "^1.28.1",
     "react": "17.0.2",

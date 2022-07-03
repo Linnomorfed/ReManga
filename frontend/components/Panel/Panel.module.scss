@@ -32,6 +32,10 @@
   border: 1px solid #3b3b3b !important;
   color: #ccc !important;
   margin-top: 0.5rem;
+
+  &File {
+    display: none
+  }
 }
 
 .editor {
@@ -39,4 +43,13 @@
   background: #1f1f1f;
   border: 1px solid rgba($clr-grey, 0.25);
   color: $clr-text;
+}
+
+.selectFile {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  & label {
+    margin-right: 10px;
+  }
 }

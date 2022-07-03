@@ -7,6 +7,7 @@ import { ResponseBookmark } from '../../../models/IBookmarks';
 import { ResponceManga } from '../../../models/IManga';
 import { RatingResponse } from '../../../models/IRating';
 import { Api } from '../../../services/api';
+import Router from 'next/router';
 
 const MangaContent = dynamic<MangaProps>(() =>
   import('../../../components').then((mod) => mod.MangaContent)

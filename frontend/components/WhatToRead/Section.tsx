@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { ResponceManga } from '../../models/IManga';
 import { Api } from '../../services/api';
@@ -9,6 +10,7 @@ interface SectionProps {
   types: number[] | null;
   genres: number[] | null;
   categories: number[] | null;
+  id: number;
 }
 
 export const Section: React.FC<SectionProps> = ({
@@ -16,15 +18,26 @@ export const Section: React.FC<SectionProps> = ({
   types,
   genres,
   categories,
+  id,
 }) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [items, setItems] = React.useState<ResponceManga[]>([]);
+
+  const activeTab = router.query.section ? router.query.section : 1;
+
+  const readMore = () => {
+    router.push('/manga/top' + `?type=${id}&section=${activeTab}`, undefined, {
+      shallow: true,
+    });
+  };
 
   React.useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
         const manga = await Api().manga.getMangaTopByQuery({
+          topBy: router.query.section === '2' ? 'new' : null,
           types,
           genres,
           categories,
@@ -35,7 +48,7 @@ export const Section: React.FC<SectionProps> = ({
         console.warn('Section loading ', err);
       }
     })();
-  }, []);
+  }, [router.asPath]);
 
   return (
     <>
@@ -48,7 +61,9 @@ export const Section: React.FC<SectionProps> = ({
           <div className={styles.section}>
             <div className={styles.sectionTop}>
               <h3 className={styles.title}>{name}</h3>
-              <a className={styles.moreBtn}>More</a>
+              <button className={styles.moreBtn} onClick={readMore}>
+                More
+              </button>
             </div>
             <div className={styles.body}>
               <div className={styles.bodyLeft}>

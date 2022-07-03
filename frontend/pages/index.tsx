@@ -37,7 +37,6 @@ export const getServerSideProps: GetServerSideProps =
       const todayPopular = await Api(ctx).manga.getTodayPopular();
       const weekPopular = await Api(ctx).manga.getWeekPopular();
       const newestPopular = await Api(ctx).manga.getNewestPopular();
-      const newestChapters = await Api(ctx).chapter.getNewestChapters();
 
       store.dispatch(setWeekPopular(weekPopular));
       store.dispatch(setTodayPopular(todayPopular));

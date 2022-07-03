@@ -1,15 +1,11 @@
 export const WhatToReadTabs = [
   {
     id: 1,
-    name: 'Top new',
-  },
-  {
-    id: 2,
     name: 'Top of the month',
   },
   {
-    id: 3,
-    name: 'Recommendations',
+    id: 2,
+    name: 'Top new',
   },
 ];
 
