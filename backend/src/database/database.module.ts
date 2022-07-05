@@ -43,7 +43,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
           PageEntity,
           LikeEntity,
         ],
-        synchronize: true,
+        synchronize: process.env.NODE_ENV === 'development' ? true : false,
       }),
     }),
   ],

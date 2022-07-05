@@ -3,9 +3,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from 'aws-sdk';
 import { ConfigService } from '@nestjs/config';
+import * as cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import * as csurf from 'csurf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
+  app.use(helmet());
+
   app.enableCors({
     origin: [/^(.*)/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
