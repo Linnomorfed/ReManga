@@ -1,44 +1,35 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
 import { MainLayout } from '../../../layouts/MainLayout';
-import { ResponseBookmark } from '../../../models/IBookmarks';
-import { ResponceManga } from '../../../models/IManga';
-import { RatingResponse } from '../../../models/IRating';
 import { Api } from '../../../services/api';
-import Router from 'next/router';
+import { wrapper } from '../../../redux/store';
+import {
+  setChaptersCount,
+  setMangaBookmarkId,
+  setMangaData,
+  setRatedByUser,
+} from '../../../redux/MangaData/slice';
+import { selectMangaTitleForHeader } from '../../../redux/MangaData/selectors';
+import { useAppSelector } from '../../../hooks/redux';
 
-const MangaContent = dynamic<MangaProps>(() =>
-  import('../../../components').then((mod) => mod.MangaContent)
+const MangaContent = dynamic<{}>(() =>
+  import(/* webpackChunkName: "MangaPanel" */ '../../../components').then(
+    (mod) => mod.MangaContent
+  )
 );
 
-interface MangaProps {
-  manga: ResponceManga;
-  bookmark: ResponseBookmark | null;
-  ratedByUser: RatingResponse | null;
-  chaptersCount: number;
-}
-
-const Manga: NextPage<MangaProps> = ({
-  manga,
-  bookmark,
-  ratedByUser,
-  chaptersCount,
-}) => {
+const Manga: NextPage = ({}) => {
+  const title = useAppSelector(selectMangaTitleForHeader);
   return (
     <>
       <Head>
-        <title>{'Read ' + manga.title + ' online'}</title>
-        <meta name='description' content={'Read ' + manga.title + ' online'} />
+        <title>{'Read ' + title + ' online'}</title>
+        <meta name='description' content={'Read ' + title + ' online'} />
       </Head>
       <MainLayout showFooter={false} headerVariant='transparent'>
-        <MangaContent
-          manga={manga}
-          bookmark={bookmark}
-          ratedByUser={ratedByUser}
-          chaptersCount={chaptersCount}
-        />
+        <MangaContent />
       </MainLayout>
     </>
   );
@@ -46,24 +37,31 @@ const Manga: NextPage<MangaProps> = ({
 
 export default Manga;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  try {
-    const id = ctx.params?.mangaId as string;
-    const obj = await Api(ctx).manga.getOneById(+id);
-    const chaptersCount = await Api().chapter.getChaptersCount(+id);
-    const manga = obj.manga;
-    const bookmark = obj.bookmark ? obj.bookmark : null;
-    const ratedByUser = obj.ratedByUser ? obj.ratedByUser : null;
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps(
+    (store) => async (ctx: GetServerSidePropsContext) => {
+      try {
+        const id = ctx.params?.mangaId as string;
+        const obj = await Api(ctx).manga.getOneById(+id);
+        const chaptersCount = await Api().chapter.getChaptersCount(+id);
+        const manga = obj.manga;
+        const bookmark = obj.bookmark ? obj.bookmark : null;
+        const ratedByUser = obj.ratedByUser ? obj.ratedByUser : null;
 
-    return { props: { manga, bookmark, ratedByUser, chaptersCount } };
-  } catch (err) {
-    console.warn('Manga loading error', err);
-    return {
-      redirect: {
-        destination: '/404',
-        permament: false,
-      },
-      props: {},
-    };
-  }
-};
+        store.dispatch(setMangaData(manga));
+        store.dispatch(setChaptersCount(chaptersCount));
+        ratedByUser && store.dispatch(setRatedByUser(ratedByUser));
+        bookmark && store.dispatch(setMangaBookmarkId(bookmark?.bookmarkId));
+      } catch (err) {
+        console.warn('Manga loading error', err);
+        return {
+          redirect: {
+            destination: '/404',
+            permament: false,
+          },
+          props: {},
+        };
+      }
+      return { props: {} };
+    }
+  );

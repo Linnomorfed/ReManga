@@ -6,7 +6,6 @@ import {
   ShowPassSvg,
   StarSvg,
 } from '../../../assets/svgs';
-import { RatingResponse } from '../../../models/IRating';
 import styles from './MangaInfo.module.scss';
 import { RatePanel } from '../RatePanel';
 
@@ -20,7 +19,6 @@ interface MangaInfoProps {
   mangaId: number;
   rating: number;
   votesCount: number;
-  ratedByUser: RatingResponse | null;
   likesCount: number;
 }
 
@@ -34,7 +32,6 @@ export const MangaInfo: React.FC<MangaInfoProps> = ({
   issueYear,
   rating,
   votesCount,
-  ratedByUser,
   likesCount,
 }) => {
   const [rateOpened, setRateOpened] = React.useState<boolean>(false);
@@ -56,7 +53,6 @@ export const MangaInfo: React.FC<MangaInfoProps> = ({
           setMangaRating={setMangaRating}
           setMangaVotesCount={setMangaVotesCount}
           mangaVotesCount={mangaVotesCount}
-          ratedByUser={ratedByUser}
         />
       )}
       <h2 className={styles.altNames}>

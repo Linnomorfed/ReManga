@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../hooks/redux';
-import { ResponceCommentItem } from '../../models/IComments';
+import { ResponseCommentItem } from '../../models/IComments';
 import { selectSortByData } from '../../redux/SortBy/selectors';
 import { setCommentsSortBy } from '../../redux/SortBy/slice';
 import { BlueBtn, SingleDropdown } from '../UI';
@@ -13,8 +13,8 @@ const sortBy = [
   { id: 3, name: 'Old ones first' },
 ];
 interface CommentsListProps {
-  comments: ResponceCommentItem[];
-  pinnedComment: ResponceCommentItem | null;
+  comments: ResponseCommentItem[];
+  pinnedComment: ResponseCommentItem | null;
   commentsCount: number;
 }
 
@@ -39,12 +39,13 @@ export const CommentsList: React.FC<CommentsListProps> = ({
       {pinnedComment && (
         <CommentElement
           isSpoiler={false}
-          votes={pinnedComment.votes}
+          rating={pinnedComment.rating}
           user={pinnedComment.user}
           repliesCount={pinnedComment.replies_count}
           body={pinnedComment.text}
           date={pinnedComment.createdAt}
           commentId={pinnedComment.id}
+          ratedUserIds={pinnedComment.rated_userIds}
           mangaId={pinnedComment.mangaId}
           isPinned={true}
         />
@@ -55,10 +56,11 @@ export const CommentsList: React.FC<CommentsListProps> = ({
           key={obj.id}
           repliesCount={obj.replies_count}
           isSpoiler={obj.spoiler}
-          votes={obj.votes}
+          rating={obj.rating}
           user={obj.user}
           body={obj.text}
           mangaId={obj.mangaId}
+          ratedUserIds={obj.rated_userIds}
           commentId={obj.id}
           date={obj.createdAt}
         />

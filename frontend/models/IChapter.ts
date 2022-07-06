@@ -1,4 +1,4 @@
-import { ResponceManga } from './IManga';
+import { ResponseManga } from './IManga';
 
 export type ChapterResult = {
   id: number;
@@ -32,7 +32,7 @@ export interface ChapterPage {
 }
 
 export type NewestChapteResult = ChapterResult & {
-  manga: ResponceManga;
+  manga: ResponseManga;
   repeatsCount: number;
 };
 

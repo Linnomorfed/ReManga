@@ -15,6 +15,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { SearchCommentDto } from './dto/search-comments.dto';
+import { UpdateCertainCommentDto } from './dto/update-certain_comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Controller('comments')
@@ -25,6 +26,36 @@ export class CommentsController {
   @UseGuards(JwtAuthGuard)
   create(@User() user: UserEntity, @Body() dto: CreateCommentDto) {
     return this.commentsService.create(dto, user);
+  }
+
+  @Patch('rate/add/:id')
+  @UseGuards(JwtAuthGuard)
+  addCommentRate(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+    @Body() dto: UpdateCertainCommentDto,
+  ) {
+    return this.commentsService.addCommentRate(+id, dto, user);
+  }
+
+  @Patch('rate/update/:id')
+  @UseGuards(JwtAuthGuard)
+  updateCommentRate(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+    @Body() dto: UpdateCertainCommentDto,
+  ) {
+    return this.commentsService.updateCommentRate(+id, dto, user);
+  }
+
+  @Patch('rate/remove/:id')
+  @UseGuards(JwtAuthGuard)
+  removeCommentRate(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+    @Body() dto: UpdateCertainCommentDto,
+  ) {
+    return this.commentsService.removeCommentRate(+id, dto, user);
   }
 
   @Get()

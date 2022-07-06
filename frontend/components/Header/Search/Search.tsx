@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ClearSvg, SearchSvg } from '../../../assets/svgs';
-import { ResponceManga } from '../../../models/IManga';
+import { ResponseManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
 import styles from './Search.module.scss';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = React.useState('');
-  const [searchResult, setSearchResult] = React.useState<ResponceManga[]>([]);
+  const [searchResult, setSearchResult] = React.useState<ResponseManga[]>([]);
 
   const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);

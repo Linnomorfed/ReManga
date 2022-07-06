@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { MainLayout } from '../../../layouts/MainLayout';
@@ -13,7 +13,9 @@ interface UserPageProps {
 }
 
 const UserPanel = dynamic<UserPageProps>(() =>
-  import('../../../components').then((mod) => mod.UserPanel)
+  import(/* webpackChunkName: "UserPanel" */ '../../../components').then(
+    (mod) => mod.UserPanel
+  )
 );
 
 const UserPage: NextPage<UserPageProps> = ({
@@ -34,7 +36,9 @@ const UserPage: NextPage<UserPageProps> = ({
 
 export default UserPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   try {
     const id = ctx.params?.id as string;
     const items = await Api().user.getUserById(+id);

@@ -4,6 +4,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { getRepository, Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { SearchCommentDto } from './dto/search-comments.dto';
+import { UpdateCertainCommentDto } from './dto/update-certain_comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentEntity } from './entities/comment.entity';
 
@@ -42,12 +43,53 @@ export class CommentsService {
     });
   }
 
-  async chapterFindAll(query: SearchCommentDto) {
-    const take = 20;
-    const page = query.page || 1;
-    const skip = (page - 1) * take;
-    const mangaId = query.mangaId;
-    const chapterId = query.chapterId;
+  async addCommentRate(
+    id: number,
+    dto: UpdateCertainCommentDto,
+    user: UserEntity,
+  ) {
+    const rate = dto.rate;
+
+    const comment = await this.findOne(+id);
+    const content = [...comment.rated_userIds, { userId: user.id, rate: rate }];
+
+    this.repository.update(+id, {
+      rated_userIds: content,
+      rating: rate === 'like' ? comment.rating + 1 : comment.rating - 1,
+    });
+  }
+
+  async removeCommentRate(
+    id: number,
+    dto: UpdateCertainCommentDto,
+    user: UserEntity,
+  ) {
+    const rate = dto.rate;
+
+    const comment = await this.findOne(+id);
+    const arr = comment.rated_userIds.filter((obj) => obj.userId !== user.id);
+
+    this.repository.update(+id, {
+      rated_userIds: arr,
+      rating: rate === 'like' ? comment.rating - 1 : comment.rating + 1,
+    });
+  }
+
+  async updateCommentRate(
+    id: number,
+    dto: UpdateCertainCommentDto,
+    user: UserEntity,
+  ) {
+    const rate = dto.rate;
+
+    const comment = await this.findOne(+id);
+    const arr = comment.rated_userIds.filter((obj) => obj.userId !== user.id);
+    const content = [...arr, { userId: user.id, rate: rate }];
+
+    this.repository.update(+id, {
+      rated_userIds: content,
+      rating: rate === 'like' ? comment.rating + 2 : comment.rating - 2,
+    });
   }
 
   async mangaFindAll(query: SearchCommentDto) {

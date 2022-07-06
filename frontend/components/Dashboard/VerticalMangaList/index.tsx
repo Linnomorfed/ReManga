@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ResponceManga } from '../../../models/IManga';
+import { ResponseManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
 import { MangaCartVertical } from '../../UI/Cards/MangaCardVertical';
 import { ShowMoreButton } from '../../UI/ShowMoreButton';
@@ -9,7 +9,7 @@ interface VerticalMangaListProps {
   title?: string;
   minCount: number;
   maxCount: number;
-  items: ResponceManga[];
+  items: ResponseManga[];
   variant: 'newest' | 'popularToday';
 }
 
@@ -20,7 +20,7 @@ export const VerticalMangaList: FC<VerticalMangaListProps> = ({
   items,
   variant,
 }) => {
-  const [newMangaList, setNewMangaList] = React.useState<ResponceManga[]>();
+  const [newMangaList, setNewMangaList] = React.useState<ResponseManga[]>();
 
   const [isShowMore, setIsShowMore] = React.useState(false);
 

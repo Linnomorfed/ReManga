@@ -4,12 +4,12 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 import TimeAgo from 'timeago-react';
 import { ForPaidSvg } from '../../../../assets/svgs';
-import { ResponceManga } from '../../../../models/IManga';
+import { ResponseManga } from '../../../../models/IManga';
 import styles from './MangaCardVertical.module.scss';
 
 interface MangaCartVerticalProps {
   isFreshChapter?: boolean;
-  data: ResponceManga;
+  data: ResponseManga;
   chapterVolume?: number;
   chapterNumber?: number;
   chapterDate?: string;

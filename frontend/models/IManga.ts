@@ -1,6 +1,6 @@
 import { OutputData } from '@editorjs/editorjs';
 import { ResponseBookmark } from './IBookmarks';
-import { CatalogFilters, ResponceFilter } from './IFilters';
+import { CatalogFilters, ResponseFilter } from './IFilters';
 import { RatingResponse } from './IRating';
 
 interface MangaImage {
@@ -9,7 +9,7 @@ interface MangaImage {
   key: string;
 }
 
-export interface ResponceManga {
+export interface ResponseManga {
   id: number;
   title: string;
   otherTitles: string;
@@ -18,25 +18,25 @@ export interface ResponceManga {
   views: number;
   createdAt: string;
   updatedAt: string;
-  type: ResponceFilter;
-  status: ResponceFilter;
-  restriction: ResponceFilter;
-  genres: ResponceFilter[];
-  categories: ResponceFilter[];
+  type: ResponseFilter;
+  status: ResponseFilter;
+  restriction: ResponseFilter;
+  genres: ResponseFilter[];
+  categories: ResponseFilter[];
   image: MangaImage;
   rating: number;
   votes_count: number;
   likes_count: number;
 }
 
-export interface ResponceSingleManga {
-  manga: ResponceManga;
+export interface ResponseSingleManga {
+  manga: ResponseManga;
   bookmark: ResponseBookmark | null;
   ratedByUser: RatingResponse | null;
 }
 
-export interface ResponceMangaData {
-  items: ResponceManga[];
+export interface ResponseMangaData {
+  items: ResponseManga[];
   count: number;
 }
 export interface CreateMangaDto {

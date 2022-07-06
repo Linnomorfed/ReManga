@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { BookmarksProps } from '../../components/Bookmarks/IBookmarksProps';
@@ -14,7 +14,9 @@ interface BookmarksPageProps {
 }
 
 const Bookmarks = dynamic<BookmarksProps>(() =>
-  import('../../components').then((mod) => mod.Bookmarks)
+  import(/* webpackChunkName: "Bookmarks" */ '../../components').then(
+    (mod) => mod.Bookmarks
+  )
 );
 
 const BookmarksPage: NextPage<BookmarksPageProps> = ({
@@ -36,7 +38,9 @@ const BookmarksPage: NextPage<BookmarksPageProps> = ({
 
 export default BookmarksPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   try {
     const user = await Api(ctx).user.getCurrentUser();
     const items = await Api(ctx).user.getUserById(+user.id);

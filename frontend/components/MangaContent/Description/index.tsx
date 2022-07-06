@@ -1,13 +1,13 @@
 import { OutputData } from '@editorjs/editorjs';
 import classNames from 'classnames';
 import React from 'react';
-import { ResponceFilter } from '../../../models/IFilters';
+import { ResponseFilter } from '../../../models/IFilters';
 import { ShowMoreButton } from '../../UI';
 import styles from './Desctiption.module.scss';
 
 interface DescriptionProps {
-  genres: ResponceFilter[];
-  categories: ResponceFilter[];
+  genres: ResponseFilter[];
+  categories: ResponseFilter[];
   blocks: OutputData['blocks'];
 }
 

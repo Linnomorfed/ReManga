@@ -2,40 +2,34 @@ import React from 'react';
 import styles from './MangaContent.module.scss';
 import { TabBtn } from '../UI';
 import { Comments } from '../Comments';
-import { ResponceManga } from '../../models/IManga';
-import { ResponseBookmark } from '../../models/IBookmarks';
-import { RatingResponse } from '../../models/IRating';
 import { Description } from './Description';
 import { LeftPanel } from './LeftPanel';
 import { MangaInfo } from './MangaInfo';
 import { Chapters } from './Chapters';
+import { selectMangaData } from '../../redux/MangaData/selectors';
+import { useAppSelector } from '../../hooks/redux';
+import { useRouter } from 'next/router';
 
-interface MangaContentProps {
-  manga: ResponceManga;
-  bookmark: ResponseBookmark | null;
-  ratedByUser: RatingResponse | null;
-  chaptersCount: number;
-}
+export const MangaContent: React.FC = () => {
+  const router = useRouter();
+  const { manga, chaptersCount } = useAppSelector(selectMangaData);
 
-export const MangaContent: React.FC<MangaContentProps> = ({
-  manga,
-  bookmark,
-  ratedByUser,
-  chaptersCount,
-}) => {
   const [activeTab, setActiveTab] = React.useState<number>(1);
 
   const onTabClick = (id: number) => {
     setActiveTab(id);
   };
 
+  if (!manga) {
+    router.push('/404');
+    return null;
+  }
   return (
     <>
       <div className='container d-flex'>
         <LeftPanel
           url={manga.image.url}
           title={manga.title}
-          bookmark={bookmark}
           mangaId={manga.id}
         />
 
@@ -49,7 +43,6 @@ export const MangaContent: React.FC<MangaContentProps> = ({
           issueYear={manga.issueYear}
           rating={manga.rating}
           votesCount={manga.votes_count}
-          ratedByUser={ratedByUser}
           likesCount={manga.likes_count}
         />
       </div>

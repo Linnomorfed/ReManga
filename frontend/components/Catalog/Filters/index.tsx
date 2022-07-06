@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Filters.module.scss';
 import { MultipleDropdown } from '../../UI';
-import { FiltersDataResponce } from '../../../models/IFilters';
+import { FiltersDataResponse } from '../../../models/IFilters';
 import {
   resetFilters,
   setCategories,
@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { selectFiltersData } from '../../../redux/Filters/selectors';
 
 interface FiltersProps {
-  filters: FiltersDataResponce;
+  filters: FiltersDataResponse;
 }
 
 export const Filters: React.FC<FiltersProps> = ({ filters }) => {

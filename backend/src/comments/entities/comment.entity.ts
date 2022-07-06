@@ -10,6 +10,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+interface RatedUserData {
+  userId: number;
+  rate: 'like' | 'dislike';
+}
+
 @Entity('comments')
 export class CommentEntity {
   @PrimaryGeneratedColumn()
@@ -22,10 +27,13 @@ export class CommentEntity {
   spoiler: boolean;
 
   @Column({ default: 0 })
-  votes: number;
+  rating: number;
 
   @Column({ default: 0 })
   replies_count: number;
+
+  @Column({ type: 'jsonb', default: [] })
+  rated_userIds: RatedUserData[];
 
   @Column({ nullable: true })
   replyTo: number;

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { WhatToReadItems } from '../../utils/static/WhatToRead';
 import { MangaCardBlock } from '../UI';
@@ -9,7 +9,7 @@ import styles from './WhatToRead.module.scss';
 export const MangaBlocks = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [items, setItems] = React.useState<ResponceManga[]>([]);
+  const [items, setItems] = React.useState<ResponseManga[]>([]);
   React.useEffect(() => {
     (async () => {
       try {

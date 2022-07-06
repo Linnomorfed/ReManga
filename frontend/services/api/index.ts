@@ -30,8 +30,6 @@ export const Api = (
     baseURL: process.env.NEXT_PUBLIC_NODE_URL,
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:3000',
     },
   });
 

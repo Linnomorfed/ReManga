@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import styles from './Carousel.module.scss';
-import { ResponceManga } from '../../../models/IManga';
+import { ResponseManga } from '../../../models/IManga';
 import { MangaCard } from '../Cards/MangaCard';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 interface SliderProps {
-  items: ResponceManga[];
+  items: ResponseManga[];
   title?: string;
   variant: 'popular' | 'new';
 }

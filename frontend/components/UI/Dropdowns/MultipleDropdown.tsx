@@ -8,12 +8,12 @@ import {
 } from '../../../assets/svgs';
 import { useAppDispatch } from '../../../hooks/redux';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ResponceFilter } from '../../../models/IFilters';
+import { ResponseFilter } from '../../../models/IFilters';
 import styles from './Dropdowns.module.scss';
 
 interface MultipleDropdownProps {
   defaultTitle: string;
-  items: ResponceFilter[];
+  items: ResponseFilter[];
   action: ActionCreatorWithPayload<number, string>;
   state: number[];
 }

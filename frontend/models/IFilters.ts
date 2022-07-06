@@ -1,14 +1,14 @@
-export interface ResponceFilter {
+export interface ResponseFilter {
   name: string;
   id: number;
 }
 
-export interface FiltersDataResponce {
-  types: ResponceFilter[];
-  genres: ResponceFilter[];
-  categories: ResponceFilter[];
-  statuses: ResponceFilter[];
-  restrictions: ResponceFilter[];
+export interface FiltersDataResponse {
+  types: ResponseFilter[];
+  genres: ResponseFilter[];
+  categories: ResponseFilter[];
+  statuses: ResponseFilter[];
+  restrictions: ResponseFilter[];
 }
 
 export interface CatalogFilters {

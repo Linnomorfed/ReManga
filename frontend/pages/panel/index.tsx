@@ -1,16 +1,18 @@
 import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { Api } from '../../services/api';
-import { FiltersDataResponce } from '../../models/IFilters';
+import { FiltersDataResponse } from '../../models/IFilters';
 import { MainLayout } from '../../layouts/MainLayout';
 import dynamic from 'next/dynamic';
 
 interface PanelProps {
-  filters: FiltersDataResponce;
+  filters: FiltersDataResponse;
 }
 
 const MangaPanel = dynamic<PanelProps>(() =>
-  import('../../components').then((mod) => mod.Panel)
+  import(/* webpackChunkName: "MangaPanel" */ '../../components').then(
+    (mod) => mod.Panel
+  )
 );
 
 const PanelPage: NextPage<PanelProps> = ({ filters }) => {

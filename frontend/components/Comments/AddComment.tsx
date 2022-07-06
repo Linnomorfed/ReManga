@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import useAutoFocus from '../../hooks/useAutoFocus';
-import { ResponceCommentItem } from '../../models/IComments';
+import { ResponseCommentItem } from '../../models/IComments';
 import { Api } from '../../services/api';
 import { BlueBtn, Switch } from '../UI';
 import styles from './Comments.module.scss';
@@ -11,7 +11,7 @@ interface AddCommentProps {
   chapterId?: number | null;
   commentId?: number | null;
   hideReply?: () => void;
-  updateComments?: (comment: ResponceCommentItem) => void;
+  updateComments?: (comment: ResponseCommentItem) => void;
   replyToName?: string;
 }
 

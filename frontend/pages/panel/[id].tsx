@@ -1,19 +1,21 @@
 import React from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Api } from '../../services/api';
-import { FiltersDataResponce } from '../../models/IFilters';
+import { FiltersDataResponse } from '../../models/IFilters';
 import { MainLayout } from '../../layouts/MainLayout';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import dynamic from 'next/dynamic';
 import { MangaPanelProps } from '../../components/Panel/IPanelProps';
 
 interface EditMangaPanelProps {
-  filters: FiltersDataResponce;
-  manga: ResponceManga;
+  filters: FiltersDataResponse;
+  manga: ResponseManga;
 }
 
 const Panel = dynamic<MangaPanelProps>(() =>
-  import('../../components').then((mod) => mod.Panel)
+  import(/* webpackChunkName: "MangaPanel" */ '../../components').then(
+    (mod) => mod.Panel
+  )
 );
 
 const EditMangaPanel: NextPage<EditMangaPanelProps> = ({ filters, manga }) => {
@@ -26,7 +28,9 @@ const EditMangaPanel: NextPage<EditMangaPanelProps> = ({ filters, manga }) => {
 
 export default EditMangaPanel;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   try {
     const id = ctx.params?.id as string;
     const manga = await Api(ctx).manga.getMangaForPanel(+id);

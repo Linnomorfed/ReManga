@@ -12,6 +12,7 @@ import { SortByReducer } from './SortBy/slice';
 import { AuthModalReducer } from './Auth/slice';
 import { MangaFiltersReducer } from './MangaFilters/slice';
 import { DashboardReducer } from './Dashboard/slice';
+import { MangaDataReducer } from './MangaData/slice';
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   sortBy: SortByReducer,
   mangaFilters: MangaFiltersReducer,
   dashboard: DashboardReducer,
+  mangaData: MangaDataReducer,
 });
 
 export function makeStore() {

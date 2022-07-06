@@ -2,15 +2,17 @@ import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { MainLayout } from '../../layouts/MainLayout';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 
 interface TopPageProps {
-  manga: ResponceManga[];
+  manga: ResponseManga[];
 }
 
 const WhatToRead = dynamic<TopPageProps>(() =>
-  import('../../components').then((mod) => mod.WhatToRead)
+  import(/* webpackChunkName: "WhatToRead" */ '../../components').then(
+    (mod) => mod.WhatToRead
+  )
 );
 
 const TopPage: NextPage<TopPageProps> = ({ manga }) => {
@@ -23,7 +25,7 @@ const TopPage: NextPage<TopPageProps> = ({ manga }) => {
 
 export default TopPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const manga = await Api().manga.getMangaTopByQuery({ take: 6 });
 

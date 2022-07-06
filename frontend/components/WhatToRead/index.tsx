@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { SelectSvg } from '../../assets/svgs';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import { WhatToReadItems, WhatToReadTabs } from '../../utils/static/WhatToRead';
 import { TabBtn } from '../UI';
 import { MangaBlocks } from './MangaBlocks';
@@ -11,7 +11,7 @@ import { MangaList } from './MangaList';
 import styles from './WhatToRead.module.scss';
 
 interface WhatToReadProps {
-  manga: ResponceManga[];
+  manga: ResponseManga[];
 }
 
 export const WhatToRead: React.FC<WhatToReadProps> = ({ manga }) => {

@@ -8,28 +8,38 @@ export interface CreateCommentDto {
   chapterId: number | null;
 }
 
+export interface UpdateCommentDto {
+  rate?: 'like' | 'dislike';
+}
+
 export interface SearchCommentDto {
   mangaId?: number | null;
   replyTo?: number | null;
   chapterId?: number | null;
 }
 
-export interface ResponceCommentItem {
+export interface RatedUserData {
+  userId: number;
+  rate: 'like' | 'dislike';
+}
+
+export interface ResponseCommentItem {
   id: number;
   text: string;
   spoiler: boolean;
   user: ResponseUser;
   mangaId: number;
-  votes: number;
+  rating: number;
   replies_count: number;
   replyTo: number | null;
   isPinned: boolean;
   createdAt: string;
   updatedAt: string;
+  rated_userIds: RatedUserData[];
 }
 
-export interface ResponceComment {
-  items: ResponceCommentItem[];
+export interface ResponseComment {
+  items: ResponseCommentItem[];
   count: number;
-  pinned: ResponceCommentItem;
+  pinned: ResponseCommentItem;
 }

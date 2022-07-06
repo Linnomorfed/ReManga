@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { CheckMarkSvg, HeartSvg } from '../../../../assets/svgs';
-import { ResponceFilter } from '../../../../models/IFilters';
+import { ResponseFilter } from '../../../../models/IFilters';
 import styles from './MangaCard.module.scss';
 
 interface MangaCardProps {
@@ -17,7 +17,7 @@ interface MangaCardProps {
   rating?: number | null;
   likesCount?: number | null;
   bookmarkItemId?: number;
-  genres?: ResponceFilter[];
+  genres?: ResponseFilter[];
   type?: string;
 }
 

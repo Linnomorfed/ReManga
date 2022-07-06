@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CircularLoader, MangaCard } from '../UI';
 import styles from './WhatToRead.module.scss';
@@ -22,7 +22,7 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [items, setItems] = React.useState<ResponceManga[]>([]);
+  const [items, setItems] = React.useState<ResponseManga[]>([]);
 
   const activeTab = router.query.section ? router.query.section : 1;
 

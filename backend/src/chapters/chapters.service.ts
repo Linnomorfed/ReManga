@@ -173,7 +173,7 @@ export class ChaptersService {
         .getRawMany();
 
       const ids = mangaRes.map((obj) => obj.id);
-      qb.andWhere('manga.id IN (:...ids)', { ids });
+      ids.length > 0 && qb.andWhere('manga.id IN (:...ids)', { ids });
     }
 
     const res = await qb.getMany();

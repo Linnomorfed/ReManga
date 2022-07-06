@@ -1,4 +1,4 @@
-import { ResponceManga } from './IManga';
+import { ResponseManga } from './IManga';
 
 export enum bookmarkIdEnum {
   READING = 1,
@@ -10,12 +10,12 @@ export enum bookmarkIdEnum {
 }
 
 export interface UpdateBookmarkDto {
-  bookmarkId: bookmarkIdEnum;
+  bookmarkId: bookmarkIdEnum | null;
 }
 
 export interface CreateBookmarkDto {
   mangaId: number;
-  bookmarkId: bookmarkIdEnum;
+  bookmarkId: bookmarkIdEnum | null;
 }
 export interface SearchBookmarkDto {
   userId: number;
@@ -26,7 +26,7 @@ export interface ResponseBookmark {
   id: number;
   userId: number;
   bookmarkId: number;
-  manga: ResponceManga;
+  manga: ResponseManga;
   createdAt: string;
   updatedAt: string;
 }

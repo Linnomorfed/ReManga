@@ -1,6 +1,6 @@
 import React from 'react';
-import { FiltersDataResponce } from '../../models/IFilters';
-import { ResponceManga } from '../../models/IManga';
+import { FiltersDataResponse } from '../../models/IFilters';
+import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CatalogSortBy } from '../../utils/static/Catalog';
 import { Filters } from './Filters';
@@ -14,8 +14,8 @@ import { selectFiltersData } from '../../redux/Filters/selectors';
 import { selectSortByData } from '../../redux/SortBy/selectors';
 
 interface CatalogProps {
-  filters: FiltersDataResponce;
-  manga: ResponceManga[];
+  filters: FiltersDataResponse;
+  manga: ResponseManga[];
   itemsCount: number;
 }
 
@@ -39,7 +39,7 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   const { catalogSortBy } = useAppSelector(selectSortByData);
 
-  const [mangaItems, setMangaItems] = React.useState<ResponceManga[]>(manga);
+  const [mangaItems, setMangaItems] = React.useState<ResponseManga[]>(manga);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [totalCount, setTotalCount] = React.useState<number>(itemsCount);
   const [cardVariant, setCardVariant] = React.useState<'block' | 'list'>(

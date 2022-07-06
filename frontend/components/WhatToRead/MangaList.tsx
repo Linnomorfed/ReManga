@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { WhatToReadItems } from '../../utils/static/WhatToRead';
 import { MangaCard } from '../UI';
@@ -9,12 +9,12 @@ import { Section } from './Section';
 import styles from './WhatToRead.module.scss';
 
 interface MangaListProps {
-  manga: ResponceManga[];
+  manga: ResponseManga[];
 }
 
 export const MangaList: React.FC<MangaListProps> = ({ manga }) => {
   const router = useRouter();
-  const [items, setItems] = React.useState<ResponceManga[]>(manga);
+  const [items, setItems] = React.useState<ResponseManga[]>(manga);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const activeTab = router.query.section ? router.query.section : 1;

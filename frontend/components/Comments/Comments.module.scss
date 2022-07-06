@@ -211,12 +211,30 @@
   margin: 0;
   padding: 2px;
 
+  & svg {
+    fill: #fff;
+  }
+
   &:hover {
     background-color: rgba(140, 140, 140, 0.1);
   }
 
   &Dislike {
     transform: rotate(180deg);
+  }
+
+  &User {
+    &Liked {
+      & svg {
+        fill: $clr-blue;
+      }
+    }
+
+    &Disliked {
+      & svg {
+        fill: $clr-red;
+      }
+    }
   }
 }
 

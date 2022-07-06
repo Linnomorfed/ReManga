@@ -2,14 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { HeartSvg, ShowPassSvg, StarSvg } from '../../../../assets/svgs';
-import { ResponceFilter } from '../../../../models/IFilters';
+import { ResponseFilter } from '../../../../models/IFilters';
 import styles from './MangaCardBlock.module.scss';
 interface MangaCardBlockProps {
   id: number;
   imageUrl: string;
   type: string;
   title: string;
-  genres: ResponceFilter[];
+  genres: ResponseFilter[];
   rating: number;
   views: number;
   likes: number;

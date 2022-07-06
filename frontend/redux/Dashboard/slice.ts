@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { ResponceManga } from '../../models/IManga';
+import { ResponseManga } from '../../models/IManga';
 
-const initialState: Record<string, ResponceManga[]> = {
+const initialState: Record<string, ResponseManga[]> = {
   newestManga: [],
   weekPopular: [],
   todayPopular: [],
@@ -13,22 +13,21 @@ export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
-    setWeekPopular: (state, action: PayloadAction<ResponceManga[]>) => {
+    setWeekPopular: (state, action: PayloadAction<ResponseManga[]>) => {
       state.weekPopular = action.payload;
     },
-    setTodayPopular: (state, action: PayloadAction<ResponceManga[]>) => {
+    setTodayPopular: (state, action: PayloadAction<ResponseManga[]>) => {
       state.todayPopular = action.payload;
     },
-    setNewestPopular: (state, action: PayloadAction<ResponceManga[]>) => {
+    setNewestPopular: (state, action: PayloadAction<ResponseManga[]>) => {
       state.newestPopular = action.payload;
     },
-    setNewestManga: (state, action: PayloadAction<ResponceManga[]>) => {
+    setNewestManga: (state, action: PayloadAction<ResponseManga[]>) => {
       state.newestManga = action.payload;
     },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log('HYDRATE_DASHBOARD', state, action.payload);
       return {
         ...state,
         ...action.payload.dashboard,

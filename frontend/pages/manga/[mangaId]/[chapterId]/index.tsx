@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
@@ -13,7 +13,9 @@ interface ChapterPageProps {
 }
 
 const Chapter = dynamic<ChapterPageProps>(() =>
-  import('../../../../components').then((mod) => mod.Chapter)
+  import(/* webpackChunkName: "ChapterPage" */ '../../../../components').then(
+    (mod) => mod.Chapter
+  )
 );
 
 const ChapterPage: NextPage<ChapterPageProps> = ({
@@ -40,7 +42,9 @@ const ChapterPage: NextPage<ChapterPageProps> = ({
 
 export default ChapterPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   try {
     const chapterId = ctx.params?.chapterId as string;
     const mangaId = ctx.params?.mangaId as string;

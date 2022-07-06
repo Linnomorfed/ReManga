@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponceCommentItem } from '../../models/IComments';
+import { ResponseCommentItem } from '../../models/IComments';
 import { Api } from '../../services/api';
 import { CommentLoader } from '../UI';
 import { AddComment } from './AddComment';
@@ -16,9 +16,9 @@ export const Comments: React.FC<CommentsProps> = ({
   chapterId = null,
 }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [comments, setComments] = React.useState<ResponceCommentItem[]>([]);
+  const [comments, setComments] = React.useState<ResponseCommentItem[]>([]);
   const [pinnedComment, setPinnedComment] =
-    React.useState<ResponceCommentItem | null>(null);
+    React.useState<ResponseCommentItem | null>(null);
   const [commentsCount, setCommentsCount] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -39,7 +39,7 @@ export const Comments: React.FC<CommentsProps> = ({
     })();
   }, []);
 
-  const updateComments = (obj: ResponceCommentItem) => {
+  const updateComments = (obj: ResponseCommentItem) => {
     setComments((prev) => [obj, ...prev]);
     setCommentsCount((prev) => prev + 1);
   };

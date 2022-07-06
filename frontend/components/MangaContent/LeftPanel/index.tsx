@@ -5,32 +5,35 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { BlueBtn, ModalBtn, SingleDropdown } from '../../UI';
 import { BookmarkTypes } from '../../../utils/static/Bookmarks';
 import styles from './LeftPanel.module.scss';
-import { ResponseBookmark } from '../../../models/IBookmarks';
 import { Api } from '../../../services/api';
 import { selectUserData } from '../../../redux/User/selectors';
 import { selectSortByData } from '../../../redux/SortBy/selectors';
-import { setMangaBookmarkId } from '../../../redux/SortBy/slice';
+import useDidMountEffect from '../../../hooks/useDidMountEffect';
+import { setMangaBookmarkId } from '../../../redux/MangaData/slice';
+import { selectMangaData } from '../../../redux/MangaData/selectors';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface MangaContentProps {
   url: string;
   title: string;
-  bookmark: ResponseBookmark | null;
   mangaId: number;
 }
 
 export const LeftPanel: React.FC<MangaContentProps> = ({
   url,
   title,
-  bookmark,
   mangaId,
 }) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const userData = useAppSelector(selectUserData);
-  const { mangaBookmarkId } = useAppSelector(selectSortByData);
+
+  const { bookmark, mangaBookmarkId } = useAppSelector(selectMangaData);
 
   //dispatch(showAuthModal());
 
-  React.useEffect(() => {
+  useDidMountEffect(() => {
     const addBookmark = async () => {
       try {
         await Api().bookmarks.createBookmark({
@@ -63,11 +66,11 @@ export const LeftPanel: React.FC<MangaContentProps> = ({
     }
   }, [mangaBookmarkId]);
 
-  React.useEffect(() => {
-    bookmark && dispatch(setMangaBookmarkId(bookmark.bookmarkId));
-  }, []);
-
   const onContinueReading = () => {};
+
+  const pushToEditPage = () => {
+    router.push(`/panel/${router.query.mangaId}`);
+  };
 
   return (
     <div className={styles.querter}>
@@ -99,7 +102,9 @@ export const LeftPanel: React.FC<MangaContentProps> = ({
           />
           {userData && (
             <>
-              <BlueBtn type='manga'>Edit</BlueBtn>
+              <BlueBtn type='manga' onClick={pushToEditPage}>
+                Edit
+              </BlueBtn>
               <button className={styles.warnBtn}>
                 <WarnSvg w={24} fill={'white'} /> Complain
               </button>

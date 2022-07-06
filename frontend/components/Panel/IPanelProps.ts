@@ -1,7 +1,7 @@
-import { FiltersDataResponce } from '../../models/IFilters';
-import { ResponceManga } from '../../models/IManga';
+import { FiltersDataResponse } from '../../models/IFilters';
+import { ResponseManga } from '../../models/IManga';
 
 export interface MangaPanelProps {
-  data?: ResponceManga;
-  filters: FiltersDataResponce;
+  data?: ResponseManga;
+  filters: FiltersDataResponse;
 }

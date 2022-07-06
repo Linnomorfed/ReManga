@@ -2,7 +2,7 @@ import React from 'react';
 import { SingleDropdown, TabBtn } from '../UI';
 import styles from './Bookmarks.module.scss';
 import { BookmarkTypes } from '../../utils/static/Bookmarks';
-import { ResponceFilter } from '../../models/IFilters';
+import { ResponseFilter } from '../../models/IFilters';
 import { MangaCard } from '../UI/Cards/MangaCard';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { Api } from '../../services/api';
@@ -109,7 +109,7 @@ export const Bookmarks: React.FC<BookmarksProps> = ({
           styles.tabs,
           `${type === 'bookmarks' && styles.tabsBookmarks}`
         )}>
-        {BookmarkTypes.map((obj: ResponceFilter) => (
+        {BookmarkTypes.map((obj: ResponseFilter) => (
           <TabBtn
             key={obj.id}
             onClick={toogleActiveTab}

@@ -4,12 +4,12 @@ import React from 'react';
 import { SelectSvg } from '../../../assets/svgs';
 import { useAppDispatch } from '../../../hooks/redux';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ResponceFilter } from '../../../models/IFilters';
+import { ResponseFilter } from '../../../models/IFilters';
 import styles from './Dropdowns.module.scss';
 
 interface SingleDropdownProps {
   variant?: 'default' | 'sortBy' | 'manga' | 'header';
-  items: ResponceFilter[];
+  items: ResponseFilter[];
   action: ActionCreatorWithPayload<number, string>;
   state: number | null;
   defaultTitle?: string;

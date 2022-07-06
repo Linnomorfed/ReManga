@@ -1,5 +1,7 @@
 import React from 'react';
-import { RatingResponse } from '../../../models/IRating';
+import { useAppSelector } from '../../../hooks/redux';
+import { selectMangaData } from '../../../redux/MangaData/selectors';
+import { selectSortByData } from '../../../redux/SortBy/selectors';
 import { Api } from '../../../services/api';
 import { RateList } from '../../../utils/static/RateList';
 import { ModalBlock } from '../../ModalBlock';
@@ -13,7 +15,6 @@ interface RatePanelProps {
   setMangaRating: React.Dispatch<React.SetStateAction<number>>;
   setMangaVotesCount: React.Dispatch<React.SetStateAction<number>>;
   mangaVotesCount: number;
-  ratedByUser: RatingResponse | null;
 }
 
 export const RatePanel: React.FC<RatePanelProps> = ({
@@ -24,8 +25,9 @@ export const RatePanel: React.FC<RatePanelProps> = ({
   visible,
   setVisible,
   mangaId,
-  ratedByUser,
 }) => {
+  const { ratedByUser } = useAppSelector(selectMangaData);
+
   const sendRate = async (rate: number) => {
     try {
       if (ratedByUser) {
