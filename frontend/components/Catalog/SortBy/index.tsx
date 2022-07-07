@@ -17,9 +17,11 @@ export const SortBy: FC<SortByProps> = ({
   callbackOrder,
   returnCardVariant,
 }) => {
+  const cardVariantValue = localStorage.getItem('cardVariant') || 'list';
   const { catalogSortBy } = useAppSelector(selectSortByData);
-
   const [currentOrder, setCurrentOrder] = React.useState<boolean>(false);
+
+  console.log(cardVariantValue, 11);
 
   const toggleOrder = () => {
     setCurrentOrder(!currentOrder);
@@ -53,13 +55,21 @@ export const SortBy: FC<SortByProps> = ({
       </div>
       <div className={styles.center}>
         <button
-          className={classNames(styles.switchBtn, styles.rightBtns)}
-          onClick={setListType}>
+          className={classNames(
+            styles.switchBtn,
+            styles.rightBtns,
+            `${cardVariantValue === 'block' ? styles.rightBtnsActive : ''}`
+          )}
+          onClick={setBlockType}>
           <ListViewSvg w={24} h={24} fill={'white'} />
         </button>
         <button
-          className={classNames(styles.switchBtn, styles.rightBtns)}
-          onClick={setBlockType}>
+          className={classNames(
+            styles.switchBtn,
+            styles.rightBtns,
+            `${cardVariantValue === 'list' ? styles.rightBtnsActive : ''}`
+          )}
+          onClick={setListType}>
           <BlockViewSvg w={24} h={24} fill={'white'} />
         </button>
       </div>

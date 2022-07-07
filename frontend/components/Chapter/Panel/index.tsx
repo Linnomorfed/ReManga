@@ -23,7 +23,6 @@ export const ChapterPanel = () => {
   const toggleActiveId = (id: number) => {
     activeId === id ? setActiveId(0) : setActiveId(id);
   };
-  console.log(activePanelId);
 
   React.useEffect(() => {
     dispatch(setActivePanelId(activeId));

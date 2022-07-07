@@ -4,6 +4,7 @@ import React from 'react';
 import { HeartSvg, ShowPassSvg, StarSvg } from '../../../../assets/svgs';
 import { ResponseFilter } from '../../../../models/IFilters';
 import styles from './MangaCardBlock.module.scss';
+
 interface MangaCardBlockProps {
   id: number;
   imageUrl: string;
@@ -13,7 +14,7 @@ interface MangaCardBlockProps {
   rating: number;
   views: number;
   likes: number;
-  index: number;
+  index?: number;
 }
 
 export const MangaCardBlock: React.FC<MangaCardBlockProps> = ({
@@ -27,8 +28,6 @@ export const MangaCardBlock: React.FC<MangaCardBlockProps> = ({
   views,
   index,
 }) => {
-  console.log(genres);
-
   const sortedGenres = genres
     ? [...genres].sort((a, b) =>
         a.name.toLowerCase().localeCompare(b.name.toLowerCase())
@@ -62,7 +61,7 @@ export const MangaCardBlock: React.FC<MangaCardBlockProps> = ({
               </span>
             </div>
           </div>
-          <div className={styles.index}>{index + 1}</div>
+          <div className={styles.index}>{index && index}</div>
         </div>
       </a>
     </Link>

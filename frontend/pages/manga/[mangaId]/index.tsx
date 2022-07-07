@@ -6,6 +6,7 @@ import { MainLayout } from '../../../layouts/MainLayout';
 import { Api } from '../../../services/api';
 import { wrapper } from '../../../redux/store';
 import {
+  setBookmark,
   setChaptersCount,
   setMangaBookmarkId,
   setMangaData,
@@ -51,7 +52,9 @@ export const getServerSideProps: GetServerSideProps =
         store.dispatch(setMangaData(manga));
         store.dispatch(setChaptersCount(chaptersCount));
         ratedByUser && store.dispatch(setRatedByUser(ratedByUser));
-        bookmark && store.dispatch(setMangaBookmarkId(bookmark?.bookmarkId));
+        bookmark &&
+          (store.dispatch(setMangaBookmarkId(bookmark.bookmarkId)),
+          store.dispatch(setBookmark(bookmark)));
       } catch (err) {
         console.warn('Manga loading error', err);
         return {

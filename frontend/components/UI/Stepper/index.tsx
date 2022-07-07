@@ -5,9 +5,11 @@ import { CheckMarkSvg } from '../../../assets/svgs';
 import { BlueBtn } from '../BlueBtn';
 import styles from './Stepper.module.scss';
 
+type StepType = { id: number; text: string };
+
 interface StepperProps {
   children: React.ReactChild | React.ReactNode;
-  steps: { id: number; text: string }[];
+  steps: StepType[];
   returnStep: (step: number) => void;
 }
 

@@ -1,16 +1,34 @@
 import React from 'react';
 import { CheckboxCheckedSvg, CheckboxSvg } from '../../../assets/svgs';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import useDidMountEffect from '../../../hooks/useDidMountEffect';
+import { showAuthModal } from '../../../redux/Auth/slice';
+import { selectUserData } from '../../../redux/User/selectors';
 import styles from './Checkbox.module.scss';
 interface CheckboxProps {
   returnValue: (checked: boolean) => void;
+  loggedInOnly?: boolean;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ returnValue }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({
+  returnValue,
+  loggedInOnly = false,
+}) => {
   const [checked, setChecked] = React.useState(false);
 
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector(selectUserData);
+
+  const toggleAuthModalVisibility = () => {
+    dispatch(showAuthModal());
+  };
+
   const toggleCheckBox = () => {
-    setChecked(!checked);
+    loggedInOnly
+      ? userData
+        ? setChecked(!checked)
+        : toggleAuthModalVisibility()
+      : setChecked(!checked);
   };
 
   useDidMountEffect(() => {

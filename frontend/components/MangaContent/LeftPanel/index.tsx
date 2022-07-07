@@ -1,17 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
 import { WarnSvg } from '../../../assets/svgs';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import { BlueBtn, ModalBtn, SingleDropdown } from '../../UI';
 import { BookmarkTypes } from '../../../utils/static/Bookmarks';
 import styles from './LeftPanel.module.scss';
 import { Api } from '../../../services/api';
 import { selectUserData } from '../../../redux/User/selectors';
-import { selectSortByData } from '../../../redux/SortBy/selectors';
 import useDidMountEffect from '../../../hooks/useDidMountEffect';
 import { setMangaBookmarkId } from '../../../redux/MangaData/slice';
 import { selectMangaData } from '../../../redux/MangaData/selectors';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface MangaContentProps {
@@ -26,12 +24,9 @@ export const LeftPanel: React.FC<MangaContentProps> = ({
   mangaId,
 }) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const userData = useAppSelector(selectUserData);
 
   const { bookmark, mangaBookmarkId } = useAppSelector(selectMangaData);
-
-  //dispatch(showAuthModal());
 
   useDidMountEffect(() => {
     const addBookmark = async () => {

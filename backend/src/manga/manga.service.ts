@@ -58,7 +58,7 @@ export class MangaService {
       .leftJoin('manga.chapters', 'chapters')
       .leftJoin('chapters.likes', 'likes')
       .addSelect('COUNT(likes)', 'count')
-      .andWhere('likes.createdAt > :monthAgo', { monthAgo })
+      //.andWhere('likes.createdAt > :monthAgo', { monthAgo })
       .groupBy('manga.id')
       .addGroupBy('chapters.id')
       .addGroupBy('likes.id')
@@ -100,7 +100,6 @@ export class MangaService {
   }
 
   async getNewestPopular() {
-    let extraData = [];
     const take = 20;
     const monthAgo = new Date();
     monthAgo.setDate(monthAgo.getDate() - 30);
@@ -126,33 +125,7 @@ export class MangaService {
 
     const res = await qb.getMany();
 
-    //  For tests
-    if (res.length < take) {
-      const qb = this.repository
-        .createQueryBuilder('manga')
-        .leftJoinAndSelect('manga.image', 'image')
-        .leftJoinAndSelect('manga.type', 'type')
-        .leftJoinAndSelect('manga.genres', 'genres')
-        .leftJoin('manga.chapters', 'chapters')
-        .leftJoin('chapters.likes', 'likes')
-        .addSelect('COUNT(likes)', 'count')
-        .groupBy('manga.id')
-        .addGroupBy('chapters.id')
-        .addGroupBy('likes.id')
-        .addGroupBy('image.id')
-        .addGroupBy('type.id')
-        .addGroupBy('genres.id')
-        .orderBy('count', 'DESC')
-        .take(take - res.length);
-
-      const newRes = await qb.getMany();
-
-      extraData = newRes.filter((obj) => !res.find(({ id }) => obj.id === id));
-    }
-
-    const content = [...res, ...extraData];
-
-    return content;
+    return res;
   }
 
   async getTodayPopular(query: SearchMangaDto) {
@@ -186,7 +159,6 @@ export class MangaService {
   }
 
   async getWeekPopular() {
-    let extraData = [];
     const take = 20;
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -198,7 +170,7 @@ export class MangaService {
       .leftJoinAndSelect('manga.genres', 'genres')
       .leftJoin('manga.chapters', 'chapters')
       .leftJoin('chapters.likes', 'likes')
-      .where('likes.createdAt  > :weekAgo', { weekAgo: weekAgo })
+      //.where('likes.createdAt  > :weekAgo', { weekAgo: weekAgo })
       .addSelect('COUNT(likes)', 'count')
       .groupBy('manga.id')
       .addGroupBy('chapters.id')
@@ -212,33 +184,7 @@ export class MangaService {
 
     const res = await qb.getMany();
 
-    //  For tests
-    if (res.length < take) {
-      const qb = this.repository
-        .createQueryBuilder('manga')
-        .leftJoinAndSelect('manga.image', 'image')
-        .leftJoinAndSelect('manga.type', 'type')
-        .leftJoinAndSelect('manga.genres', 'genres')
-        .leftJoin('manga.chapters', 'chapters')
-        .leftJoin('chapters.likes', 'likes')
-        .addSelect('COUNT(likes)', 'count')
-        .groupBy('manga.id')
-        .addGroupBy('chapters.id')
-        .addGroupBy('likes.id')
-        .addGroupBy('image.id')
-        .addGroupBy('type.id')
-        .addGroupBy('genres.id')
-        .orderBy('count', 'DESC')
-        .take(take - res.length);
-
-      const newRes = await qb.getMany();
-
-      extraData = newRes.filter((obj) => !res.find(({ id }) => obj.id === id));
-    }
-
-    const content = [...res, ...extraData];
-
-    return content;
+    return res;
   }
 
   async getMangaByQuery(query: SearchMangaDto) {
@@ -267,6 +213,7 @@ export class MangaService {
       .leftJoinAndSelect('manga.genres', 'genres')
       .leftJoinAndSelect('manga.restriction', 'restriction')
       .leftJoinAndSelect('manga.categories', 'categories')
+
       .setParameters({
         keyword: `%${keyword}%`,
       })
@@ -345,8 +292,55 @@ export class MangaService {
       qb.orderBy('manga.createdAt', orderby);
     }
 
+    if (sortby === SortByEnum.updates) {
+      qb.leftJoinAndSelect('manga.chapters', 'chapters').orderBy(
+        'chapters.createdAt',
+        orderby,
+      );
+    }
+
+    if (sortby === SortByEnum.popularity) {
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+
+      qb.leftJoin('manga.chapters', 'chapters')
+        .leftJoin('chapters.likes', 'likes')
+        .andWhere('likes.createdAt  > :weekAgo', { weekAgo: weekAgo })
+        .addSelect('COUNT(likes)', 'count')
+        .groupBy('manga.id')
+        .addGroupBy('chapters.id')
+        .addGroupBy('likes.id')
+        .addGroupBy('image.id')
+        .addGroupBy('type.id')
+        .addGroupBy('status.id')
+        .addGroupBy('restriction.id')
+        .addGroupBy('categories.id')
+        .addGroupBy('genres.id')
+        .addGroupBy('image.id')
+        .orderBy('count', 'DESC');
+    }
+
+    if (sortby === SortByEnum.likes) {
+      qb.orderBy('manga.likes_count', orderby);
+    }
+
     if (sortby === SortByEnum.views) {
       qb.orderBy('manga.views', orderby);
+    }
+
+    if (sortby === SortByEnum.chaptersCount) {
+      qb.leftJoinAndSelect('manga.chapters', 'chapters')
+        .addSelect('COUNT(chapters)', 'chapters_count')
+        .orderBy('chapters_count', orderby)
+        .groupBy('manga.id')
+        .addGroupBy('chapters.id')
+        .addGroupBy('image.id')
+        .addGroupBy('type.id')
+        .addGroupBy('status.id')
+        .addGroupBy('restriction.id')
+        .addGroupBy('categories.id')
+        .addGroupBy('genres.id')
+        .addGroupBy('image.id');
     }
 
     const data = await qb.getManyAndCount();

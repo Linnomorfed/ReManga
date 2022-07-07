@@ -7,7 +7,7 @@ import { Filters } from './Filters';
 import { Pagination } from '../UI/Pagination';
 import { SortBy } from './SortBy';
 import styles from './Catalog.module.scss';
-import { MangaCard } from '../UI';
+import { MangaCard, MangaCardBlock } from '../UI';
 import { useAppSelector } from '../../hooks/redux';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { selectFiltersData } from '../../redux/Filters/selectors';
@@ -24,7 +24,7 @@ export const Catalog: React.FC<CatalogProps> = ({
   manga,
   itemsCount,
 }) => {
-  const showPerPage = 3;
+  const showPerPage = 4;
 
   const {
     types,
@@ -39,12 +39,14 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   const { catalogSortBy } = useAppSelector(selectSortByData);
 
+  const cardVariantValue = localStorage.getItem('cardVariant') || 'list';
+
   const [mangaItems, setMangaItems] = React.useState<ResponseManga[]>(manga);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [totalCount, setTotalCount] = React.useState<number>(itemsCount);
-  const [cardVariant, setCardVariant] = React.useState<'block' | 'list'>(
-    'block'
-  );
+  const [cardVariant, setCardVariant] = React.useState<
+    'block' | 'list' | string
+  >(cardVariantValue);
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
   );
@@ -59,6 +61,9 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   const toggleCardType = (type: 'list' | 'block') => {
     setCardVariant(type);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cardVariant', type);
+    }
   };
 
   useDidMountEffect(() => {
@@ -110,17 +115,32 @@ export const Catalog: React.FC<CatalogProps> = ({
             returnCardVariant={toggleCardType}
           />
           <div className={styles.mangaList}>
-            {mangaItems.map((obj) => (
-              <MangaCard
-                key={obj.id}
-                title={obj.title}
-                url={obj.image.url}
-                mangaId={obj.id}
-                rating={obj.rating}
-                type={obj.type.name}
-                genres={obj.genres}
-              />
-            ))}
+            {mangaItems &&
+              mangaItems.map((obj) =>
+                cardVariant === 'list' ? (
+                  <MangaCard
+                    key={obj.id}
+                    title={obj.title}
+                    url={obj.image.url}
+                    mangaId={obj.id}
+                    rating={obj.rating}
+                    type={obj.type.name}
+                    genres={obj.genres}
+                  />
+                ) : (
+                  <MangaCardBlock
+                    key={obj.id}
+                    id={obj.id}
+                    imageUrl={obj.image.url}
+                    type={obj.type.name}
+                    title={obj.title}
+                    genres={obj.genres}
+                    rating={obj.rating}
+                    views={obj.views}
+                    likes={obj.likes_count}
+                  />
+                )
+              )}
           </div>
           <Pagination
             itemsPerPage={showPerPage}

@@ -7,11 +7,13 @@ import { LeftPanel } from './LeftPanel';
 import { MangaInfo } from './MangaInfo';
 import { Chapters } from './Chapters';
 import { selectMangaData } from '../../redux/MangaData/selectors';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useRouter } from 'next/router';
+import { setCurrentChapter } from '../../redux/Chapter/slice';
 
 export const MangaContent: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { manga, chaptersCount } = useAppSelector(selectMangaData);
 
   const [activeTab, setActiveTab] = React.useState<number>(1);
@@ -19,6 +21,10 @@ export const MangaContent: React.FC = () => {
   const onTabClick = (id: number) => {
     setActiveTab(id);
   };
+
+  React.useEffect(() => {
+    dispatch(setCurrentChapter(null));
+  }, []);
 
   if (!manga) {
     router.push('/404');

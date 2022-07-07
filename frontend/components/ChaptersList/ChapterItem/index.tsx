@@ -34,7 +34,8 @@ export const ChapterItem: React.FC<ChapterItemProps> = ({
   const [chapterLikesCount, setChapterLikesCount] =
     React.useState<number>(likesCount);
 
-  const likeTheChapter = async () => {
+  const likeTheChapter = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     try {
       if (!likedChapter) {
         await Api().chapter.likeTheChapter({ chapterId });

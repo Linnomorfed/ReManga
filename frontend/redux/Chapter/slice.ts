@@ -17,7 +17,7 @@ export const chapterSlice = createSlice({
   name: 'chapters',
   initialState,
   reducers: {
-    setCurrentChapter: (state, action: PayloadAction<ChapterResult>) => {
+    setCurrentChapter: (state, action: PayloadAction<ChapterResult | null>) => {
       state.currentChapter = action.payload;
     },
     setNextPageId: (state, action: PayloadAction<number | null>) => {

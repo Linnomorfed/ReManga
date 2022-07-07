@@ -1,5 +1,8 @@
 export enum SortByEnum {
-  views = 'views',
   createdAt = 'createdAt',
+  updates = 'latestUpdates',
+  popularity = 'popularity',
   likes = 'likes',
+  views = 'views',
+  chaptersCount = 'chaptersCount',
 }

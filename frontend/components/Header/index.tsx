@@ -21,7 +21,7 @@ import { BookmarkTypes } from '../../utils/static/Bookmarks';
 import { selectUserData } from '../../redux/User/selectors';
 import { selectChaptersData } from '../../redux/Chapter/selectors';
 import { selectSortByData } from '../../redux/SortBy/selectors';
-import { setMangaBookmarkId } from '../../redux/SortBy/slice';
+import { setMangaBookmarkId } from '../../redux/MangaData/slice';
 
 interface HeaderProps {
   variant?: 'default' | 'transparent' | 'chapter';

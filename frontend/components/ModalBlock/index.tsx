@@ -28,6 +28,9 @@ export const ModalBlock: React.FC<ModalBlockProps> = ({
     if (visible) {
       document.body.style.overflow = 'hidden';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [visible]);
 
   return (

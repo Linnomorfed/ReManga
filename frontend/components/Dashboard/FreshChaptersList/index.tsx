@@ -40,7 +40,7 @@ export const FreshChaptersList: FC = () => {
       <div className={styles.header}>
         <h5 className={styles.title}>Fresh chapters</h5>
         <div className='d-flex align-center'>
-          <Checkbox returnValue={returnCheckboxValue} />
+          <Checkbox returnValue={returnCheckboxValue} loggedInOnly />
           <p className={styles.description}>Only my bookmarks</p>
         </div>
       </div>

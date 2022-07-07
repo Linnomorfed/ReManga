@@ -5,11 +5,10 @@ export const CatalogSortBy = [
   {
     id: 2,
     name: 'According to latest updates',
-    filter: MangaSortEnum.createdAt,
+    filter: MangaSortEnum.updates,
   },
-  { id: 3, name: 'Popularity', filter: MangaSortEnum.createdAt },
-  { id: 4, name: 'According to the likes', filter: MangaSortEnum.createdAt },
+  { id: 3, name: 'Popularity', filter: MangaSortEnum.popularity },
+  { id: 4, name: 'According to the likes', filter: MangaSortEnum.likes },
   { id: 5, name: 'By views', filter: MangaSortEnum.views },
-  { id: 6, name: 'By number of chapters', filter: MangaSortEnum.createdAt },
-  { id: 7, name: "I'm lucky", filter: MangaSortEnum.createdAt },
+  { id: 6, name: 'By number of chapters', filter: MangaSortEnum.chaptersCount },
 ];

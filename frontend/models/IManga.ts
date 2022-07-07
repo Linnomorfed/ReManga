@@ -70,6 +70,10 @@ export interface SearchMangaDto {
 }
 
 export enum MangaSortEnum {
-  views = 'views',
   createdAt = 'createdAt',
+  updates = 'latestUpdates',
+  popularity = 'popularity',
+  likes = 'likes',
+  views = 'views',
+  chaptersCount = 'chaptersCount',
 }
