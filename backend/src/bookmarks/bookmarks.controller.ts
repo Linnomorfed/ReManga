@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
+import { EmailConfirmationGuard } from 'src/email/guards/emailConfirmation.guard';
 import { MangaService } from 'src/manga/manga.service';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { BookmarksService } from './bookmarks.service';
@@ -26,6 +27,7 @@ export class BookmarksController {
   ) {}
 
   @Post()
+  @UseGuards(EmailConfirmationGuard)
   @UseGuards(JwtAuthGuard)
   async create(@User() user: UserEntity, @Body() dto: CreateBookmarkDto) {
     const manga = await this.mangaService.getMangaById(dto.mangaId);

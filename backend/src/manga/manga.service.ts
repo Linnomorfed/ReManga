@@ -213,11 +213,9 @@ export class MangaService {
       .leftJoinAndSelect('manga.genres', 'genres')
       .leftJoinAndSelect('manga.restriction', 'restriction')
       .leftJoinAndSelect('manga.categories', 'categories')
-
       .setParameters({
         keyword: `%${keyword}%`,
       })
-
       .take(take)
       .skip(skip);
 
@@ -329,9 +327,8 @@ export class MangaService {
     }
 
     if (sortby === SortByEnum.chaptersCount) {
-      qb.leftJoinAndSelect('manga.chapters', 'chapters')
+      qb.leftJoin('manga.chapters', 'chapters')
         .addSelect('COUNT(chapters)', 'chapters_count')
-        .orderBy('chapters_count', orderby)
         .groupBy('manga.id')
         .addGroupBy('chapters.id')
         .addGroupBy('image.id')
@@ -340,11 +337,11 @@ export class MangaService {
         .addGroupBy('restriction.id')
         .addGroupBy('categories.id')
         .addGroupBy('genres.id')
-        .addGroupBy('image.id');
+        .addGroupBy('image.id')
+        .orderBy('chapters_count', orderby);
     }
 
     const data = await qb.getManyAndCount();
-
     const [items, count] = data;
 
     return { items, count };

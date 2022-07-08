@@ -40,8 +40,6 @@ export class UserController {
     @User() user: UserEntity,
     @Body() dto: UpdateUserDto,
   ) {
-    console.log(user);
-    console.log(dto);
     return this.userService.update(+id, dto, +user.id);
   }
 

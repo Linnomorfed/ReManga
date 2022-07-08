@@ -17,11 +17,13 @@ export const SortBy: FC<SortByProps> = ({
   callbackOrder,
   returnCardVariant,
 }) => {
-  const cardVariantValue = localStorage.getItem('cardVariant') || 'list';
+  const cardVariantValue =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('cardVariant') || 'list'
+      : 'list';
+
   const { catalogSortBy } = useAppSelector(selectSortByData);
   const [currentOrder, setCurrentOrder] = React.useState<boolean>(false);
-
-  console.log(cardVariantValue, 11);
 
   const toggleOrder = () => {
     setCurrentOrder(!currentOrder);

@@ -28,6 +28,7 @@ export interface ResponseUser {
   nickname: string;
   updatedAt: string;
   liked_chapters: number;
+  isEmailConfirmed: boolean;
   access_token: string;
 }
 

@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseModule } from './database/database.module';
-
 import 'dotenv/config';
+import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { MangaModule } from './manga/manga.module';
 import { CommentsModule } from './comments/comments.module';
@@ -20,6 +19,7 @@ import { RatingModule } from './rating/rating.module';
 import { ChaptersModule } from './chapters/chapters.module';
 import { PagesModule } from './pages/pages.module';
 import { LikesModule } from './likes/likes.module';
+import { EmailModule } from './email/email.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -27,8 +27,14 @@ import * as Joi from '@hapi/joi';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
+        EMAIL_SERVICE: Joi.string().required(),
+        EMAIL_USER: Joi.string().required(),
+        EMAIL_PASSWORD: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
+        JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
+        JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+        EMAIL_CONFIRMATION_URL: Joi.string().required(),
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
         AWS_REGION: Joi.string().required(),
@@ -38,6 +44,7 @@ import * as Joi from '@hapi/joi';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         NODE_ENV: Joi.string().required().valid('development', 'production'),
+        NODE_URL: Joi.string().required(),
         PORT: Joi.string().required(),
       }),
     }),
@@ -46,6 +53,7 @@ import * as Joi from '@hapi/joi';
     MangaModule,
     CommentsModule,
     AuthModule,
+    EmailModule,
     TypesModule,
     CategoriesModule,
     GenresModule,

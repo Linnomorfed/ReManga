@@ -91,8 +91,21 @@ export class UserService {
     };
   }
 
+  async markEmailAsConfirmed(email: string) {
+    return this.repository.update(
+      { email },
+      {
+        isEmailConfirmed: true,
+      },
+    );
+  }
+
   findByConditions(cond: LoginUserDto) {
-    return this.repository.findOne(cond);
+    const res = this.repository.findOne(cond);
+    if (!res) {
+      throw new NotFoundException();
+    }
+    return res;
   }
 
   findByEmail(email: string): Promise<UserEntity> {

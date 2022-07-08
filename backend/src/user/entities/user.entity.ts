@@ -28,6 +28,9 @@ export class UserEntity {
   @Column({ nullable: true })
   password?: string;
 
+  @Column({ default: false })
+  isEmailConfirmed: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

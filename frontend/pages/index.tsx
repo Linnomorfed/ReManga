@@ -41,9 +41,11 @@ export default Home;
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps(
     (store) => async (ctx: GetServerSidePropsContext) => {
+      const takeNumber = Number(process.env.NEXT_PUBLIC_NEWEST_MIN_COUNT);
+
       try {
         const newestManga = await Api(ctx).manga.getMangaByQuery({
-          take: Number(process.env.NEXT_PUBLIC_NEWEST_MIN_COUNT),
+          take: +takeNumber,
         });
         const todayPopular = await Api(ctx).manga.getTodayPopular();
         const weekPopular = await Api(ctx).manga.getWeekPopular();

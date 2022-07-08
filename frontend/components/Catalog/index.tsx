@@ -24,7 +24,9 @@ export const Catalog: React.FC<CatalogProps> = ({
   manga,
   itemsCount,
 }) => {
-  const showPerPage = 4;
+  const showPerPage = Number(
+    process.env.NEXT_PUBLIC_CATALOG_SHOW_MANGA_PER_PAGE
+  );
 
   const {
     types,
@@ -39,7 +41,10 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   const { catalogSortBy } = useAppSelector(selectSortByData);
 
-  const cardVariantValue = localStorage.getItem('cardVariant') || 'list';
+  const cardVariantValue =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('cardVariant') || 'list'
+      : 'list';
 
   const [mangaItems, setMangaItems] = React.useState<ResponseManga[]>(manga);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
@@ -50,6 +55,7 @@ export const Catalog: React.FC<CatalogProps> = ({
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
   );
+  console.log(mangaItems);
 
   const callbackOrder = (order: boolean) => {
     setCurrentOrder(order ? 'ASC' : 'DESC');

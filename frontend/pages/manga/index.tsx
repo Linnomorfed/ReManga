@@ -33,11 +33,15 @@ const MangaCatalog: NextPage<MangaCatalogProps> = ({
 export default MangaCatalog;
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const showPerPage = Number(
+    process.env.NEXT_PUBLIC_CATALOG_SHOW_MANGA_PER_PAGE
+  );
+
   try {
     const manga = await Api().manga.getMangaByQuery({
       sortby: MangaSortEnum.views,
       page: 1,
-      take: 3,
+      take: +showPerPage,
       orderby: 'DESC',
     });
 
