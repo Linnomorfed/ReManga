@@ -4,7 +4,7 @@ import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { WhatToReadItems } from '../../utils/static/WhatToRead';
-import { MangaCard } from '../UI';
+import { MangaCard } from '../../ui-components';
 import { Section } from './Section';
 import styles from './WhatToRead.module.scss';
 

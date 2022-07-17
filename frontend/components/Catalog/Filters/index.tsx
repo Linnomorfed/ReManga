@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Filters.module.scss';
-import { MultipleDropdown } from '../../UI';
+import { MultipleDropdown } from '../../../ui-components';
 import { FiltersDataResponse } from '../../../models/IFilters';
 import {
   resetFilters,
@@ -20,7 +20,7 @@ interface FiltersProps {
   filters: FiltersDataResponse;
 }
 
-export const Filters: React.FC<FiltersProps> = ({ filters }) => {
+export const Filters: React.FC<FiltersProps> = React.memo(({ filters }) => {
   const dispatch = useAppDispatch();
   const {
     types,
@@ -43,91 +43,100 @@ export const Filters: React.FC<FiltersProps> = ({ filters }) => {
   };
 
   return (
-    <div>
-      <div className={styles.filters}>
+    <div className={styles.header}>
+      <div className='container'>
+        <h1 className={styles.title}>Manga catalog</h1>
         <div>
-          <MultipleDropdown
-            defaultTitle='Types'
-            items={filters.types}
-            action={setTypes}
-            state={types}
-          />
-        </div>
-        <div>
-          <MultipleDropdown
-            defaultTitle='Genres'
-            items={filters.genres}
-            action={setGenres}
-            state={genres}
-          />
-        </div>
-        <div>
-          <MultipleDropdown
-            defaultTitle='Categories'
-            items={filters.categories}
-            action={setCategories}
-            state={categories}
-          />
-        </div>
-      </div>
+          <div className={styles.filters}>
+            <div>
+              <MultipleDropdown
+                defaultTitle='Types'
+                items={filters.types}
+                action={setTypes}
+                state={types}
+              />
+            </div>
+            <div>
+              <MultipleDropdown
+                defaultTitle='Genres'
+                items={filters.genres}
+                action={setGenres}
+                state={genres}
+              />
+            </div>
+            <div>
+              <MultipleDropdown
+                defaultTitle='Categories'
+                items={filters.categories}
+                action={setCategories}
+                state={categories}
+              />
+            </div>
+          </div>
 
-      <div
-        className={`${isShowMore ? styles.filtersShow : styles.filtersHide}`}>
-        <div className={styles.filters}>
-          <div>
-            <MultipleDropdown
-              defaultTitle='Statuses'
-              items={filters.statuses}
-              action={setStatuses}
-              state={statuses}
-            />
+          <div
+            className={`${
+              isShowMore ? styles.filtersShow : styles.filtersHide
+            }`}>
+            <div className={styles.filters}>
+              <div>
+                <MultipleDropdown
+                  defaultTitle='Statuses'
+                  items={filters.statuses}
+                  action={setStatuses}
+                  state={statuses}
+                />
+              </div>
+              <div>
+                <MultipleDropdown
+                  defaultTitle='Restrictions'
+                  items={filters.restrictions}
+                  action={setRestrictions}
+                  state={restrictions}
+                />
+              </div>
+            </div>
+            <h5 className={styles.subtitle}>Exclude</h5>
+            <div className={styles.filters}>
+              <div>
+                <MultipleDropdown
+                  defaultTitle='Types'
+                  items={filters.types}
+                  action={setExcludedTypes}
+                  state={excludedTypes}
+                />
+              </div>
+              <div>
+                <MultipleDropdown
+                  defaultTitle='Genres'
+                  items={filters.genres}
+                  action={setExcludedGenres}
+                  state={excludedGenres}
+                />
+              </div>
+              <div>
+                <MultipleDropdown
+                  defaultTitle='Categories'
+                  items={filters.categories}
+                  action={setExcludedCategories}
+                  state={excludedCategories}
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <MultipleDropdown
-              defaultTitle='Restrictions'
-              items={filters.restrictions}
-              action={setRestrictions}
-              state={restrictions}
-            />
-          </div>
-        </div>
-        <h5 className={styles.subtitle}>Exclude</h5>
-        <div className={styles.filters}>
-          <div>
-            <MultipleDropdown
-              defaultTitle='Types'
-              items={filters.types}
-              action={setExcludedTypes}
-              state={excludedTypes}
-            />
-          </div>
-          <div>
-            <MultipleDropdown
-              defaultTitle='Genres'
-              items={filters.genres}
-              action={setExcludedGenres}
-              state={excludedGenres}
-            />
-          </div>
-          <div>
-            <MultipleDropdown
-              defaultTitle='Categories'
-              items={filters.categories}
-              action={setExcludedCategories}
-              state={excludedCategories}
-            />
-          </div>
-        </div>
-      </div>
 
-      <div>
-        <button onClick={toogleShowMoreVisibility} className={styles.btn}>
-          {isShowMore ? 'hide' : 'more'} filters
-        </button>
-        <button className={styles.btn} onClick={resetAllFilters}>
-          reset
-        </button>
+          <div>
+            <button onClick={toogleShowMoreVisibility} className={styles.btn}>
+              {isShowMore ? 'hide' : 'more'} filters
+            </button>
+            <button className={styles.btn} onClick={resetAllFilters}>
+              reset
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
+});
+
+Filters.displayName = 'Filters';

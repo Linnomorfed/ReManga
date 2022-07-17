@@ -6,7 +6,7 @@ import {
   HeartSvg,
   ShowPassSvg,
 } from '../../assets/svgs';
-import { BlueBtn } from '../UI';
+import { BlueBtn } from '../../ui-components';
 import styles from './UserPanel.module.scss';
 import avatar from '/assets/avatar.jpg';
 import coin from '../../assets/coin.png';

@@ -34,6 +34,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: userData.id,
       email: userData.email,
       nickname: userData.nickname,
+      isEmailConfirmed: userData.isEmailConfirmed,
     };
   }
 }

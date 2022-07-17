@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { selectChaptersData } from '../../../redux/Chapter/selectors';
 import { setActivePanelId } from '../../../redux/Chapter/slice';
-import { ChaptersList } from '../../UI';
+import { ChaptersList } from '../../ChaptersList';
 import styles from './Panel.module.scss';
 import { Section } from './Section';
 

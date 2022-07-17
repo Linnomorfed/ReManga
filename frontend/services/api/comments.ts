@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import {
   CreateCommentDto,
+  PinCommentDto,
   ResponseComment,
   ResponseCommentItem,
   SearchCommentDto,
@@ -42,6 +43,19 @@ export const CommentsApi = (instance: AxiosInstance) => ({
       `comments/rate/update/${id}`,
       dto
     );
+    return data;
+  },
+
+  async pinComment(dto: PinCommentDto) {
+    const { data } = await instance.patch<
+      PinCommentDto,
+      { data: ResponseCommentItem }
+    >('comments/pin', dto);
+    return data;
+  },
+
+  async unpinComment(id: number) {
+    const { data } = await instance.patch(`comments/unpin/${id}`);
     return data;
   },
 });

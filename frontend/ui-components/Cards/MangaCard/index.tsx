@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC } from 'react';
-import { CheckMarkSvg, HeartSvg } from '../../../../assets/svgs';
-import { ResponseFilter } from '../../../../models/IFilters';
+import { CheckMarkSvg, HeartSvg } from '../../../assets/svgs';
+import { ResponseFilter } from '../../../models/IFilters';
 import styles from './MangaCard.module.scss';
 
 interface MangaCardProps {

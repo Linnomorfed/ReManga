@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from '../../../UI';
+import { Checkbox } from '../../../../ui-components';
 import styles from './Steps.module.scss';
 
 interface StepOneProps {

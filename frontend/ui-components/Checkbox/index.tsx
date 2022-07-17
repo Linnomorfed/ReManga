@@ -1,9 +1,9 @@
 import React from 'react';
-import { CheckboxCheckedSvg, CheckboxSvg } from '../../../assets/svgs';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import useDidMountEffect from '../../../hooks/useDidMountEffect';
-import { showAuthModal } from '../../../redux/Auth/slice';
-import { selectUserData } from '../../../redux/User/selectors';
+import { CheckboxCheckedSvg, CheckboxSvg } from '../../assets/svgs';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
+import { showAuthModal } from '../../redux/Auth/slice';
+import { selectUserData } from '../../redux/User/selectors';
 import styles from './Checkbox.module.scss';
 interface CheckboxProps {
   returnValue: (checked: boolean) => void;

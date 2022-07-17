@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MangaContent.module.scss';
-import { TabBtn } from '../UI';
+import { TabBtn } from '../../ui-components';
 import { Comments } from '../Comments';
 import { Description } from './Description';
 import { LeftPanel } from './LeftPanel';

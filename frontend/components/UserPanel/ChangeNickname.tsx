@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { selectUserData } from '../../redux/User/selectors';
 import { Api } from '../../services/api';
 import { ModalBlock } from '../ModalBlock';
-import { ModalBtn } from '../UI';
+import { ModalBtn } from '../../ui-components';
 import styles from './UserPanel.module.scss';
 
 interface ChangeNicknameProps {

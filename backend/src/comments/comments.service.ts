@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MangaEntity } from 'src/manga/entities/manga.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { getRepository, Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { PinCommentDto } from './dto/pin-comment.dto';
 import { SearchCommentDto } from './dto/search-comments.dto';
 import { UpdateCertainCommentDto } from './dto/update-certain_comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -144,6 +146,36 @@ export class CommentsService {
       pinned: pinned,
     };
   }
+
+  async pinComment(dto: PinCommentDto, user: UserEntity) {
+    const result = await this.repository
+      .createQueryBuilder('comments')
+      .andWhere('comments.mangaId = :mangaId', { mangaId: +dto.mangaId })
+      .andWhere('comments.pinned IS NOT NULL')
+      .getOne();
+
+    if (result) {
+      await this.repository.update(result.id, {
+        pinned: null,
+      });
+    }
+
+    await this.repository.update(dto.commentId, {
+      pinned: dto.mangaId,
+    });
+
+    const content = await this.repository.findOne(dto.commentId);
+
+    return content;
+  }
+
+  async unpinComment(commentId: number, user: UserEntity) {
+    await this.repository.update(+commentId, {
+      pinned: null,
+    });
+    return 'ok';
+  }
+
   findOne(id: number) {
     return this.repository.findOne(+id);
   }

@@ -1,7 +1,8 @@
 import React from 'react';
-import { ResponseCommentItem } from '../../models/IComments';
-import { Api } from '../../services/api';
-import { CommentLoader } from '../UI';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchComments } from '../../redux/Comments/actions';
+import { selectCommentsData } from '../../redux/Comments/selectors';
+import { CommentLoader } from '../../ui-components';
 import { AddComment } from './AddComment';
 import styles from './Comments.module.scss';
 import { CommentsList } from './CommentsList';
@@ -15,53 +16,24 @@ export const Comments: React.FC<CommentsProps> = ({
   mangaId,
   chapterId = null,
 }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [comments, setComments] = React.useState<ResponseCommentItem[]>([]);
-  const [pinnedComment, setPinnedComment] =
-    React.useState<ResponseCommentItem | null>(null);
-  const [commentsCount, setCommentsCount] = React.useState<number>(0);
+  const dispatch = useAppDispatch();
+  const { error, isLoading, comments, commentsCount } =
+    useAppSelector(selectCommentsData);
 
   React.useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const comments = await Api().comments.getComments({
-          mangaId,
-          chapterId,
-        });
-        setComments(comments.items);
-        setCommentsCount(comments.count);
-        setPinnedComment(comments.pinned);
-        setIsLoading(false);
-      } catch (err) {
-        console.warn('Fetch comments', err);
-      }
-    })();
-  }, []);
-
-  const updateComments = (obj: ResponseCommentItem) => {
-    setComments((prev) => [obj, ...prev]);
-    setCommentsCount((prev) => prev + 1);
-  };
+    dispatch(fetchComments({ mangaId, chapterId }));
+  }, [chapterId, mangaId]);
 
   return (
     <div className={styles.comments}>
       <h4 className={styles.commentsCount}>
         Comments {commentsCount > 0 && '(' + commentsCount + ')'}
       </h4>
-      <AddComment
-        chapterId={chapterId}
-        mangaId={mangaId}
-        updateComments={updateComments}
-      />
+      <AddComment chapterId={chapterId} mangaId={mangaId} />
       {isLoading ? (
         Array.from(Array(3), (_, i) => <CommentLoader key={i} />)
       ) : (
-        <CommentsList
-          commentsCount={commentsCount}
-          comments={comments}
-          pinnedComment={pinnedComment}
-        />
+        <CommentsList />
       )}
     </div>
   );

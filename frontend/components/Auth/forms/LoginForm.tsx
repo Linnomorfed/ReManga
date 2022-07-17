@@ -8,7 +8,7 @@ import {
   ShowPassSvg,
 } from '../../../assets/svgs';
 import styles from '../Auth.module.scss';
-import { ModalBtn } from '../../UI/ModalBtn';
+import { ModalBtn } from '../../../ui-components//ModalBtn';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginFormSchema } from '../../../utils/schemas/loginValidation';

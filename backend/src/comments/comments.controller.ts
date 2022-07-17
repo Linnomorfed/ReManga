@@ -14,6 +14,7 @@ import { User } from 'src/decorators/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { PinCommentDto } from './dto/pin-comment.dto';
 import { SearchCommentDto } from './dto/search-comments.dto';
 import { UpdateCertainCommentDto } from './dto/update-certain_comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -26,6 +27,18 @@ export class CommentsController {
   @UseGuards(JwtAuthGuard)
   create(@User() user: UserEntity, @Body() dto: CreateCommentDto) {
     return this.commentsService.create(dto, user);
+  }
+
+  @Patch('pin')
+  @UseGuards(JwtAuthGuard)
+  pinComment(@User() user: UserEntity, @Body() dto: PinCommentDto) {
+    return this.commentsService.pinComment(dto, user);
+  }
+
+  @Patch('unpin/:id')
+  @UseGuards(JwtAuthGuard)
+  unpinComment(@User() user: UserEntity, @Param('id') id: string) {
+    return this.commentsService.unpinComment(+id, user);
   }
 
   @Patch('rate/add/:id')

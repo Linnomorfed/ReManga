@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlueBtn } from '../UI';
+import { BlueBtn } from '../../ui-components';
 import styles from './UserPanel.module.scss';
 
 export const Publishers = () => {

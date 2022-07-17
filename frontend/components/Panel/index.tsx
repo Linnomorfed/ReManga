@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useEvent } from '../../hooks/useEvent';
 import { selectMangaFiltersData } from '../../redux/MangaFilters/selectors';
 import {
   resetMangaFilters,
@@ -16,12 +17,12 @@ import {
   setMangaType,
 } from '../../redux/MangaFilters/slice';
 import { Api } from '../../services/api';
-import { BlueBtn, MultipleDropdown, SingleDropdown } from '../UI';
+import { BlueBtn, MultipleDropdown, SingleDropdown } from '../../ui-components';
 import { MangaPanelProps } from './IPanelProps';
 import styles from './Panel.module.scss';
 
 const Editor = dynamic(
-  () => import('../UI/Editor').then((m: any) => m.Editor),
+  () => import('../../ui-components/Editor').then((m: any) => m.Editor),
   {
     ssr: false,
   }
@@ -92,7 +93,7 @@ export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
     setIssueYear(Number(e.target.value));
   };
 
-  const onCreateManga = async () => {
+  const onCreateManga = useEvent(async () => {
     try {
       setLoading(true);
 
@@ -125,7 +126,8 @@ export const Panel: React.FC<MangaPanelProps> = ({ data, filters }) => {
     } finally {
       setLoading(false);
     }
-  };
+  });
+
   return (
     <>
       <div className='containerSmall'>

@@ -1,9 +1,16 @@
 import classNames from 'classnames';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useAutoFocus from '../../hooks/useAutoFocus';
+import { useEvent } from '../../hooks/useEvent';
 import { ResponseCommentItem } from '../../models/IComments';
+import { selectCommentsData } from '../../redux/Comments/selectors';
+import {
+  updateStateComments,
+  setCommentsCount,
+} from '../../redux/Comments/slice';
 import { Api } from '../../services/api';
-import { BlueBtn, Switch } from '../UI';
+import { BlueBtn, Switch } from '../../ui-components';
 import styles from './Comments.module.scss';
 
 interface AddCommentProps {
@@ -24,6 +31,8 @@ export const AddComment: React.FC<AddCommentProps> = ({
   replyToName = '',
 }) => {
   const replyInput = useAutoFocus();
+  const dispatch = useAppDispatch();
+  const { commentsCount } = useAppSelector(selectCommentsData);
 
   const [text, setText] = React.useState<string>('');
   const [isSpoiler, setIsSpoiler] = React.useState<boolean>(false);
@@ -33,15 +42,20 @@ export const AddComment: React.FC<AddCommentProps> = ({
     setText(e.target.value);
   };
 
-  const toogleSwitch = () => {
+  const setStateComments = (comment: ResponseCommentItem) => {
+    dispatch(updateStateComments(comment));
+    dispatch(setCommentsCount(commentsCount + 1));
+  };
+
+  const toogleSwitch = React.useCallback(() => {
     setIsSpoiler(!isSpoiler);
-  };
+  }, [isSpoiler]);
 
-  const cancelAction = () => {
+  const cancelAction = React.useCallback(() => {
     commentId ? hideReply && hideReply() : setText('');
-  };
+  }, [commentId, hideReply]);
 
-  const onAddComment = async () => {
+  const onAddComment = useEvent(async () => {
     try {
       setIsLoading(true);
       const comment = await Api().comments.createComment({
@@ -52,7 +66,7 @@ export const AddComment: React.FC<AddCommentProps> = ({
         chapterId,
       });
 
-      updateComments && updateComments(comment);
+      updateComments ? updateComments(comment) : setStateComments(comment);
     } catch (err) {
       console.warn('Creating comment ', err);
     } finally {
@@ -61,7 +75,7 @@ export const AddComment: React.FC<AddCommentProps> = ({
       setIsSpoiler(false);
       hideReply && hideReply();
     }
-  };
+  });
 
   return (
     <div
@@ -72,13 +86,19 @@ export const AddComment: React.FC<AddCommentProps> = ({
       <div className={styles.textareaContainer}>
         <div className={styles.textareaWrapper}>
           {replyToName && (
-            <label className={styles.replyLabel}>{replyToName}</label>
+            <label
+              className={classNames(
+                styles.replyLabel,
+                `${text.length > 0 ? styles.replyLabelLenghtCheck : ''}`
+              )}>
+              {replyToName}
+            </label>
           )}
           <textarea
             className={classNames(
               styles.textarea,
-              `${text.length > 75 && styles.textareaXs}`,
-              `${text.length > 220 && styles.textareaSm}`
+              `${text.length > 75 ? styles.textareaXs : ''}`,
+              `${text.length > 220 ? styles.textareaSm : ''}`
             )}
             onChange={limitHandler}
             placeholder={replyToName ? '' : 'Leave comment'}

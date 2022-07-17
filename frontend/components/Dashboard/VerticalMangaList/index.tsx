@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { ResponseManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
-import { MangaCartVertical } from '../../UI/Cards/MangaCardVertical';
-import { ShowMoreButton } from '../../UI/ShowMoreButton';
+import { MangaCartVertical } from '../../../ui-components/Cards/MangaCardVertical';
+import { ShowMoreButton } from '../../../ui-components/ShowMoreButton';
 import styles from './VerticalMangaList.module.scss';
 
 interface VerticalMangaListProps {

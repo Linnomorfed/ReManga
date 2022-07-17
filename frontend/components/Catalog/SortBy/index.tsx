@@ -3,7 +3,7 @@ import { BlockViewSvg, ListViewSvg, SwitchSvg } from '../../../assets/svgs';
 import classNames from 'classnames';
 import styles from './SortBy.module.scss';
 import { CatalogSortBy } from '../../../utils/static/Catalog';
-import { SingleDropdown } from '../../UI';
+import { SingleDropdown } from '../../../ui-components';
 import { useAppSelector } from '../../../hooks/redux';
 import { selectSortByData } from '../../../redux/SortBy/selectors';
 import { setCatalogSortBy } from '../../../redux/SortBy/slice';
@@ -30,7 +30,7 @@ export const SortBy: FC<SortByProps> = ({
   };
   React.useEffect(() => {
     callbackOrder(currentOrder);
-  }, [currentOrder]);
+  }, [currentOrder, callbackOrder]);
 
   const setBlockType = () => {
     returnCardVariant('block');

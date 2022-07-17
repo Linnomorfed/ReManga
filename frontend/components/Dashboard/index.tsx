@@ -1,7 +1,7 @@
 import React from 'react';
 import { FreshChaptersList } from './FreshChaptersList';
 import { Socials } from '../Socials';
-import { Carousel } from '../UI';
+import { Carousel } from '../../ui-components';
 import { VerticalMangaList } from './VerticalMangaList';
 import styles from './Dashboard.module.scss';
 import { selectDashboardData } from '../../redux/Dashboard/selectors';

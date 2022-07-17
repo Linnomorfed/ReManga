@@ -13,5 +13,4 @@ export * from './Checkbox';
 export * from './Loaders/CircularLoader';
 export * from './Loaders/CommentLoader';
 export * from './Carousel';
-export * from '../ChaptersList';
 export * from './Pagination';

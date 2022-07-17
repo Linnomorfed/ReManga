@@ -2,7 +2,7 @@ import { OutputData } from '@editorjs/editorjs';
 import classNames from 'classnames';
 import React from 'react';
 import { ResponseFilter } from '../../../models/IFilters';
-import { ShowMoreButton } from '../../UI';
+import { ShowMoreButton } from '../../../ui-components';
 import styles from './Desctiption.module.scss';
 
 interface DescriptionProps {

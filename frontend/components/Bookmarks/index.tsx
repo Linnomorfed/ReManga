@@ -1,15 +1,14 @@
 import React from 'react';
-import { SingleDropdown, TabBtn } from '../UI';
+import { SingleDropdown, TabBtn } from '../../ui-components';
 import styles from './Bookmarks.module.scss';
 import { BookmarkTypes } from '../../utils/static/Bookmarks';
 import { ResponseFilter } from '../../models/IFilters';
-import { MangaCard } from '../UI/Cards/MangaCard';
+import { MangaCard } from '../../ui-components/Cards/MangaCard';
 import { ResponseBookmark } from '../../models/IBookmarks';
 import { Api } from '../../services/api';
 import classNames from 'classnames';
 import { DeleteSvg, EditSvg, HistorySvg, SettingsSvg } from '../../assets/svgs';
 import { bookmarkListFilters } from '../../utils/static/BookmarkListFilters';
-
 import { useAppSelector } from '../../hooks/redux';
 import { selectSortByData } from '../../redux/SortBy/selectors';
 import { setBookmarksSortBy } from '../../redux/SortBy/slice';
@@ -30,11 +29,14 @@ export const Bookmarks: React.FC<BookmarksProps> = ({
     preloadedBookmarksCount
   );
 
-  const updateSelectedList = (id: number) => {
-    selected.includes(id)
-      ? setSelected(selected.filter((items) => items !== id))
-      : setSelected((prev) => [...prev, id]);
-  };
+  const updateSelectedList = React.useCallback(
+    (id: number) => {
+      selected.includes(id)
+        ? setSelected(selected.filter((items) => items !== id))
+        : setSelected((prev) => [...prev, id]);
+    },
+    [selected]
+  );
 
   const toggleEditorVisibility = () => {
     setShowEditor(!showEditor);
@@ -80,21 +82,24 @@ export const Bookmarks: React.FC<BookmarksProps> = ({
     setShowEditor(false);
   };
 
-  const toogleActiveTab = async (id: number) => {
-    setActiveTab(id);
-    setSelected([]);
+  const toogleActiveTab = React.useCallback(
+    async (id: number) => {
+      setActiveTab(id);
+      setSelected([]);
 
-    try {
-      const bookmarks = await Api().bookmarks.getBookmarksByQuery({
-        userId: +userId,
-        bookmarkId: +id,
-      });
+      try {
+        const bookmarks = await Api().bookmarks.getBookmarksByQuery({
+          userId: +userId,
+          bookmarkId: +id,
+        });
 
-      setItems(bookmarks);
-    } catch (err) {
-      console.warn('Bookmarks loading ', err);
-    }
-  };
+        setItems(bookmarks);
+      } catch (err) {
+        console.warn('Bookmarks loading ', err);
+      }
+    },
+    [userId]
+  );
 
   return (
     <>

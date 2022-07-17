@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { WarnSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
-import { BlueBtn, ModalBtn, SingleDropdown } from '../../UI';
+import { BlueBtn, ModalBtn, SingleDropdown } from '../../../ui-components';
 import { BookmarkTypes } from '../../../utils/static/Bookmarks';
 import styles from './LeftPanel.module.scss';
 import { Api } from '../../../services/api';

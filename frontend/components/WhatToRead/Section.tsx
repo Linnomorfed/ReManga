@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
-import { CircularLoader, MangaCard } from '../UI';
+import { CircularLoader, MangaCard } from '../../ui-components';
 import styles from './WhatToRead.module.scss';
 
 interface SectionProps {
@@ -43,9 +43,10 @@ export const Section: React.FC<SectionProps> = ({
           categories,
         });
         setItems(manga);
-        setIsLoading(false);
       } catch (err) {
         console.warn('Section loading ', err);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [router.asPath]);

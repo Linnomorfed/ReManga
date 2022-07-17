@@ -2,8 +2,8 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchChapters } from '../../redux/Chapter/actions';
 import { selectChaptersData } from '../../redux/Chapter/selectors';
-import { BlueBtn } from '../UI/BlueBtn';
-import { CircularLoader } from '../UI/Loaders/CircularLoader';
+import { BlueBtn } from '../../ui-components/BlueBtn';
+import { CircularLoader } from '../../ui-components/Loaders/CircularLoader';
 import { ChapterItem } from './ChapterItem';
 import styles from './ChaptersList.module.scss';
 

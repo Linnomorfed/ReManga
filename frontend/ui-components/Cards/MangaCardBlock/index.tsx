@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { HeartSvg, ShowPassSvg, StarSvg } from '../../../../assets/svgs';
-import { ResponseFilter } from '../../../../models/IFilters';
+import { HeartSvg, ShowPassSvg, StarSvg } from '../../../assets/svgs';
+import { ResponseFilter } from '../../../models/IFilters';
 import styles from './MangaCardBlock.module.scss';
 
 interface MangaCardBlockProps {
@@ -61,7 +61,7 @@ export const MangaCardBlock: React.FC<MangaCardBlockProps> = ({
               </span>
             </div>
           </div>
-          <div className={styles.index}>{index && index}</div>
+          <div className={styles.index}>{index && index + 1}</div>
         </div>
       </a>
     </Link>

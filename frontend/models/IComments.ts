@@ -18,6 +18,11 @@ export interface SearchCommentDto {
   chapterId?: number | null;
 }
 
+export interface PinCommentDto {
+  mangaId: number;
+  commentId: number;
+}
+
 export interface RatedUserData {
   userId: number;
   rate: 'like' | 'dislike';
@@ -30,9 +35,9 @@ export interface ResponseCommentItem {
   user: ResponseUser;
   mangaId: number;
   rating: number;
+  pinned: number | null;
   replies_count: number;
   replyTo: number | null;
-  isPinned: boolean;
   createdAt: string;
   updatedAt: string;
   rated_userIds: RatedUserData[];

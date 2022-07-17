@@ -3,7 +3,7 @@ import React from 'react';
 import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { WhatToReadItems } from '../../utils/static/WhatToRead';
-import { MangaCardBlock } from '../UI';
+import { MangaCardBlock } from '../../ui-components';
 import styles from './WhatToRead.module.scss';
 
 export const MangaBlocks = () => {
@@ -30,12 +30,14 @@ export const MangaBlocks = () => {
               : null,
         });
         setItems(manga);
-        setIsLoading(false);
       } catch (err) {
         console.warn('Type Manga loading error ', err);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [router.query]);
+
   return (
     <div className='container'>
       <div className={styles.blocksWrapper}>

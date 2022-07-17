@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChapterSteps } from '../../../utils/static/ChapterSteps';
 import { ModalBlock } from '../../ModalBlock';
-import { Stepper } from '../../UI';
+import { Stepper } from '../../../ui-components';
 import { StepOne } from './Steps/StepOne';
 import { StepTwo } from './Steps/StepTwo';
 

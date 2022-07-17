@@ -1,49 +1,64 @@
 import classNames from 'classnames';
 import React from 'react';
 import TimeAgo from 'timeago-react';
-import { ExclamationSvg, LikeSvg, ReplySvg } from '../../assets/svgs';
-import { useAppSelector } from '../../hooks/redux';
+import {
+  ExclamationSvg,
+  LikeSvg,
+  PushPinSvg,
+  ReplySvg,
+} from '../../assets/svgs';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ResponseUser } from '../../models/IAuth';
 import { RatedUserData, ResponseCommentItem } from '../../models/IComments';
+import { selectPinnedComment } from '../../redux/Comments/selectors';
+import {
+  clearPinnedComment,
+  setPinnedComment,
+} from '../../redux/Comments/slice';
 import { selectUserData } from '../../redux/User/selectors';
 import { Api } from '../../services/api';
-import { ShowMoreButton } from '../UI';
-import { UserAvatar } from '../UI/UserAvatar';
+import { ShowMoreButton } from '../../ui-components/ShowMoreButton';
+import { UserAvatar } from '../../ui-components/UserAvatar';
 import { AddComment } from './AddComment';
-import { CommentReply } from './CommentReply';
 import styles from './Comments.module.scss';
 
 interface CommentElementProps {
   body: string;
   isSpoiler: boolean;
-  isPinned?: boolean;
   rating: number;
-  repliesCount: number;
+  repliesCount?: number;
   date: string;
   user: ResponseUser;
-  mangaId?: number | null;
+  mangaId: number;
   commentId: number;
+  replyTo: number | null;
   ratedUserIds: RatedUserData[];
+  updateCommentsFunc?: (comment: ResponseCommentItem) => void;
 }
 
 export const CommentElement: React.FC<CommentElementProps> = ({
   body,
   isSpoiler,
-  isPinned = false,
   rating,
   user,
-  mangaId = null,
+  mangaId,
   commentId,
   date,
   repliesCount,
   ratedUserIds,
+  updateCommentsFunc,
+  replyTo,
 }) => {
   const userData = useAppSelector(selectUserData);
+  const dispatch = useAppDispatch();
+  const pinnedComment = useAppSelector(selectPinnedComment);
 
   const [commentRating, setCommentRating] = React.useState<number>(rating);
   const [ratedUsersList, setRatedUsersList] =
     React.useState<RatedUserData[]>(ratedUserIds);
-  const [repliesNumber, setRepliesNumber] = React.useState(repliesCount);
+  const [repliesNumber, setRepliesNumber] = React.useState(
+    repliesCount ? repliesCount : null
+  );
   const [repliesOpened, setRepliesOpened] = React.useState(false);
   const [commentBody, setCommentBody] = React.useState(body);
   const [isReplying, setIsReplying] = React.useState<boolean>(false);
@@ -51,22 +66,25 @@ export const CommentElement: React.FC<CommentElementProps> = ({
   const [showSpoiler, setShowSpoiler] = React.useState(false);
   const [replies, setReplies] = React.useState<ResponseCommentItem[]>([]);
 
-  const toogleShowMore = () => {
-    setIsShowMore(!isShowMore);
-  };
+  const toogleShowMore = React.useCallback(() => {
+    setIsShowMore((prev) => !prev);
+  }, []);
 
-  const toogleReplying = () => {
-    setIsReplying(!isReplying);
-  };
+  const toogleReplying = React.useCallback(() => {
+    setIsReplying((prev) => !prev);
+  }, []);
 
   const toogleSpoilerStatus = () => {
     setShowSpoiler(!showSpoiler);
   };
 
-  const updateComments = (comment: ResponseCommentItem) => {
-    setReplies((prev) => [...prev, comment]);
-    setRepliesNumber((prev) => prev + 1);
-  };
+  const updateComments = React.useCallback(
+    (comment: ResponseCommentItem) => {
+      setReplies((prev) => [...prev, comment]);
+      repliesCount && setRepliesNumber(repliesCount + 1);
+    },
+    [repliesCount]
+  );
 
   const clearComments = () => {
     setReplies([]);
@@ -114,12 +132,27 @@ export const CommentElement: React.FC<CommentElementProps> = ({
     }
   };
 
+  const pinComment = async () => {
+    try {
+      if (pinnedComment?.id === commentId) {
+        await Api().comments.unpinComment(commentId);
+        dispatch(clearPinnedComment());
+      } else {
+        const result = await Api().comments.pinComment({ mangaId, commentId });
+        dispatch(clearPinnedComment());
+        dispatch(setPinnedComment(result));
+      }
+    } catch (err) {
+      console.warn('Pinning comment ', err);
+    }
+  };
+
   return (
     <div className={`${commentRating < -5 ? styles.negativeComment : ''}`}>
       <div
         className={classNames(
           styles.commentElement,
-          `${isPinned && styles.commentElementFixed}`
+          `${pinnedComment?.id === commentId && styles.commentElementFixed}`
         )}>
         <div className={styles.userAvatarWrapper}>
           <UserAvatar nickname={user.nickname} size='medium' />
@@ -131,7 +164,31 @@ export const CommentElement: React.FC<CommentElementProps> = ({
             <small>
               · <TimeAgo datetime={date} />
             </small>
-            {isPinned && <ExclamationSvg fill={'white'} w={20} h={20} />}
+            <span
+              onClick={pinComment}
+              className={classNames(
+                styles.pushPin,
+                `${
+                  pinnedComment?.id === commentId ? styles.pushPinPinned : ''
+                }`,
+                `${!userData ? styles.pushPinDefault : ''}`
+              )}>
+              {userData ? (
+                user.id === userData.id && replyTo === null ? (
+                  pinnedComment?.id === commentId ? (
+                    <PushPinSvg w={20} h={20} />
+                  ) : (
+                    <PushPinSvg w={20} h={20} />
+                  )
+                ) : (
+                  ''
+                )
+              ) : pinnedComment?.id === commentId ? (
+                <ExclamationSvg w={20} h={20} />
+              ) : (
+                ''
+              )}
+            </span>
           </div>
 
           {isSpoiler ? (
@@ -211,7 +268,7 @@ export const CommentElement: React.FC<CommentElementProps> = ({
             <button className={styles.commentBtn} onClick={toogleReplying}>
               <ReplySvg w={24} h={24} />
             </button>
-            {repliesNumber > 0 && (
+            {repliesNumber && repliesNumber > 0 && (
               <span
                 className={styles.replies}
                 onClick={repliesOpened ? clearComments : showReplies}>
@@ -224,7 +281,9 @@ export const CommentElement: React.FC<CommentElementProps> = ({
 
           {isReplying && (
             <AddComment
-              updateComments={updateComments}
+              updateComments={
+                updateCommentsFunc ? updateCommentsFunc : updateComments
+              }
               mangaId={mangaId}
               hideReply={toogleReplying}
               commentId={commentId}
@@ -235,18 +294,18 @@ export const CommentElement: React.FC<CommentElementProps> = ({
           {replies.length > 0 && (
             <div className={styles.replies}>
               {replies.map((obj) => (
-                <CommentReply
+                <CommentElement
                   key={obj.id}
-                  updateComments={updateComments}
+                  updateCommentsFunc={updateComments}
                   body={obj.text}
                   ratedUserIds={obj.rated_userIds}
                   isSpoiler={obj.spoiler}
                   rating={obj.rating}
+                  replyTo={obj.replyTo}
                   date={obj.createdAt}
                   user={obj.user}
                   mangaId={mangaId}
-                  parentCommentId={commentId}
-                  commentId={obj.id}
+                  commentId={obj.replyTo ? obj.replyTo : obj.id}
                 />
               ))}
             </div>

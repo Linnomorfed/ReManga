@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlueBtn, ChaptersList } from '../../UI';
+import { BlueBtn, ChaptersList } from '../../../ui-components';
 import { AddChapters } from '../AddChapter';
 import styles from './Chapters.module.scss';
 

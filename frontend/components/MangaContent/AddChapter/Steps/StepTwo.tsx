@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { Api } from '../../../../services/api';
-import { BlueBtn } from '../../../UI';
+import { BlueBtn } from '../../../../ui-components';
 import styles from './Steps.module.scss';
 
 interface StepTwoProps {

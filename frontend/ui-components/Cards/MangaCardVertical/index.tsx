@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import TimeAgo from 'timeago-react';
-import { ForPaidSvg } from '../../../../assets/svgs';
-import { ResponseManga } from '../../../../models/IManga';
+import { ForPaidSvg } from '../../../assets/svgs';
+import { ResponseManga } from '../../../models/IManga';
 import styles from './MangaCardVertical.module.scss';
 
 interface MangaCartVerticalProps {

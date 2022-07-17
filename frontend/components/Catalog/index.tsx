@@ -4,10 +4,10 @@ import { ResponseManga } from '../../models/IManga';
 import { Api } from '../../services/api';
 import { CatalogSortBy } from '../../utils/static/Catalog';
 import { Filters } from './Filters';
-import { Pagination } from '../UI/Pagination';
+import { Pagination } from '../../ui-components/Pagination';
 import { SortBy } from './SortBy';
 import styles from './Catalog.module.scss';
-import { MangaCard, MangaCardBlock } from '../UI';
+import { MangaCard, MangaCardBlock } from '../../ui-components';
 import { useAppSelector } from '../../hooks/redux';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { selectFiltersData } from '../../redux/Filters/selectors';
@@ -55,22 +55,21 @@ export const Catalog: React.FC<CatalogProps> = ({
   const [currentOrder, setCurrentOrder] = React.useState<'DESC' | 'ASC'>(
     'DESC'
   );
-  console.log(mangaItems);
 
-  const callbackOrder = (order: boolean) => {
+  const callbackOrder = React.useCallback((order: boolean) => {
     setCurrentOrder(order ? 'ASC' : 'DESC');
-  };
+  }, []);
 
-  const toggleCurrentPage = (page: number) => {
+  const toggleCurrentPage = React.useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  }, []);
 
-  const toggleCardType = (type: 'list' | 'block') => {
+  const toggleCardType = React.useCallback((type: 'list' | 'block') => {
     setCardVariant(type);
     if (typeof window !== 'undefined') {
       localStorage.setItem('cardVariant', type);
     }
-  };
+  }, []);
 
   useDidMountEffect(() => {
     (async () => {
@@ -108,12 +107,7 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   return (
     <>
-      <div className={styles.header}>
-        <div className='container'>
-          <h1 className={styles.title}>Manga catalog</h1>
-          <Filters filters={filters} />
-        </div>
-      </div>
+      <Filters filters={filters} />
       <div className='containerSmall'>
         <div className={styles.main}>
           <SortBy

@@ -6,7 +6,7 @@ import { ResponseManga } from '../../../models/IManga';
 import { Api } from '../../../services/api';
 import styles from './Search.module.scss';
 
-export const Search = () => {
+export const Search = React.memo(() => {
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState<ResponseManga[]>([]);
 
@@ -57,7 +57,7 @@ export const Search = () => {
       {searchValue.length > 0 && searchResult.length > 0 && (
         <div className={styles.searchResult}>
           {searchResult.map((obj) => (
-            <>
+            <React.Fragment key={obj.id}>
               <Link href={`/manga/${obj.id}`}>
                 <a onClick={onClickClearButton}>
                   <div className={styles.searchResultElement}>
@@ -80,10 +80,12 @@ export const Search = () => {
                   </div>
                 </a>
               </Link>
-            </>
+            </React.Fragment>
           ))}
         </div>
       )}
     </div>
   );
-};
+});
+
+Search.displayName = 'Search';

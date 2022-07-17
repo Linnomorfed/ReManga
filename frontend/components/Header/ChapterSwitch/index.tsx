@@ -1,4 +1,3 @@
-import { useWhyDidYouUpdate } from 'ahooks';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,7 +6,7 @@ import { SelectSvg } from '../../../assets/svgs';
 import { useAppSelector } from '../../../hooks/redux';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { selectChaptersData } from '../../../redux/Chapter/selectors';
-import { CircularLoader } from '../../UI';
+import { CircularLoader } from '../../../ui-components';
 import { ChapterList } from '../ChapterList';
 import styles from './ChapterSwitch.module.scss';
 
