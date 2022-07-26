@@ -23,13 +23,13 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   config.update({
-    accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
-    secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
-    region: configService.get<string>('AWS_REGION'),
+    accessKeyId: configService.get<string>('AWS_MANGA_ACCESS_KEY_ID'),
+    secretAccessKey: configService.get<string>('AWS_MANGA_SECRET_ACCESS_KEY'),
+    region: configService.get<string>('AWS_MANGA_REGION'),
   });
 
   app.useGlobalPipes(new ValidationPipe());
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 8080;
   await app.listen(port);
   Logger.log('Listening at http://localhost:' + port + '/');
 }

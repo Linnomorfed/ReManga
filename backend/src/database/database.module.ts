@@ -29,6 +29,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
+        ssl: { rejectUnauthorized: false },
         entities: [
           CommentEntity,
           MangaEntity,
