@@ -31,12 +31,4 @@ export class FilesService {
 
     return newFile;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} file`;
-  }
 }

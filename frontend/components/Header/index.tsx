@@ -7,13 +7,10 @@ import {
   PanelSvg,
   ThemeSvg,
 } from '../../assets/svgs';
-import { UserPopup } from './UserPopup';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { Auth } from '../Auth';
 import { useAppSelector } from '../../hooks/redux';
-import { UserAvatar } from '../../ui-components/UserAvatar';
-import useOutsideClick from '../../hooks/useOutsideClick';
 import { Search } from './Search';
 import { ChapterSwitch } from './ChapterSwitch';
 import { SingleDropdown } from '../../ui-components';
@@ -22,6 +19,7 @@ import { selectUserData } from '../../redux/User/selectors';
 import { selectChaptersData } from '../../redux/Chapter/selectors';
 import { selectSortByData } from '../../redux/SortBy/selectors';
 import { setMangaBookmarkId } from '../../redux/MangaData/slice';
+import { Profile } from './Profile';
 
 interface HeaderProps {
   variant?: 'default' | 'transparent' | 'chapter';
@@ -33,41 +31,37 @@ export const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
   const { mangaBookmarkId } = useAppSelector(selectSortByData);
 
   const NotificationCount = 100;
-  const [visibleUserPopup, setVisibleUserPopup] = React.useState(false);
   const [scrollDirection, setScrollDirection] = React.useState<'down' | 'up'>(
     'up'
   );
 
   React.useEffect(() => {
-    let lastScrollY = window.pageYOffset;
+    if (variant === 'chapter') {
+      let lastScrollY = window.pageYOffset;
 
-    const onClick = () => {
-      setScrollDirection('up');
-    };
-    const updateScrollDirection = () => {
-      const scrollY = window.pageYOffset;
-      const direction = scrollY > lastScrollY ? 'down' : 'up';
-      if (
-        direction !== scrollDirection &&
-        (scrollY - lastScrollY > 1 || scrollY - lastScrollY < -1)
-      ) {
-        setScrollDirection(direction);
-      }
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-    };
-    window.addEventListener('scroll', updateScrollDirection);
-    window.addEventListener('click', onClick);
+      const onClick = () => {
+        setScrollDirection('up');
+      };
+      const updateScrollDirection = () => {
+        const scrollY = window.pageYOffset;
+        const direction = scrollY > lastScrollY ? 'down' : 'up';
+        if (
+          direction !== scrollDirection &&
+          (scrollY - lastScrollY > 1 || scrollY - lastScrollY < -1)
+        ) {
+          setScrollDirection(direction);
+        }
+        lastScrollY = scrollY > 0 ? scrollY : 0;
+      };
+      window.addEventListener('scroll', updateScrollDirection);
+      window.addEventListener('click', onClick);
 
-    return () => {
-      window.removeEventListener('scroll', updateScrollDirection);
-      window.removeEventListener('click', onClick);
-    };
+      return () => {
+        window.removeEventListener('scroll', updateScrollDirection);
+        window.removeEventListener('click', onClick);
+      };
+    }
   }, [scrollDirection]);
-
-  const { componentRef, toggleVisibility } = useOutsideClick(
-    visibleUserPopup,
-    setVisibleUserPopup
-  );
 
   return (
     <div
@@ -163,17 +157,7 @@ export const Header: FC<HeaderProps> = ({ variant = 'default' }) => {
                     </span>
                   </div>
                 </button>
-                <div className={styles.relative} ref={componentRef}>
-                  <button
-                    onClick={toggleVisibility}
-                    className={classNames(styles.btn, styles.btnSpace)}>
-                    <UserAvatar nickname={userData.nickname} />
-                  </button>
-
-                  {visibleUserPopup && (
-                    <UserPopup nickname={userData.nickname} id={userData.id} />
-                  )}
-                </div>
+                <Profile />
               </>
             ) : (
               <Auth />

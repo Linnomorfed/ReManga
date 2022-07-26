@@ -11,6 +11,7 @@ import useDidMountEffect from '../../../hooks/useDidMountEffect';
 import { setMangaBookmarkId } from '../../../redux/MangaData/slice';
 import { selectMangaData } from '../../../redux/MangaData/selectors';
 import { useRouter } from 'next/router';
+import { AddChapters } from '../AddChapter';
 
 interface MangaContentProps {
   url: string;
@@ -95,16 +96,18 @@ export const LeftPanel: React.FC<MangaContentProps> = ({
             state={mangaBookmarkId}
             variant='manga'
           />
+
           {userData && (
             <>
+              <AddChapters mangaId={mangaId} />
               <BlueBtn type='manga' onClick={pushToEditPage}>
                 Edit
               </BlueBtn>
-              <button className={styles.warnBtn}>
-                <WarnSvg w={24} fill={'white'} /> Complain
-              </button>
             </>
           )}
+          <button className={styles.warnBtn}>
+            <WarnSvg w={24} fill={'white'} /> Complain
+          </button>
         </div>
       </div>
     </div>

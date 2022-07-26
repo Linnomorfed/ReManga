@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookmarksEntity } from 'src/bookmarks/entities/bookmark.entity';
+import { BranchEntity } from 'src/branches/entities/branch.entity';
 import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { ChaptersEntity } from 'src/chapters/entities/chapter.entity';
 import { CommentEntity } from 'src/comments/entities/comment.entity';
@@ -13,6 +14,7 @@ import PageEntity from 'src/pages/entities/page.entity';
 import { RatingEntity } from 'src/rating/entities/rating.entity';
 import { RestrictionEntity } from 'src/restriction/entities/restriction.entity';
 import { StatusEntity } from 'src/status/entities/status.entity';
+import { TranslatorEntity } from 'src/translators/entities/translator.entity';
 import { TypesEntity } from 'src/types/entities/type.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 
@@ -42,6 +44,8 @@ import { UserEntity } from 'src/user/entities/user.entity';
           ChaptersEntity,
           PageEntity,
           LikeEntity,
+          TranslatorEntity,
+          BranchEntity,
         ],
         synchronize: process.env.NODE_ENV === 'development' ? true : false,
       }),

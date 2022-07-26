@@ -8,9 +8,9 @@ import {
 } from '../../assets/svgs';
 import { BlueBtn } from '../../ui-components';
 import styles from './UserPanel.module.scss';
-import avatar from '/assets/avatar.jpg';
-import coin from '../../assets/coin.png';
-import ticket from '../../assets/ticket.png';
+import avatar from '/assets/images/avatar.jpg';
+import coin from '../../assets/images/coin.png';
+import ticket from '../../assets/images/ticket.png';
 import { ChangeNickname } from './ChangeNickname';
 
 interface HeaderProps {

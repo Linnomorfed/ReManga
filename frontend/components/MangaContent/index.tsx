@@ -5,11 +5,11 @@ import { Comments } from '../Comments';
 import { Description } from './Description';
 import { LeftPanel } from './LeftPanel';
 import { MangaInfo } from './MangaInfo';
-import { Chapters } from './Chapters';
 import { selectMangaData } from '../../redux/MangaData/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useRouter } from 'next/router';
 import { setCurrentChapter } from '../../redux/Chapter/slice';
+import { ChaptersList } from '../ChaptersList';
 
 export const MangaContent: React.FC = () => {
   const router = useRouter();
@@ -76,7 +76,7 @@ export const MangaContent: React.FC = () => {
               </>
             )}
 
-            {activeTab === 2 && <Chapters mangaId={manga.id} />}
+            {activeTab === 2 && <ChaptersList mangaId={manga.id} />}
           </div>
           <div className={styles.querter}>
             <div className={styles.rightMangaContainer}>

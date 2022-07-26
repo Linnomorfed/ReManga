@@ -1,0 +1,25 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "singleQuote": true,
+  "useTabs": true,
+  "semi": true,
+  "importOrder": [
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "next-seo.config",
+    "@components/(.*)$",
+    "@ui-components/(.*)$",
+    "@hooks/(.*)$",
+    "@redux/(.*)$",
+    "@services/(.*)$",
+    "@models/(.*)$",
+    "@utils/(.*)$",
+    "@assets/(.*)$",
+    "../(.*)",
+    "./(.*)",
+    "(.scss)$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}

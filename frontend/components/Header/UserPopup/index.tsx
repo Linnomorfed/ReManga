@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './UserPopup.module.scss';
-import coin from '../../../assets/coin.png';
-import ticket from '../../../assets/ticket.png';
+import coin from '../../../assets/images/coin.png';
+import ticket from '../../../assets/images/ticket.png';
 import Image from 'next/image';
 import { UserAvatar } from '../../../ui-components/UserAvatar';
 import Link from 'next/link';
@@ -22,6 +22,7 @@ export const UserPopup: React.FC<UserPopupProps> = React.memo(
       destroyCookie({}, 'remangaToken');
       dispatch(clearUserData());
     };
+
     return (
       <div className={styles.popup}>
         <Link href={`/user/${id}`}>

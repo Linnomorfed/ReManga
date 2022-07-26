@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { S3 } from 'aws-sdk';
 import PageEntity from './entities/page.entity';
-import { ChaptersEntity } from 'src/chapters/entities/chapter.entity';
 import { ChaptersService } from 'src/chapters/chapters.service';
 
 @Injectable()
@@ -17,32 +16,27 @@ export class PagesService {
     private readonly configService: ConfigService,
   ) {}
 
-  async uploadChapterFiles(chapterId: number, dataBuffer: Buffer) {
+  async uploadChapterFiles(chapterId: number, images: Express.Multer.File[]) {
     const result = await this.chapterService.findOne(+chapterId);
 
-    const s3 = new S3();
-    const uploadResult = await s3
-      .upload({
-        Bucket: this.configService.get('AWS_MANGA_CHAPTERS_BUCKET'),
-        Body: dataBuffer,
-        Key: `${uuid()}`,
-      })
-      .promise();
+    for (const page of images) {
+      const s3 = new S3();
 
-    const newFile = this.repository.create({
-      key: uploadResult.Key,
-      url: uploadResult.Location,
-      chapter: result,
-    });
+      const uploadResult = await s3
+        .upload({
+          Bucket: this.configService.get('AWS_MANGA_CHAPTERS_BUCKET'),
+          Body: page.buffer,
+          Key: `${uuid()}`,
+        })
+        .promise();
 
-    return this.repository.save(newFile);
-  }
+      const newFile = this.repository.create({
+        key: uploadResult.Key,
+        url: uploadResult.Location,
+        chapter: result,
+      });
 
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+      this.repository.save(newFile);
+    }
   }
 }

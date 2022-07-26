@@ -6,7 +6,8 @@
   align-items: center;
   background: $clr-bg-secondary;
   padding-bottom: 24px;
-  & > svg {
+
+  &>svg {
     margin-left: 12px;
     cursor: pointer;
   }
@@ -30,7 +31,7 @@
     background: $clr-bg-secondary;
     border-bottom: $line-divider;
 
-    & > button {
+    &>button {
       padding-bottom: 0;
     }
   }
@@ -44,6 +45,7 @@
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+
   &Wrapper {
     margin: 8px 14px;
   }
@@ -54,6 +56,7 @@
   display: flex;
   min-height: 40px;
   justify-content: space-between;
+
   &Btn {
     display: flex;
     align-self: center;
@@ -73,7 +76,8 @@
     &:disabled {
       color: rgba(100, 100, 100, 0.4) !important;
       border-color: rgba(100, 100, 100, 0.4) !important;
-      & > svg {
+
+      &>svg {
         fill: rgba(100, 100, 100, 0.4);
       }
     }
@@ -97,6 +101,7 @@
     margin-bottom: 8px;
     justify-content: center;
   }
+
   &Btn {
     display: flex;
     padding: 6px;
@@ -115,6 +120,7 @@
     border-radius: 0.285rem;
     text-transform: uppercase;
     background-color: transparent;
+
     &:hover {
       background-color: $btn-hover;
     }
@@ -124,7 +130,8 @@
       color: rgba(100, 100, 100, 0.4);
       pointer-events: none;
       user-select: none;
-      & > svg {
+
+      &>svg {
         fill: rgba(100, 100, 100, 0.4);
       }
     }

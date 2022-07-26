@@ -13,13 +13,11 @@ export interface UpdateBookmarkDto {
   bookmarkId: bookmarkIdEnum | null;
 }
 
-export interface CreateBookmarkDto {
+export interface CreateBookmarkDto extends UpdateBookmarkDto {
   mangaId: number;
-  bookmarkId: bookmarkIdEnum | null;
 }
-export interface SearchBookmarkDto {
+export interface SearchBookmarkDto extends UpdateBookmarkDto {
   userId: number;
-  bookmarkId: bookmarkIdEnum;
 }
 
 export interface ResponseBookmark {

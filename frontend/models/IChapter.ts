@@ -1,6 +1,6 @@
 import { ResponseManga } from './IManga';
 
-export type ChapterResult = {
+export interface ChapterResult {
   id: number;
   volume: number;
   chapter_number: number;
@@ -12,11 +12,16 @@ export type ChapterResult = {
   rated: boolean;
   mangaTitle: string;
   isPaid: boolean;
-};
+}
 
-export type CertainChaptersResult = ChapterResult & {
+export interface CertainChaptersResult extends ChapterResult {
   pages: ChapterPage[];
-};
+}
+
+export interface NewestChapteResult extends ChapterResult {
+  manga: ResponseManga;
+  repeatsCount: number;
+}
 
 export interface ChapterPageResult {
   content: CertainChaptersResult;
@@ -30,11 +35,6 @@ export interface ChapterPage {
   key: string;
   chapterId: number;
 }
-
-export type NewestChapteResult = ChapterResult & {
-  manga: ResponseManga;
-  repeatsCount: number;
-};
 
 export interface CreateChapterDto {
   mangaId: number;

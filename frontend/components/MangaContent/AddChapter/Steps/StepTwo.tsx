@@ -44,24 +44,13 @@ export const StepTwo: React.FC<StepTwoProps> = ({
         volume,
       });
 
-      // uploadedImages.map(async (page) => {
-      //   const fd = new FormData();
-      //   fd.append('page', page);
-      //   fd.append('id', item.id.toString())
-
-      //   await Api().chapter.addChapterPages(fd)
-      // })
-
-      // const createPage = async (page: any) => {
-      //
-      // }
-
-      for (const page of uploadedImages) {
-        const fd = new FormData();
-        fd.append('page', page);
-        fd.append('id', item.id.toString());
-        await Api().chapter.addChapterPages(fd);
+      const fd = new FormData();
+      fd.append('id', item.id.toString());
+      for (const key of Object.keys(uploadedImages)) {
+        fd.append('page', uploadedImages[+key]);
       }
+
+      await Api().chapter.addChapterPages(fd);
     } catch (err) {
       console.warn('Creating chapter ', err);
       alert('Failed to create chapter: ' + err);

@@ -20,6 +20,8 @@ import { ChaptersModule } from './chapters/chapters.module';
 import { PagesModule } from './pages/pages.module';
 import { LikesModule } from './likes/likes.module';
 import { EmailModule } from './email/email.module';
+import { TranslatorsModule } from './translators/translators.module';
+import { BranchesModule } from './branches/branches.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -65,6 +67,8 @@ import * as Joi from '@hapi/joi';
     ChaptersModule,
     PagesModule,
     LikesModule,
+    TranslatorsModule,
+    BranchesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

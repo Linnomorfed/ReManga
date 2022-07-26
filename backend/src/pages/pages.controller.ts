@@ -7,8 +7,9 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ChaptersService } from 'src/chapters/chapters.service';
 import { PagesService } from './pages.service';
 
@@ -20,21 +21,11 @@ export class PagesController {
   ) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('page'))
+  @UseInterceptors(FilesInterceptor('page'))
   async uploadPublicFile(
     @Body() body,
-    @UploadedFile() pages: Express.Multer.File,
+    @UploadedFiles() pages: Array<Express.Multer.File>,
   ) {
-    this.pagesService.uploadChapterFiles(+body.id, pages.buffer);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pagesService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pagesService.remove(+id);
+    this.pagesService.uploadChapterFiles(+body.id, pages);
   }
 }

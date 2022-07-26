@@ -1,8 +1,10 @@
 import { Exclude } from 'class-transformer';
+import { TranslatorEntity } from 'src/translators/entities/translator.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -24,7 +26,16 @@ export class UserEntity {
   @Column({ default: 0 })
   liked_chapters: number;
 
-  @Exclude()
+  @ManyToMany(
+    () => TranslatorEntity,
+    (translators) => translators.translators,
+    {
+      cascade: true,
+    },
+  )
+  within_teams: TranslatorEntity[];
+
+  @Exclude({ toPlainOnly: true })
   @Column({ nullable: true })
   password?: string;
 

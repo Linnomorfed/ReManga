@@ -27,7 +27,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Read manga online - ReManga</title>
         <meta name='description' content='ReManga' />
-        <link rel='icon' href='/icon.png' />
       </Head>
       <MainLayout>
         <Dashboard />
