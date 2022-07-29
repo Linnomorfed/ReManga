@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MangaEntity } from 'src/manga/entities/manga.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { getRepository, Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';

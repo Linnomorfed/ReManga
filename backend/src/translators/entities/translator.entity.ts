@@ -1,3 +1,4 @@
+import { MemberEntity } from 'src/members/entities/member.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -5,6 +6,8 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -45,14 +48,16 @@ export class TranslatorEntity {
   @Column({ default: 0 })
   manga_count: number;
 
-  @OneToOne(() => UserEntity, { eager: true })
+  @ManyToOne(() => UserEntity, { eager: true })
   @JoinColumn({ name: 'leaderId' })
   leader: UserEntity;
 
   @Column()
   leaderId: number;
 
-  @ManyToMany(() => UserEntity, (user) => user.within_teams)
+  @OneToMany(() => MemberEntity, (member) => member.translatorsTeam, {
+    eager: true,
+  })
   @JoinTable()
-  translators: UserEntity[];
+  members: MemberEntity[];
 }

@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer';
+import { MemberEntity } from 'src/members/entities/member.entity';
 import { TranslatorEntity } from 'src/translators/entities/translator.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,7 +19,7 @@ export class UserEntity {
   @Column()
   nickname: string;
 
-  @Column({ unique: true })
+  @Column()
   email: string;
 
   @Column({ default: 0 })
@@ -26,14 +28,10 @@ export class UserEntity {
   @Column({ default: 0 })
   liked_chapters: number;
 
-  @ManyToMany(
-    () => TranslatorEntity,
-    (translators) => translators.translators,
-    {
-      cascade: true,
-    },
-  )
-  within_teams: TranslatorEntity[];
+  @OneToMany(() => MemberEntity, (member: MemberEntity) => member.user, {
+    eager: true,
+  })
+  within_teams: MemberEntity[];
 
   @Exclude({ toPlainOnly: true })
   @Column({ nullable: true })

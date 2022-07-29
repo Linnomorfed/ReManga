@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 web: npm run start:prod
+=======
+web: npm run start:prod
+>>>>>>> 2db5698d0e83df1d7e9655be44f075ffcf8c4e15
